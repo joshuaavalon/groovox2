@@ -1,0 +1,40 @@
+{
+  "name": "@groovox/database",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "./lib/index.js",
+  "typings": "./src/index.ts",
+  "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "tsc",
+    "generate": "prisma generate",
+    "case": "ts-node script/prisma.ts",
+    "postcase": "prisma format",
+    "introspect": "prisma introspect",
+    "postintrospect": "npm run case"
+  },
+  "keywords": [],
+  "homepage": "https://github.com/groovox/groovox#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/groovox/groovox.git",
+    "directory": "packages/database"
+  },
+  "bugs": {
+    "url": "https://github.com/groovox/groovox/issues"
+  },
+  "author": "Joshua Avalon",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@prisma/client": "^3.1.1",
+    "lodash": "^4.17.21",
+    "prisma": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^16.10.2",
+    "change-case": "^4.1.2",
+    "ts-node": "^10.2.1"
+  }
+}
