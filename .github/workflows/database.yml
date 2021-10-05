@@ -6,7 +6,6 @@ jobs:
   generate-prisma:
     name: generate prisma schema
     runs-on: ubuntu-latest
-    container: node:16
     services:
       postgres:
         image: postgres:12-alpine
@@ -26,10 +25,11 @@ jobs:
       POSTGRES_USER: groovox
       POSTGRES_PASSWORD: groovox
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: migrate
-        uses: joshuaavalon/flyway-action@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - uses: joshuaavalon/flyway-action@v1
         with:
           url: ${{ format('jdbc:{0}', env.POSTGRES_URL) }}
           user: ${{ env.POSTGRES_USER }}
@@ -40,9 +40,9 @@ jobs:
       - name: reset schema
         run: cp packages/database/schema.template.prisma packages/database/schema.prisma
       - name: introspect database
-        run: sudo npm run introspect
+        run: npm run introspect
       - name: generate schema
-        run: sudo npm run generate:database
+        run: npm run generate:database
       - uses: actions/upload-artifact@v2
         with:
           name: schema.prisma
