@@ -6,6 +6,7 @@ jobs:
   generate-prisma:
     name: generate prisma schema
     runs-on: ubuntu-latest
+    container: node:16
     services:
       postgres:
         image: postgres:12-alpine
@@ -20,15 +21,12 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
-      DATABASE_URL: postgresql://groovox:groovox@localhost:5432/groovox
-      POSTGRES_URL: postgresql://localhost:5432/groovox
+      DATABASE_URL: postgresql://groovox:groovox@postgres:5432/groovox
+      POSTGRES_URL: postgresql://postgres:5432/groovox
       POSTGRES_USER: groovox
       POSTGRES_PASSWORD: groovox
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "16"
       - uses: joshuaavalon/flyway-action@v1
         with:
           url: ${{ format('jdbc:{0}', env.POSTGRES_URL) }}
@@ -37,6 +35,7 @@ jobs:
           locations: filesystem:./database/migrations
       - name: install dependencies
         run: npm ci
+      - run: chmod -R 777 .
       - name: reset schema
         run: cp packages/database/schema.template.prisma packages/database/schema.prisma
       - name: introspect database
