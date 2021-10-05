@@ -21,7 +21,8 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
-      DATABASE_URL: postgresql://postgres:5432/groovox
+      DATABASE_URL: postgresql://groovox:groovox@postgres:5432/groovox
+      POSTGRES_URL: postgresql://postgres:5432/groovox
       POSTGRES_USER: groovox
       POSTGRES_PASSWORD: groovox
     steps:
@@ -30,7 +31,7 @@ jobs:
       - name: migrate
         uses: joshuaavalon/flyway-action@v1
         with:
-          url: jdbc:postgresql://postgres:5432/postgres
+          url: ${{ format('jdbc:{0}', env.POSTGRES_URL) }}
           user: ${{ env.POSTGRES_USER }}
           password: ${{ env.POSTGRES_PASSWORD }}
           location: filesystem:./database/migrations
