@@ -183,13 +183,25 @@ CREATE TABLE show (
   name_sort_id UUID UNIQUE NOT NULL,
   content_rating TEXT NOT NULL,
   aired DATE,
-  tagline UUID UNIQUE NOT NULL,
+  tagline_id UUID UNIQUE NOT NULL,
   rating NUMERIC(3, 1),
   description_id UUID UNIQUE NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (name_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (name_sort_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (tagline_id) REFERENCES multilingual (id) ON DELETE CASCADE,
+  FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE
+);
+
+CREATE TABLE show_season (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  show_id BIGINT NOT NULL,
+  name_id UUID UNIQUE NOT NULL,
+  season_no INTEGER NOT NULL,
+  description_id UUID UNIQUE NOT NULL,
+  UNIQUE (show_id, season_no),
+  FOREIGN KEY (show_id) REFERENCES show (id) ON DELETE CASCADE,
+  FOREIGN KEY (name_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE
 );
 
@@ -210,7 +222,11 @@ CREATE TABLE episode (
   aired DATE,
   rating NUMERIC(3, 1),
   description_id UUID UNIQUE NOT NULL,
+  season_id UUID NOT NULL,
+  episode_no INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (season_id, episode_no),
+  FOREIGN KEY (season_id) REFERENCES show_season (id) ON DELETE CASCADE,
   FOREIGN KEY (name_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (name_sort_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE
