@@ -18,7 +18,7 @@ CREATE TABLE multilingual (
   FOREIGN KEY (default_language_id) REFERENCES language (id)
 );
 
-CREATE TABLE string (
+CREATE TABLE text (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   content TEXT NOT NULL,
   multilingual_id UUID UNIQUE NOT NULL,
