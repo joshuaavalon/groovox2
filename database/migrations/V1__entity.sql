@@ -116,7 +116,7 @@ CREATE TABLE album (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (name_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (name_sort_id) REFERENCES multilingual (id) ON DELETE CASCADE,
-  FOREIGN KEY (artist_id) REFERENCES person (id) ON DELETE CASCADE,
+  FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
   FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE
 );
 
