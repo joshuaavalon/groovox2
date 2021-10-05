@@ -38,11 +38,11 @@ jobs:
       - name: install dependencies
         run: npm ci
       - name: reset schema
-        run: cp -p packages/database/schema.template.prisma packages/database/schema.prisma
+        run: cp packages/database/schema.template.prisma packages/database/schema.prisma
       - name: introspect database
-        run: npm run introspect
+        run: sudo npm run introspect
       - name: generate schema
-        run: npm run generate:database
+        run: sudo npm run generate:database
       - uses: actions/upload-artifact@v2
         with:
           name: schema.prisma
