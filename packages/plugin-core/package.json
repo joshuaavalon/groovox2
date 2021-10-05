@@ -1,0 +1,28 @@
+{
+  "name": "@groovox/plugin-core",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "./lib/index.js",
+  "typings": "./src/index.ts",
+  "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "homepage": "https://github.com/groovox/groovox#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/groovox/groovox.git",
+    "directory": "packages/plugin-core"
+  },
+  "bugs": {
+    "url": "https://github.com/groovox/groovox/issues"
+  },
+  "author": "Joshua Avalon",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "fastify-plugin": "^3.0.0"
+  },
+  "devDependencies": {}
+}
