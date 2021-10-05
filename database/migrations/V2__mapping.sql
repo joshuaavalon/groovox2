@@ -1,8 +1,9 @@
-CREATE TABLE person_similar (
-  person_a_id UUID NOT NULL,
-  person_b_id UUID NOT NULL,
-  FOREIGN KEY (person_a_id) REFERENCES person (id) ON DELETE CASCADE,
-  FOREIGN KEY (person_b_id) REFERENCES person (id) ON DELETE CASCADE
+CREATE TABLE _person_similar (
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES person (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES person (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX person_similar_unique ON person_similar (person_a_id, person_b_id);
+CREATE UNIQUE INDEX _person_similar_ab_unique ON _person_similar (a, b);
+CREATE INDEX _person_similar_b_index ON _person_similar (b);
