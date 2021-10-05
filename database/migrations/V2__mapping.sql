@@ -1,16 +1,8 @@
-CREATE TABLE _person_similar (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY ("B") REFERENCES person (id) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE person_similar (
+  person_a_id UUID NOT NULL,
+  person_b UUID NOT NULL,
+  FOREIGN KEY (person_a_id) REFERENCES person (id) ON DELETE CASCADE,
+  FOREIGN KEY (person_b_id) REFERENCES person (id) ON DELETE CASCADE
 );
 
-CREATE TABLE "User" (
-    id integer PRIMARY KEY,
-    name text
-);
-
-CREATE TABLE "_UserFollows" (
-    "A" integer NOT NULL REFERENCES "User"(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    "B" integer NOT NULL REFERENCES "User"(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
+CREATE UNIQUE INDEX person_similar_unique ON person_similar (person_a_id UUID, person_b_id UUID);
