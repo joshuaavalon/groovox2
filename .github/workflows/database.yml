@@ -39,7 +39,7 @@ jobs:
       - name: reset schema
         run: cp packages/database/schema.template.prisma packages/database/schema.prisma
       - name: introspect database
-        run: npm run introspect
+        run: npm run --prefix packages/database introspect:raw
       - name: generate schema
         run: npm run generate:database
       - uses: actions/upload-artifact@v2
