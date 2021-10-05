@@ -20,8 +20,8 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
-      DATABASE_URL: postgresql://groovox:groovox@postgres:5432/groovox
-      POSTGRES_URL: postgresql://postgres:5432/groovox
+      DATABASE_URL: postgresql://groovox:groovox@localhost:5432/groovox
+      POSTGRES_URL: postgresql://localhost:5432/groovox
       POSTGRES_USER: groovox
       POSTGRES_PASSWORD: groovox
     steps:
@@ -34,7 +34,7 @@ jobs:
           url: ${{ format('jdbc:{0}', env.POSTGRES_URL) }}
           user: ${{ env.POSTGRES_USER }}
           password: ${{ env.POSTGRES_PASSWORD }}
-          location: filesystem:./database/migrations
+          locations: filesystem:./database/migrations
       - name: install dependencies
         run: npm ci
       - name: reset schema
