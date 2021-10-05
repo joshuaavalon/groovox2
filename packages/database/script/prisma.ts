@@ -121,7 +121,8 @@ const fixId = (line: string): string => {
 };
 
 const fixRelation = (line: string): string => {
-  const regex = /(?<relation>@relation\((?<fullName>"(?<name>\w+)")?)(?<fullFields>,? ?fields: \[(?<fields>[\w,\s]+)\])?(?<fullReferences>, references: \[(?<references>[\w,\s]+)\])?(?<other>.+)?\)/u;
+  const regex =
+    /(?<relation>@relation\((?<fullName>"(?<name>\w+)")?)(?<fullFields>,? ?fields: \[(?<fields>[\w,\s]+)\])?(?<fullReferences>, references: \[(?<references>[\w,\s]+)\])?(?<other>.+)?\)/u;
   const match = regex.exec(line);
   const groups = match?.groups;
   if (!match || !groups) {
