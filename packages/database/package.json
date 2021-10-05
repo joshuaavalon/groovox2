@@ -11,7 +11,7 @@
     "generate": "prisma generate",
     "case": "ts-node script/prisma.ts",
     "postcase": "prisma format",
-    "introspect": "prisma introspect",
+    "introspect": "prisma db pull",
     "postintrospect": "npm run case"
   },
   "keywords": [],
