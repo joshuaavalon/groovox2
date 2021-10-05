@@ -195,7 +195,7 @@ CREATE TABLE show (
 
 CREATE TABLE show_season (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  show_id BIGINT NOT NULL,
+  show_id UUID NOT NULL,
   name_id UUID UNIQUE NOT NULL,
   season_no INTEGER NOT NULL,
   description_id UUID UNIQUE NOT NULL,
