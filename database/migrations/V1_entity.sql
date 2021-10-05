@@ -28,12 +28,6 @@ CREATE TABLE string (
   FOREIGN KEY (language_id) REFERENCES language (id) ON DELETE CASCADE
 );
 
-CREATE TABLE attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  uploaded BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE genre (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name_id UUID UNIQUE NOT NULL,
@@ -48,6 +42,15 @@ CREATE TABLE collection (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (name_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE
+);
+
+CREATE TABLE collection_attachment (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  collection_id UUID UNIQUE NOT NULL,
+  uploaded BOOLEAN DEFAULT FALSE,
+  variant TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (collection_id) REFERENCES collection (id) ON DELETE CASCADE
 );
 
 CREATE TABLE studio (
@@ -93,6 +96,15 @@ CREATE TABLE person (
   FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE
 );
 
+CREATE TABLE person_attachment (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  person_id UUID UNIQUE NOT NULL,
+  uploaded BOOLEAN DEFAULT FALSE,
+  variant TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE
+);
+
 CREATE TABLE album (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name_id UUID UNIQUE NOT NULL,
@@ -108,6 +120,15 @@ CREATE TABLE album (
   FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE
 );
 
+CREATE TABLE album_attachment (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  album_id UUID UNIQUE NOT NULL,
+  uploaded BOOLEAN DEFAULT FALSE,
+  variant TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (album_id) REFERENCES album (id) ON DELETE CASCADE
+);
+
 CREATE TABLE track (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name_id UUID UNIQUE NOT NULL,
@@ -120,6 +141,15 @@ CREATE TABLE track (
   FOREIGN KEY (name_sort_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (album_id) REFERENCES album (id) ON DELETE CASCADE
+);
+
+CREATE TABLE track_attachment (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  track_id UUID UNIQUE NOT NULL,
+  uploaded BOOLEAN DEFAULT FALSE,
+  variant TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (track_id) REFERENCES track (id) ON DELETE CASCADE
 );
 
 CREATE TABLE movie (
@@ -138,13 +168,22 @@ CREATE TABLE movie (
   FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE
 );
 
+CREATE TABLE movie_attachment (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  movie_id UUID UNIQUE NOT NULL,
+  uploaded BOOLEAN DEFAULT FALSE,
+  variant TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (movie_id) REFERENCES movie (id) ON DELETE CASCADE
+);
+
 CREATE TABLE show (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name_id UUID UNIQUE NOT NULL,
   name_sort_id UUID UNIQUE NOT NULL,
   content_rating TEXT NOT NULL,
   aired DATE,
-  tagline TEXT NOT NULL,
+  tagline UUID UNIQUE NOT NULL,
   rating NUMERIC(3, 1),
   description_id UUID UNIQUE NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -152,6 +191,15 @@ CREATE TABLE show (
   FOREIGN KEY (name_sort_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (tagline_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE
+);
+
+CREATE TABLE show_attachment (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  show_id UUID UNIQUE NOT NULL,
+  uploaded BOOLEAN DEFAULT FALSE,
+  variant TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (show_id) REFERENCES show (id) ON DELETE CASCADE
 );
 
 CREATE TABLE episode (
@@ -166,6 +214,15 @@ CREATE TABLE episode (
   FOREIGN KEY (name_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (name_sort_id) REFERENCES multilingual (id) ON DELETE CASCADE,
   FOREIGN KEY (description_id) REFERENCES multilingual (id) ON DELETE CASCADE
+);
+
+CREATE TABLE episode_attachment (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  episode_id UUID UNIQUE NOT NULL,
+  uploaded BOOLEAN DEFAULT FALSE,
+  variant TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (episode_id) REFERENCES episode (id) ON DELETE CASCADE
 );
 
 INSERT INTO version(version) VALUES ('v1');
