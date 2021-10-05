@@ -3,635 +3,309 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Album {
-  id              BigInt            @id @default(autoincrement())
-  name            String
-  nameSort        String?           @map("name_sort")
-  nameMatch       String            @unique @map("name_match")
-  rating          Decimal?          @db.Decimal(3, 1)
-  summary         String
-  aired           DateTime?         @db.Date
-  artistId        BigInt            @map("artist_id")
-  createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamp(6)
-  artist          Artist            @relation(fields: [artistId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  albumAttachment AlbumAttachment[]
-  albumCollection AlbumCollection[]
-  albumCountry    AlbumCountry[]
-  albumGenre      AlbumGenre[]
-  albumMood       AlbumMood[]
-  albumStudio     AlbumStudio[]
-  albumStyle      AlbumStyle[]
-  albumTrack      AlbumTrack[]
-
-  @@map("album")
+model album {
+  id                                              String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id                                         String            @unique @db.Uuid
+  name_sort_id                                    String            @unique @db.Uuid
+  rating                                          Decimal?          @db.Decimal(3, 1)
+  description_id                                  String            @unique @db.Uuid
+  release_date                                    DateTime?         @db.Date
+  person_id                                       String            @db.Uuid
+  created_at                                      DateTime          @default(now()) @db.Timestamp(6)
+  multilingual_album_description_idTomultilingual multilingual      @relation("album_description_idTomultilingual", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_album_name_idTomultilingual        multilingual      @relation("album_name_idTomultilingual", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_album_name_sort_idTomultilingual   multilingual      @relation("album_name_sort_idTomultilingual", fields: [name_sort_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  person                                          person            @relation(fields: [person_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  album_attachment                                album_attachment?
+  track                                           track[]
 }
 
-model AlbumAttachment {
-  attachmentId String     @map("attachment_id") @db.Uuid
-  albumId      BigInt     @map("album_id")
-  variant      String
-  album        Album      @relation(fields: [albumId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  attachment   Attachment @relation(fields: [attachmentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([attachmentId, albumId, variant])
-  @@unique([albumId, variant])
-  @@map("album_attachment")
+model album_attachment {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  album_id   String   @unique @db.Uuid
+  uploaded   Boolean? @default(false)
+  variant    String
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  album      album    @relation(fields: [album_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model AlbumCollection {
-  albumId      BigInt     @map("album_id")
-  collectionId BigInt     @map("collection_id")
-  ordering     Int
-  album        Album      @relation(fields: [albumId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([albumId, ordering])
-  @@unique([albumId, collectionId])
-  @@map("album_collection")
+model collection {
+  id                                                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id                                              String                 @unique @db.Uuid
+  description_id                                       String                 @db.Uuid
+  created_at                                           DateTime               @default(now()) @db.Timestamp(6)
+  multilingual_collection_description_idTomultilingual multilingual           @relation("collection_description_idTomultilingual", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_collection_name_idTomultilingual        multilingual           @relation("collection_name_idTomultilingual", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  collection_attachment                                collection_attachment?
 }
 
-model AlbumCountry {
-  albumId     BigInt  @map("album_id")
-  countryCode String  @map("country_code")
-  ordering    Int
-  album       Album   @relation(fields: [albumId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  country     Country @relation(fields: [countryCode], references: [code], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([albumId, ordering])
-  @@unique([albumId, countryCode])
-  @@map("album_country")
+model collection_attachment {
+  id            String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  collection_id String     @unique @db.Uuid
+  uploaded      Boolean?   @default(false)
+  variant       String
+  created_at    DateTime   @default(now()) @db.Timestamp(6)
+  collection    collection @relation(fields: [collection_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model AlbumGenre {
-  albumId  BigInt @map("album_id")
-  genreId  BigInt @map("genre_id")
-  ordering Int
-  album    Album  @relation(fields: [albumId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  genre    Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([albumId, ordering])
-  @@unique([albumId, genreId])
-  @@map("album_genre")
+model country {
+  id           String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  code         String       @unique
+  name_id      String       @unique @db.Uuid
+  created_at   DateTime     @default(now()) @db.Timestamp(6)
+  multilingual multilingual @relation(fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model AlbumMood {
-  albumId  BigInt @map("album_id")
-  moodId   BigInt @map("mood_id")
-  ordering Int
-  album    Album  @relation(fields: [albumId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  mood     Mood   @relation(fields: [moodId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+model episode {
+  id                                                String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id                                           String              @unique @db.Uuid
+  name_sort_id                                      String              @unique @db.Uuid
+  content_rating                                    String
+  aired                                             DateTime?           @db.Date
+  rating                                            Decimal?            @db.Decimal(3, 1)
+  description_id                                    String              @unique @db.Uuid
+  season_id                                         String              @db.Uuid
+  episode_no                                        Int
+  created_at                                        DateTime            @default(now()) @db.Timestamp(6)
+  multilingual_episode_description_idTomultilingual multilingual        @relation("episode_description_idTomultilingual", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_episode_name_idTomultilingual        multilingual        @relation("episode_name_idTomultilingual", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_episode_name_sort_idTomultilingual   multilingual        @relation("episode_name_sort_idTomultilingual", fields: [name_sort_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  show_season                                       show_season         @relation(fields: [season_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  episode_attachment                                episode_attachment?
 
-  @@id([albumId, ordering])
-  @@unique([albumId, moodId])
-  @@map("album_mood")
+  @@unique([season_id, episode_no])
 }
 
-model AlbumStudio {
-  albumId  BigInt @map("album_id")
-  studioId BigInt @map("studio_id")
-  ordering Int
-  album    Album  @relation(fields: [albumId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  studio   Studio @relation(fields: [studioId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([albumId, ordering])
-  @@unique([albumId, studioId])
-  @@map("album_studio")
+model episode_attachment {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  episode_id String   @unique @db.Uuid
+  uploaded   Boolean? @default(false)
+  variant    String
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  episode    episode  @relation(fields: [episode_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model AlbumStyle {
-  albumId  BigInt @map("album_id")
-  styleId  BigInt @map("style_id")
-  ordering Int
-  album    Album  @relation(fields: [albumId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  style    Style  @relation(fields: [styleId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([albumId, ordering])
-  @@unique([albumId, styleId])
-  @@map("album_style")
-}
-
-model AlbumTrack {
-  albumId  BigInt @map("album_id")
-  trackId  BigInt @map("track_id")
-  ordering Int
-  disk     Int
-  album    Album  @relation(fields: [albumId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  track    Track  @relation(fields: [trackId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([trackId, disk, ordering])
-  @@unique([albumId, trackId])
-  @@map("album_track")
-}
-
-model Artist {
-  id                            BigInt             @id @default(autoincrement())
-  personId                      BigInt             @unique @map("person_id")
-  summary                       String
-  createdAt                     DateTime           @default(now()) @map("created_at") @db.Timestamp(6)
-  person                        Person             @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  album                         Album[]
-  artistAttachment              ArtistAttachment[]
-  artistCollection              ArtistCollection[]
-  artistCountry                 ArtistCountry[]
-  artistGenre                   ArtistGenre[]
-  artistMood                    ArtistMood[]
-  artistSimilarSimilarArtist1Id ArtistSimilar[]    @relation("artistToArtistSimilarArtist1Id")
-  artistSimilarSimilarArtist2Id ArtistSimilar[]    @relation("artistToArtistSimilarArtist2Id")
-  artistStyle                   ArtistStyle[]
-
-  @@map("artist")
-}
-
-model ArtistAttachment {
-  attachmentId String     @map("attachment_id") @db.Uuid
-  artistId     BigInt     @map("artist_id")
-  variant      String
-  artist       Artist     @relation(fields: [artistId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  attachment   Attachment @relation(fields: [attachmentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([attachmentId, artistId, variant])
-  @@unique([artistId, variant])
-  @@map("artist_attachment")
-}
-
-model ArtistCollection {
-  artistId     BigInt     @map("artist_id")
-  collectionId BigInt     @map("collection_id")
-  ordering     Int
-  artist       Artist     @relation(fields: [artistId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([artistId, ordering])
-  @@unique([artistId, collectionId])
-  @@map("artist_collection")
-}
-
-model ArtistCountry {
-  artistId    BigInt  @map("artist_id")
-  countryCode String  @map("country_code")
-  ordering    Int
-  artist      Artist  @relation(fields: [artistId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  country     Country @relation(fields: [countryCode], references: [code], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([artistId, ordering])
-  @@unique([artistId, countryCode])
-  @@map("artist_country")
-}
-
-model ArtistGenre {
-  artistId BigInt @map("artist_id")
-  genreId  BigInt @map("genre_id")
-  ordering Int
-  artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  genre    Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([artistId, ordering])
-  @@unique([artistId, genreId])
-  @@map("artist_genre")
-}
-
-model ArtistMood {
-  artistId BigInt @map("artist_id")
-  moodId   BigInt @map("mood_id")
-  ordering Int
-  artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  mood     Mood   @relation(fields: [moodId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([artistId, ordering])
-  @@unique([artistId, moodId])
-  @@map("artist_mood")
-}
-
-model ArtistSimilar {
-  artist1Id              BigInt @map("artist1_id")
-  artist2Id              BigInt @map("artist2_id")
-  artistSimilarArtist1Id Artist @relation("artistToArtistSimilarArtist1Id", fields: [artist1Id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  artistSimilarArtist2Id Artist @relation("artistToArtistSimilarArtist2Id", fields: [artist2Id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([artist1Id, artist2Id])
-  @@map("artist_similar")
-}
-
-model ArtistStyle {
-  artistId BigInt @map("artist_id")
-  styleId  BigInt @map("style_id")
-  ordering Int
-  artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  style    Style  @relation(fields: [styleId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([artistId, ordering])
-  @@unique([artistId, styleId])
-  @@map("artist_style")
-}
-
-model Attachment {
-  id                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  uploaded             Boolean?               @default(false)
-  createdAt            DateTime               @default(now()) @map("created_at") @db.Timestamp(6)
-  albumAttachment      AlbumAttachment[]
-  artistAttachment     ArtistAttachment[]
-  collectionAttachment CollectionAttachment[]
-  episodeAttachment    EpisodeAttachment[]
-  movieAttachment      MovieAttachment[]
-  personAttachment     PersonAttachment[]
-  showAttachment       ShowAttachment[]
-
-  @@map("attachment")
-}
-
-model Collection {
-  id                   BigInt                 @id @default(autoincrement())
-  name                 String                 @unique
-  summary              String
-  createdAt            DateTime               @default(now()) @map("created_at") @db.Timestamp(6)
-  albumCollection      AlbumCollection[]
-  artistCollection     ArtistCollection[]
-  collectionAttachment CollectionAttachment[]
-  movieCollection      MovieCollection[]
-  showCollection       ShowCollection[]
-
-  @@map("collection")
-}
-
-model CollectionAttachment {
-  attachmentId String     @map("attachment_id") @db.Uuid
-  collectionId BigInt     @map("collection_id")
-  variant      String
-  attachment   Attachment @relation(fields: [attachmentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([attachmentId, collectionId, variant])
-  @@unique([collectionId, variant])
-  @@map("collection_attachment")
-}
-
-model Country {
-  code          String          @id
-  name          String          @unique
-  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
-  albumCountry  AlbumCountry[]
-  artistCountry ArtistCountry[]
-  movieCountry  MovieCountry[]
-
-  @@map("country")
-}
-
-model Episode {
-  id                BigInt              @id @default(autoincrement())
-  name              String[]
-  nameSort          String?             @map("name_sort")
-  nameOriginal      String[]            @map("name_original")
-  contentRating     String              @map("content_rating")
-  aired             DateTime?           @db.Date
-  rating            Decimal?            @db.Decimal(3, 1)
-  summary           String
-  createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamp(6)
-  episodeAttachment EpisodeAttachment[]
-  episodeStaff      EpisodeStaff[]
-
-  @@map("episode")
-}
-
-model EpisodeAttachment {
-  attachmentId String     @map("attachment_id") @db.Uuid
-  episodeId    BigInt     @map("episode_id")
-  variant      String
-  attachment   Attachment @relation(fields: [attachmentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  episode      Episode    @relation(fields: [episodeId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([attachmentId, episodeId, variant])
-  @@unique([episodeId, variant])
-  @@map("episode_attachment")
-}
-
-model EpisodeStaff {
-  id        BigInt  @id @default(autoincrement())
-  episodeId BigInt  @map("episode_id")
-  staffType String  @map("staff_type")
-  personId  BigInt  @map("person_id")
-  ordering  Int
-  staffName String? @map("staff_name")
-  episode   Episode @relation(fields: [episodeId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  person    Person  @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([episodeId, staffType, ordering])
-  @@unique([episodeId, staffType, personId])
-  @@map("episode_staff")
-}
-
-model FlywaySchemaHistory {
-  installedRank Int      @id(map: "flyway_schema_history_pk") @map("installed_rank")
-  version       String?  @db.VarChar(50)
-  description   String   @db.VarChar(200)
-  type          String   @db.VarChar(20)
-  script        String   @db.VarChar(1000)
-  checksum      Int?
-  installedBy   String   @map("installed_by") @db.VarChar(100)
-  installedOn   DateTime @default(now()) @map("installed_on") @db.Timestamp(6)
-  executionTime Int      @map("execution_time")
-  success       Boolean
+model flyway_schema_history {
+  installed_rank Int      @id(map: "flyway_schema_history_pk")
+  version        String?  @db.VarChar(50)
+  description    String   @db.VarChar(200)
+  type           String   @db.VarChar(20)
+  script         String   @db.VarChar(1000)
+  checksum       Int?
+  installed_by   String   @db.VarChar(100)
+  installed_on   DateTime @default(now()) @db.Timestamp(6)
+  execution_time Int
+  success        Boolean
 
   @@index([success], map: "flyway_schema_history_s_idx")
-  @@map("flyway_schema_history")
 }
 
-model Genre {
-  id          BigInt        @id @default(autoincrement())
-  name        String        @unique
-  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamp(6)
-  albumGenre  AlbumGenre[]
-  artistGenre ArtistGenre[]
-  movieGenre  MovieGenre[]
-  showGenre   ShowGenre[]
-  trackGenre  TrackGenre[]
-
-  @@map("genre")
+model genre {
+  id           String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id      String       @unique @db.Uuid
+  created_at   DateTime     @default(now()) @db.Timestamp(6)
+  multilingual multilingual @relation(fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model Mood {
-  id         BigInt       @id @default(autoincrement())
-  name       String       @unique
-  createdAt  DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
-  albumMood  AlbumMood[]
-  artistMood ArtistMood[]
-  trackMood  TrackMood[]
-
-  @@map("mood")
+model language {
+  id           String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name         String         @unique
+  iso          String         @unique
+  multilingual multilingual[]
+  text         text?
 }
 
-model Movie {
-  id              BigInt            @id @default(autoincrement())
-  name            String
-  nameSort        String?           @map("name_sort")
-  nameOriginal    String[]          @map("name_original")
-  nameMatch       String            @unique @map("name_match")
-  contentRating   String            @map("content_rating")
-  aired           DateTime?         @db.Date
-  tagline         String
-  rating          Decimal?          @db.Decimal(3, 1)
-  summary         String
-  createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamp(6)
-  movieAttachment MovieAttachment[]
-  movieCollection MovieCollection[]
-  movieCountry    MovieCountry[]
-  movieGenre      MovieGenre[]
-  movieStaff      MovieStaff[]
-  movieStudio     MovieStudio[]
-
-  @@map("movie")
+model mood {
+  id                                             String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id                                        String       @unique @db.Uuid
+  description_id                                 String       @unique @db.Uuid
+  multilingual_mood_description_idTomultilingual multilingual @relation("mood_description_idTomultilingual", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_mood_name_idTomultilingual        multilingual @relation("mood_name_idTomultilingual", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model MovieAttachment {
-  attachmentId String     @map("attachment_id") @db.Uuid
-  movieId      BigInt     @map("movie_id")
-  variant      String
-  attachment   Attachment @relation(fields: [attachmentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  movie        Movie      @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([attachmentId, movieId, variant])
-  @@unique([movieId, variant])
-  @@map("movie_attachment")
+model movie {
+  id                                              String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id                                         String            @unique @db.Uuid
+  name_sort_id                                    String            @unique @db.Uuid
+  content_rating                                  String
+  aired                                           DateTime?         @db.Date
+  tagline_id                                      String            @unique @db.Uuid
+  rating                                          Decimal?          @db.Decimal(3, 1)
+  description_id                                  String            @unique @db.Uuid
+  created_at                                      DateTime          @default(now()) @db.Timestamp(6)
+  multilingual_movie_description_idTomultilingual multilingual      @relation("movie_description_idTomultilingual", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_movie_name_idTomultilingual        multilingual      @relation("movie_name_idTomultilingual", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_movie_name_sort_idTomultilingual   multilingual      @relation("movie_name_sort_idTomultilingual", fields: [name_sort_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_movie_tagline_idTomultilingual     multilingual      @relation("movie_tagline_idTomultilingual", fields: [tagline_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  movie_attachment                                movie_attachment?
 }
 
-model MovieCollection {
-  movieId      BigInt     @map("movie_id")
-  collectionId BigInt     @map("collection_id")
-  ordering     Int
-  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  movie        Movie      @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([movieId, ordering])
-  @@unique([movieId, collectionId])
-  @@map("movie_collection")
+model movie_attachment {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  movie_id   String   @unique @db.Uuid
+  uploaded   Boolean? @default(false)
+  variant    String
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  movie      movie    @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model MovieCountry {
-  movieId     BigInt  @map("movie_id")
-  countryCode String  @map("country_code")
-  ordering    Int
-  country     Country @relation(fields: [countryCode], references: [code], onDelete: Cascade, onUpdate: NoAction)
-  movie       Movie   @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([movieId, ordering])
-  @@unique([movieId, countryCode])
-  @@map("movie_country")
+model multilingual {
+  id                                                   String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  default_language_id                                  String       @db.Uuid
+  language                                             language     @relation(fields: [default_language_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  album_album_description_idTomultilingual             album?       @relation("album_description_idTomultilingual")
+  album_album_name_idTomultilingual                    album?       @relation("album_name_idTomultilingual")
+  album_album_name_sort_idTomultilingual               album?       @relation("album_name_sort_idTomultilingual")
+  collection_collection_description_idTomultilingual   collection[] @relation("collection_description_idTomultilingual")
+  collection_collection_name_idTomultilingual          collection?  @relation("collection_name_idTomultilingual")
+  country                                              country?
+  episode_episode_description_idTomultilingual         episode?     @relation("episode_description_idTomultilingual")
+  episode_episode_name_idTomultilingual                episode?     @relation("episode_name_idTomultilingual")
+  episode_episode_name_sort_idTomultilingual           episode?     @relation("episode_name_sort_idTomultilingual")
+  genre                                                genre?
+  mood_mood_description_idTomultilingual               mood?        @relation("mood_description_idTomultilingual")
+  mood_mood_name_idTomultilingual                      mood?        @relation("mood_name_idTomultilingual")
+  movie_movie_description_idTomultilingual             movie?       @relation("movie_description_idTomultilingual")
+  movie_movie_name_idTomultilingual                    movie?       @relation("movie_name_idTomultilingual")
+  movie_movie_name_sort_idTomultilingual               movie?       @relation("movie_name_sort_idTomultilingual")
+  movie_movie_tagline_idTomultilingual                 movie?       @relation("movie_tagline_idTomultilingual")
+  person_multilingualToperson_description_id           person?      @relation("multilingualToperson_description_id")
+  person_multilingualToperson_name_id                  person?      @relation("multilingualToperson_name_id")
+  person_multilingualToperson_name_sort_id             person?      @relation("multilingualToperson_name_sort_id")
+  show_multilingualToshow_description_id               show?        @relation("multilingualToshow_description_id")
+  show_multilingualToshow_name_id                      show?        @relation("multilingualToshow_name_id")
+  show_multilingualToshow_name_sort_id                 show?        @relation("multilingualToshow_name_sort_id")
+  show_multilingualToshow_tagline_id                   show?        @relation("multilingualToshow_tagline_id")
+  show_season_multilingualToshow_season_description_id show_season? @relation("multilingualToshow_season_description_id")
+  show_season_multilingualToshow_season_name_id        show_season? @relation("multilingualToshow_season_name_id")
+  studio_multilingualTostudio_description_id           studio?      @relation("multilingualTostudio_description_id")
+  studio_multilingualTostudio_name_id                  studio?      @relation("multilingualTostudio_name_id")
+  style_multilingualTostyle_description_id             style?       @relation("multilingualTostyle_description_id")
+  style_multilingualTostyle_name_id                    style?       @relation("multilingualTostyle_name_id")
+  text                                                 text?
+  track_multilingualTotrack_description_id             track?       @relation("multilingualTotrack_description_id")
+  track_multilingualTotrack_name_id                    track?       @relation("multilingualTotrack_name_id")
+  track_multilingualTotrack_name_sort_id               track?       @relation("multilingualTotrack_name_sort_id")
 }
 
-model MovieGenre {
-  movieId  BigInt @map("movie_id")
-  genreId  BigInt @map("genre_id")
-  ordering Int
-  genre    Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  movie    Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([movieId, ordering])
-  @@unique([movieId, genreId])
-  @@map("movie_genre")
+model person {
+  id                                               String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id                                          String             @unique @db.Uuid
+  name_sort_id                                     String             @unique @db.Uuid
+  description_id                                   String             @unique @db.Uuid
+  created_at                                       DateTime           @default(now()) @db.Timestamp(6)
+  multilingual_multilingualToperson_description_id multilingual       @relation("multilingualToperson_description_id", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualToperson_name_id        multilingual       @relation("multilingualToperson_name_id", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualToperson_name_sort_id   multilingual       @relation("multilingualToperson_name_sort_id", fields: [name_sort_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  album                                            album[]
+  person_attachment                                person_attachment?
+  person_b                                         person[]           @relation("person_similar")
+  person_a                                         person[]           @relation("person_similar")
 }
 
-model MovieStaff {
-  id        BigInt  @id @default(autoincrement())
-  movieId   BigInt  @map("movie_id")
-  staffType String  @map("staff_type")
-  personId  BigInt  @map("person_id")
-  ordering  Int
-  staffName String? @map("staff_name")
-  movie     Movie   @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  person    Person  @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([movieId, staffType, ordering])
-  @@unique([movieId, staffType, personId])
-  @@map("movie_staff")
+model person_attachment {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  person_id  String   @unique @db.Uuid
+  uploaded   Boolean? @default(false)
+  variant    String
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  person     person   @relation(fields: [person_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model MovieStudio {
-  movieId  BigInt @map("movie_id")
-  studioId BigInt @map("studio_id")
-  ordering Int
-  movie    Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  studio   Studio @relation(fields: [studioId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([movieId, ordering])
-  @@unique([movieId, studioId])
-  @@map("movie_studio")
+model show {
+  id                                             String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id                                        String           @unique @db.Uuid
+  name_sort_id                                   String           @unique @db.Uuid
+  content_rating                                 String
+  aired                                          DateTime?        @db.Date
+  tagline_id                                     String           @unique @db.Uuid
+  rating                                         Decimal?         @db.Decimal(3, 1)
+  description_id                                 String           @unique @db.Uuid
+  created_at                                     DateTime         @default(now()) @db.Timestamp(6)
+  multilingual_multilingualToshow_description_id multilingual     @relation("multilingualToshow_description_id", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualToshow_name_id        multilingual     @relation("multilingualToshow_name_id", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualToshow_name_sort_id   multilingual     @relation("multilingualToshow_name_sort_id", fields: [name_sort_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualToshow_tagline_id     multilingual     @relation("multilingualToshow_tagline_id", fields: [tagline_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  show_attachment                                show_attachment?
+  show_season                                    show_season[]
 }
 
-model Person {
-  id               BigInt             @id @default(autoincrement())
-  name             String
-  nameSort         String?            @map("name_sort")
-  nameMatch        String             @unique @map("name_match")
-  createdAt        DateTime           @default(now()) @map("created_at") @db.Timestamp(6)
-  artist           Artist?
-  episodeStaff     EpisodeStaff[]
-  movieStaff       MovieStaff[]
-  personAttachment PersonAttachment[]
-  showStaff        ShowStaff[]
-
-  @@map("person")
+model show_attachment {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  show_id    String   @unique @db.Uuid
+  uploaded   Boolean? @default(false)
+  variant    String
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  show       show     @relation(fields: [show_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model PersonAttachment {
-  attachmentId String     @map("attachment_id") @db.Uuid
-  personId     BigInt     @map("person_id")
-  variant      String
-  attachment   Attachment @relation(fields: [attachmentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  person       Person     @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+model show_season {
+  id                                                    String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  show_id                                               String       @db.Uuid
+  name_id                                               String       @unique @db.Uuid
+  season_no                                             Int
+  description_id                                        String       @unique @db.Uuid
+  multilingual_multilingualToshow_season_description_id multilingual @relation("multilingualToshow_season_description_id", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualToshow_season_name_id        multilingual @relation("multilingualToshow_season_name_id", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  show                                                  show         @relation(fields: [show_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  episode                                               episode[]
 
-  @@id([attachmentId, personId, variant])
-  @@unique([personId, variant])
-  @@map("person_attachment")
+  @@unique([show_id, season_no])
 }
 
-model Show {
-  id             BigInt           @id @default(autoincrement())
-  name           String
-  nameSort       String?          @map("name_sort")
-  nameOriginal   String[]         @map("name_original")
-  nameMatch      String           @unique @map("name_match")
-  contentRating  String           @map("content_rating")
-  aired          DateTime?        @db.Date
-  tagline        String
-  rating         Decimal?         @db.Decimal(3, 1)
-  summary        String
-  createdAt      DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
-  showAttachment ShowAttachment[]
-  showCollection ShowCollection[]
-  showGenre      ShowGenre[]
-  showSeason     ShowSeason[]
-  showStaff      ShowStaff[]
-
-  @@map("show")
+model studio {
+  id                                               String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id                                          String       @unique @db.Uuid
+  description_id                                   String       @unique @db.Uuid
+  multilingual_multilingualTostudio_description_id multilingual @relation("multilingualTostudio_description_id", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualTostudio_name_id        multilingual @relation("multilingualTostudio_name_id", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model ShowAttachment {
-  attachmentId String     @map("attachment_id") @db.Uuid
-  showId       BigInt     @map("show_id")
-  variant      String
-  attachment   Attachment @relation(fields: [attachmentId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  show         Show       @relation(fields: [showId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([attachmentId, showId, variant])
-  @@unique([showId, variant])
-  @@map("show_attachment")
+model style {
+  id                                              String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id                                         String       @unique @db.Uuid
+  description_id                                  String       @unique @db.Uuid
+  multilingual_multilingualTostyle_description_id multilingual @relation("multilingualTostyle_description_id", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualTostyle_name_id        multilingual @relation("multilingualTostyle_name_id", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model ShowCollection {
-  showId       BigInt     @map("show_id")
-  collectionId BigInt     @map("collection_id")
-  ordering     Int
-  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  show         Show       @relation(fields: [showId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+model text {
+  id              String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  content         String
+  multilingual_id String       @unique @db.Uuid
+  language_id     String       @unique @db.Uuid
+  language        language     @relation(fields: [language_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual    multilingual @relation(fields: [multilingual_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  @@id([showId, ordering])
-  @@unique([showId, collectionId])
-  @@map("show_collection")
+  @@unique([multilingual_id, language_id])
 }
 
-model ShowGenre {
-  showId   BigInt @map("show_id")
-  genreId  BigInt @map("genre_id")
-  ordering Int
-  genre    Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  show     Show   @relation(fields: [showId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([showId, ordering])
-  @@unique([showId, genreId])
-  @@map("show_genre")
+model track {
+  id                                              String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name_id                                         String            @unique @db.Uuid
+  name_sort_id                                    String            @unique @db.Uuid
+  description_id                                  String            @unique @db.Uuid
+  album_id                                        String            @db.Uuid
+  rating                                          Decimal?          @db.Decimal(3, 1)
+  created_at                                      DateTime          @default(now()) @db.Timestamp(6)
+  album                                           album             @relation(fields: [album_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualTotrack_description_id multilingual      @relation("multilingualTotrack_description_id", fields: [description_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualTotrack_name_id        multilingual      @relation("multilingualTotrack_name_id", fields: [name_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  multilingual_multilingualTotrack_name_sort_id   multilingual      @relation("multilingualTotrack_name_sort_id", fields: [name_sort_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  track_attachment                                track_attachment?
 }
 
-model ShowSeason {
-  id      BigInt @id @default(autoincrement())
-  showId  BigInt @map("show_id")
-  name    String
-  season  Int
-  summary String
-  show    Show   @relation(fields: [showId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([showId, season])
-  @@map("show_season")
+model track_attachment {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  track_id   String   @unique @db.Uuid
+  uploaded   Boolean? @default(false)
+  variant    String
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  track      track    @relation(fields: [track_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model ShowStaff {
-  id        BigInt  @id @default(autoincrement())
-  showId    BigInt  @map("show_id")
-  staffType String  @map("staff_type")
-  personId  BigInt  @map("person_id")
-  ordering  Int
-  staffName String? @map("staff_name")
-  person    Person  @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  show      Show    @relation(fields: [showId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([showId, staffType, ordering])
-  @@unique([showId, staffType, personId])
-  @@map("show_staff")
-}
-
-model Studio {
-  id          BigInt        @id @default(autoincrement())
-  name        String        @unique
-  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamp(6)
-  albumStudio AlbumStudio[]
-  movieStudio MovieStudio[]
-
-  @@map("studio")
-}
-
-model Style {
-  id          BigInt        @id @default(autoincrement())
-  name        String        @unique
-  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamp(6)
-  albumStyle  AlbumStyle[]
-  artistStyle ArtistStyle[]
-
-  @@map("style")
-}
-
-model Track {
-  id         BigInt       @id @default(autoincrement())
-  name       String
-  nameSort   String?      @map("name_sort")
-  rating     Decimal?     @db.Decimal(3, 1)
-  createdAt  DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
-  albumTrack AlbumTrack[]
-  trackGenre TrackGenre[]
-  trackMood  TrackMood[]
-
-  @@map("track")
-}
-
-model TrackGenre {
-  trackId  BigInt @map("track_id")
-  genreId  BigInt @map("genre_id")
-  ordering Int
-  genre    Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  track    Track  @relation(fields: [trackId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([trackId, ordering])
-  @@unique([trackId, genreId])
-  @@map("track_genre")
-}
-
-model TrackMood {
-  trackId  BigInt @map("track_id")
-  moodId   BigInt @map("mood_id")
-  ordering Int
-  mood     Mood   @relation(fields: [moodId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  track    Track  @relation(fields: [trackId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@id([trackId, ordering])
-  @@unique([trackId, moodId])
-  @@map("track_mood")
-}
-
-model Version {
-  id        BigInt   @id @default(autoincrement())
-  version   String
-  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
-
-  @@map("version")
-}
-
-generator client {
-  provider = "prisma-client-js"
+model version {
+  id         BigInt   @id @default(autoincrement())
+  version    String
+  created_at DateTime @default(now()) @db.Timestamp(6)
 }
