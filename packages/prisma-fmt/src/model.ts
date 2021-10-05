@@ -1,3 +1,5 @@
+import { changeCase } from "./case";
+
 import type { Block } from "./block";
 
 export const isModel = (line: string): boolean => {
@@ -74,28 +76,9 @@ export class Model implements Block {
   }
 }
 
-class Field {
-  private name: string;
-  private type: string;
-
-  constructor(line: string) {
-    const regex = /^\s*(?<name>\w+)\s+(?<type>\w+)(?<annotations>\s+.+)?\s*$/u;
-    const match = regex.exec(line);
-    const groups = match?.groups;
-    if (!groups) {
-      throw new Error(`Expect: 'model name {'. Actual: '${line}'`);
-    }
-    this.name = groups.name;
-    this.type = groups.type;
-    const annotations = groups.annotations.trim().split(/\s+/u);
-  }
-
-  private parseRelation(annotation: string): void {}
-}
-
 class Relation {
   private name?: string;
-  private attributes: { [key: string]: any };
+  private attributes: { [key: string]: string };
 
   constructor(line: string) {
     const regex = /^@relation\((?<name>"\w+",\s+)?(?<attributes>.+)\)$/u;
@@ -107,7 +90,9 @@ class Relation {
     if (groups.name) {
       this.parseName(groups.name);
     }
+    this.attributes = {};
     const attributes = groups.attributes.trim().split(/,\s+/u);
+    attributes.forEach(this.parseAttributes);
   }
 
   private parseName(line: string): void {
@@ -117,6 +102,64 @@ class Relation {
     if (!groups) {
       throw new Error(`Expect name. Actual: '${line}'`);
     }
+    this.name = `"${changeCase(groups.name)}"`;
+  }
+
+  private parseAttributes(line: string): void {
+    const regex = /^\s*(?<key>\w+):\s+(?<value>.+)\s*$/u;
+    const match = regex.exec(line);
+    const groups = match?.groups;
+    if (!groups) {
+      throw new Error(`Expect attribute. Actual: '${line}'`);
+    }
+    const { key, value } = groups;
+    if (key !== "fields" && key !== "references") {
+      this.attributes[key] = value;
+      return;
+    }
+    const regex2 = /^\[(?<value>.+)\]$/u;
+    const match2 = regex2.exec(value);
+    const groups2 = match2?.groups;
+    if (!groups2) {
+      throw new Error(`Expect array. Actual: '${line}'`);
+    }
+    this.attributes[key] = `[${changeCase(groups2.value)}]`;
+  }
+
+  toString(): string {
+    let result = "@relation(";
+    if (!this.name) {
+      result += `${this.name}, `;
+    }
+    result += Object.entries(this.attributes)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", ");
+    result += ")";
+    return result;
+  }
+}
+
+class Field {
+  private name: string;
+  private type: string;
+  private annotations: string[];
+
+  constructor(line: string) {
+    const regex = /^\s*(?<name>\w+)\s+(?<type>\w+)(?<annotations>\s+.+)?\s*$/u;
+    const match = regex.exec(line);
+    const groups = match?.groups;
+    if (!groups) {
+      throw new Error(`Expect: 'model name {'. Actual: '${line}'`);
+    }
     this.name = groups.name;
+    this.type = groups.type;
+    const annotations = groups.annotations.trim().split(/\s+/u);
+    this.annotations = annotations.map(this.parseAnnotation);
+  }
+
+  private parseAnnotation(annotation: string): string {
+    if (annotation.startsWith("@relation")) {
+      return new Relation(annotation).toString();
+    }
   }
 }
