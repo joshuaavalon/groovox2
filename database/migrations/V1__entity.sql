@@ -8,7 +8,7 @@ CREATE TABLE version (
 );
 
 CREATE TABLE tag_category (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY,
   custom_id TEXT UNIQUE NOT NULL,
   name TEXT NOT NULL,
   description TEXT NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE tag_category (
 );
 
 CREATE TABLE tag (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY,
   custom_id TEXT UNIQUE NOT NULL,
   name TEXT NOT NULL,
   description TEXT NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE tag (
 );
 
 CREATE TABLE attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY,
   custom_id TEXT UNIQUE NOT NULL,
   name TEXT NOT NULL,
   description TEXT NOT NULL,
