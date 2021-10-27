@@ -35,7 +35,12 @@ CREATE TABLE attachment (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE UNIQUE INDEX _tag_unique ON tag (id);
+CREATE TABLE tag2 (
+  id UUID PRIMARY KEY,
+  id2 UUID UNIQUE NOT NULL,
+);
+
+CREATE UNIQUE INDEX _tag_unique ON tag2 (id, id2);
 
 -- CREATE TABLE "_TagToAttachment" (
 --     "A" UUID NOT NULL REFERENCES tag(id) ,
