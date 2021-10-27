@@ -44,16 +44,16 @@ CREATE UNIQUE INDEX "_TagToAttachment_AB_unique" ON "_TagToAttachment"("A","B");
 CREATE INDEX "_TagToAttachment_B_index" ON "_TagToAttachment"("B");
 
 CREATE TABLE "Category" (
-    id INTEGER PRIMARY KEY
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 );
 
 CREATE TABLE "Post" (
-    id INTEGER PRIMARY KEY
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 );
 
 CREATE TABLE "_CategoryToPost" (
-    "A" INTEGER NOT NULL REFERENCES "Category"(id) ,
-    "B" INTEGER NOT NULL REFERENCES "Post"(id)
+    "A" BIGINT NOT NULL REFERENCES "Category"(id) ,
+    "B" BIGINT NOT NULL REFERENCES "Post"(id)
 );
 CREATE UNIQUE INDEX "_CategoryToPost_AB_unique" ON "_CategoryToPost"("A","B");
 CREATE INDEX "_CategoryToPost_B_index" ON "_CategoryToPost"("B");
