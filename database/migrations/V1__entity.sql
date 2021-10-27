@@ -36,8 +36,8 @@ CREATE TABLE attachment (
 );
 
 CREATE TABLE "_TagToAttachment" (
-    "A" UUID NOT NULL REFERENCES "Tag"(id) ,
-    "B" UUID NOT NULL REFERENCES "Attachment"(id)
+    "A" UUID NOT NULL REFERENCES tag(id) ,
+    "B" UUID NOT NULL REFERENCES attachment(id)
 );
 
 CREATE UNIQUE INDEX "_TagToAttachment_AB_unique" ON "_TagToAttachment"("A" UUID,"B" UUID);
