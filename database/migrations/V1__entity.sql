@@ -1,4 +1,4 @@
--- CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE version (
   id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -44,16 +44,16 @@ CREATE UNIQUE INDEX "_TagToAttachment_AB_unique" ON "_TagToAttachment"("A","B");
 CREATE INDEX "_TagToAttachment_B_index" ON "_TagToAttachment"("B");
 
 CREATE TABLE "Category" (
-    id integer SERIAL PRIMARY KEY
+    id INTEGER PRIMARY KEY
 );
 
 CREATE TABLE "Post" (
-    id integer SERIAL PRIMARY KEY
+    id INTEGER PRIMARY KEY
 );
 
 CREATE TABLE "_CategoryToPost" (
-    "A" integer NOT NULL REFERENCES "Category"(id) ,
-    "B" integer NOT NULL REFERENCES "Post"(id)
+    "A" INTEGER NOT NULL REFERENCES "Category"(id) ,
+    "B" INTEGER NOT NULL REFERENCES "Post"(id)
 );
 CREATE UNIQUE INDEX "_CategoryToPost_AB_unique" ON "_CategoryToPost"("A","B");
 CREATE INDEX "_CategoryToPost_B_index" ON "_CategoryToPost"("B");
