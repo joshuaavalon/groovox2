@@ -35,13 +35,6 @@ CREATE TABLE attachment (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- CREATE TABLE tag2 (
---   id UUID PRIMARY KEY,
---   id2 UUID UNIQUE NOT NULL,
--- );
-
--- CREATE UNIQUE INDEX _tag_unique ON tag2 (id, id2);
-
 CREATE TABLE "_TagToAttachment" (
     "A" UUID NOT NULL REFERENCES tag(id) ,
     "B" UUID NOT NULL REFERENCES attachment(id)
@@ -49,3 +42,18 @@ CREATE TABLE "_TagToAttachment" (
 
 CREATE UNIQUE INDEX "_TagToAttachment_AB_unique" ON "_TagToAttachment"("A","B");
 CREATE INDEX "_TagToAttachment_B_index" ON "_TagToAttachment"("B");
+
+CREATE TABLE "Category" (
+    id integer SERIAL PRIMARY KEY
+);
+
+CREATE TABLE "Post" (
+    id integer SERIAL PRIMARY KEY
+);
+
+CREATE TABLE "_CategoryToPost" (
+    "A" integer NOT NULL REFERENCES "Category"(id) ,
+    "B" integer NOT NULL REFERENCES "Post"(id)
+);
+CREATE UNIQUE INDEX "_CategoryToPost_AB_unique" ON "_CategoryToPost"("A","B");
+CREATE INDEX "_CategoryToPost_B_index" ON "_CategoryToPost"("B");
