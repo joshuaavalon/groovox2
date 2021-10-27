@@ -35,10 +35,12 @@ CREATE TABLE attachment (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE "_TagToAttachment" (
-    "A" UUID NOT NULL REFERENCES tag(id) ,
-    "B" UUID NOT NULL REFERENCES attachment(id)
-);
+CREATE UNIQUE INDEX _tag_unique ON tag (id UUID);
 
-CREATE UNIQUE INDEX "_TagToAttachment_AB_unique" ON "_TagToAttachment"("A" UUID,"B" UUID);
-CREATE INDEX "_TagToAttachment_B_index" ON "_TagToAttachment"("B" UUID);
+-- CREATE TABLE "_TagToAttachment" (
+--     "A" UUID NOT NULL REFERENCES tag(id) ,
+--     "B" UUID NOT NULL REFERENCES attachment(id)
+-- );
+
+-- CREATE UNIQUE INDEX "_TagToAttachment_AB_unique" ON "_TagToAttachment"("A" UUID,"B" UUID);
+-- CREATE INDEX "_TagToAttachment_B_index" ON "_TagToAttachment"("B" UUID);
