@@ -9,7 +9,7 @@ jobs:
     container: node:16
     services:
       postgres:
-        image: postgres:12-alpine
+        image: postgres:12
         env:
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
