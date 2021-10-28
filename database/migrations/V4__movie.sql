@@ -7,31 +7,33 @@ CREATE TABLE movie (
   tagline TEXT UNIQUE NOT NULL,
   rating NUMERIC(3, 1),
   description TEXT NOT NULL,
+  studio_id UUID NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (studio_id) REFERENCES studio (id) ON DELETE CASCADE
 );
 
 CREATE TABLE _attachment_movie (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES attachment (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES movie (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES attachment (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES movie (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _attachment_movie_AB_unique ON _attachment_movie ("A", "B");
-CREATE INDEX _attachment_movie_B_index ON _attachment_movie ("B");
+CREATE UNIQUE INDEX _attachment_movie_ab_unique ON _attachment_movie (a, b);
+CREATE INDEX _attachment_movie_b_index ON _attachment_movie (b);
 
 CREATE TABLE _movie_tag (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES movie (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES tag (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES movie (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES tag (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _movie_tag_AB_unique ON _movie_tag ("A", "B");
-CREATE INDEX _movie_tag_B_index ON _movie_tag ("B");
+CREATE UNIQUE INDEX _movie_tag_ab_unique ON _movie_tag (a, b);
+CREATE INDEX _movie_tag_b_index ON _movie_tag (b);
 
-CREATE TABLE movie_role (
+CREATE TABLE movie_person_role (
   movie_id UUID NOT NULL,
   person_id UUID NOT NULL,
   role_id UUID NOT NULL,

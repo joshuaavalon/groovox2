@@ -7,31 +7,33 @@ CREATE TABLE show (
   tagline TEXT UNIQUE NOT NULL,
   rating NUMERIC(3, 1),
   description TEXT NOT NULL,
+  studio_id UUID NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (studio_id) REFERENCES studio (id) ON DELETE CASCADE
 );
 
 CREATE TABLE _attachment_show (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES attachment (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES show (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES attachment (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES show (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _attachment_show_AB_unique ON _attachment_show ("A", "B");
-CREATE INDEX _attachment_show_B_index ON _attachment_show ("B");
+CREATE UNIQUE INDEX _attachment_show_ab_unique ON _attachment_show (a, b);
+CREATE INDEX _attachment_show_b_index ON _attachment_show (b);
 
 CREATE TABLE _show_tag (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES show (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES tag (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES show (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES tag (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _show_tag_AB_unique ON _show_tag ("A", "B");
-CREATE INDEX _show_tag_B_index ON _show_tag ("B");
+CREATE UNIQUE INDEX _show_tag_ab_unique ON _show_tag (a, b);
+CREATE INDEX _show_tag_b_index ON _show_tag (b);
 
-CREATE TABLE show_role (
+CREATE TABLE show_person_role (
   show_id UUID NOT NULL,
   person_id UUID NOT NULL,
   role_id UUID NOT NULL,
@@ -73,14 +75,14 @@ CREATE TABLE show_season_role (
 );
 
 CREATE TABLE _attachment_show_season (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES attachment (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES show_season (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES attachment (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES show_season (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _attachment_show_season_AB_unique ON _attachment_show_season ("A", "B");
-CREATE INDEX _attachment_show_season_B_index ON _attachment_show_season ("B");
+CREATE UNIQUE INDEX _attachment_show_season_ab_unique ON _attachment_show_season (a, b);
+CREATE INDEX _attachment_show_season_b_index ON _attachment_show_season (b);
 
 CREATE TABLE episode (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -109,21 +111,21 @@ CREATE TABLE episode_role (
 );
 
 CREATE TABLE _episode_tag (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES episode (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES tag (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES episode (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES tag (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _episode_tag_AB_unique ON _episode_tag ("A", "B");
-CREATE INDEX _episode_tag_B_index ON _episode_tag ("B");
+CREATE UNIQUE INDEX _episode_tag_ab_unique ON _episode_tag (a, b);
+CREATE INDEX _episode_tag_b_index ON _episode_tag (b);
 
 CREATE TABLE _attachment_episode (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES attachment (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES episode (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES attachment (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES episode (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _attachment_episode_AB_unique ON _attachment_episode ("A", "B");
-CREATE INDEX _attachment_episode_B_index ON _attachment_episode ("B");
+CREATE UNIQUE INDEX _attachment_episode_ab_unique ON _attachment_episode (a, b);
+CREATE INDEX _attachment_episode_b_index ON _attachment_episode (b);

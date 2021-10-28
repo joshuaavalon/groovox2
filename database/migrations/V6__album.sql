@@ -10,26 +10,26 @@ CREATE TABLE album (
 );
 
 CREATE TABLE _album_attachment (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES album (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES attachment (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES album (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES attachment (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _album_attachment_AB_unique ON _album_attachment ("A", "B");
-CREATE INDEX _album_attachment_B_index ON _album_attachment ("B");
+CREATE UNIQUE INDEX _album_attachment_ab_unique ON _album_attachment (a, b);
+CREATE INDEX _album_attachment_b_index ON _album_attachment (b);
 
 CREATE TABLE _album_tag (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES album (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES tag (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES album (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES tag (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _album_tag_AB_unique ON _album_tag ("A", "B");
-CREATE INDEX _album_tag_B_index ON _album_tag ("B");
+CREATE UNIQUE INDEX _album_tag_ab_unique ON _album_tag (a, b);
+CREATE INDEX _album_tag_b_index ON _album_tag (b);
 
-CREATE TABLE album_role (
+CREATE TABLE album_person_role (
   album_id UUID NOT NULL,
   person_id UUID NOT NULL,
   role_id UUID NOT NULL,
@@ -38,6 +38,17 @@ CREATE TABLE album_role (
   FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
   FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
   PRIMARY KEY(album_id, person_id, role_id)
+);
+
+CREATE TABLE album_group_role (
+  album_id UUID NOT NULL,
+  group_id UUID NOT NULL,
+  role_id UUID NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (album_id) REFERENCES album (id) ON DELETE CASCADE,
+  FOREIGN KEY (group_id) REFERENCES group (id) ON DELETE CASCADE,
+  FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
+  PRIMARY KEY(album_id, group_id, role_id)
 );
 
 CREATE TABLE track (
@@ -53,26 +64,26 @@ CREATE TABLE track (
 );
 
 CREATE TABLE _attachment_track (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES attachment (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES track (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES attachment (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES track (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _attachment_track_AB_unique ON _attachment_track ("A", "B");
-CREATE INDEX _attachment_track_B_index ON _attachment_track ("B");
+CREATE UNIQUE INDEX _attachment_track_ab_unique ON _attachment_track (a, b);
+CREATE INDEX _attachment_track_b_index ON _attachment_track (b);
 
 CREATE TABLE _tag_track (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES tag (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES track (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES tag (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES track (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _tag_track_AB_unique ON _tag_track ("A", "B");
-CREATE INDEX _tag_track_B_index ON _tag_track ("B");
+CREATE UNIQUE INDEX _tag_track_ab_unique ON _tag_track (a, b);
+CREATE INDEX _tag_track_b_index ON _tag_track (b);
 
-CREATE TABLE track_role (
+CREATE TABLE track_person_role (
   track_id UUID NOT NULL,
   person_id UUID NOT NULL,
   role_id UUID NOT NULL,
@@ -81,4 +92,15 @@ CREATE TABLE track_role (
   FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
   FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
   PRIMARY KEY(track_id, person_id, role_id)
+);
+
+CREATE TABLE track_group_role (
+  track_id UUID NOT NULL,
+  group_id UUID NOT NULL,
+  role_id UUID NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (track_id) REFERENCES track (id) ON DELETE CASCADE,
+  FOREIGN KEY (group_id) REFERENCES group (id) ON DELETE CASCADE,
+  FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
+  PRIMARY KEY(track_id, group_id, role_id)
 );
