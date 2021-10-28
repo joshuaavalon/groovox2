@@ -41,3 +41,10 @@ CREATE TABLE movie_role (
   FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
   PRIMARY KEY(movie_id, person_id, role_id)
 );
+
+CREATE TABLE movie_alias (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  alias TEXT NOT NULL,
+  movie_id UUID NOT NULL,
+  FOREIGN KEY (movie_id) REFERENCES movie (id) ON DELETE CASCADE
+);

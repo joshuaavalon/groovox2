@@ -9,8 +9,7 @@
     "prebuild": "rimraf lib",
     "build": "tsc",
     "generate": "prisma generate",
-    "case": "ts-node script/prisma.ts",
-    "postcase": "pfmt format",
+    "case": "pfmt format",
     "introspect:raw": "prisma db pull",
     "introspect": "prisma db pull",
     "postintrospect": "npm run case"
@@ -28,7 +27,7 @@
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "dependencies": {
-    "@prisma-fmt/cli": "^1.1.0",
+    "@prisma-fmt/cli": "^1.1.1",
     "@prisma/client": "^3.1.1",
     "lodash": "^4.17.21",
     "prisma": "^3.1.1"
