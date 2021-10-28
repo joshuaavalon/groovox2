@@ -17,11 +17,11 @@ CREATE TABLE tag (
 );
 
 CREATE TABLE _attachment_tag (
-  "A" UUID NOT NULL,
-  "B" UUID NOT NULL,
-  FOREIGN KEY ("A") REFERENCES attachment (id) ON DELETE CASCADE,
-  FOREIGN KEY ("B") REFERENCES tag (id) ON DELETE CASCADE
+  a UUID NOT NULL,
+  b UUID NOT NULL,
+  FOREIGN KEY (a) REFERENCES attachment (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES tag (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _attachment_tag_AB_unique ON _attachment_tag ("A", "B");
-CREATE INDEX _attachment_tag_B_index ON _attachment_tag ("B");
+CREATE UNIQUE INDEX _attachment_tag_ab_unique ON _attachment_tag (a, b);
+CREATE INDEX _attachment_tag_b_index ON _attachment_tag (b);
