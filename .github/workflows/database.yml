@@ -37,12 +37,12 @@ jobs:
         run: npm ci
       - run: chmod -R 777 .
       - name: reset schema
-        run: cp packages/database/schema.template.prisma packages/database/schema.prisma
+        run: cp packages/plugin-database/schema.template.prisma packages/plugin-database/schema.prisma
       - name: introspect database
-        run: npm run --prefix packages/database introspect:raw
+        run: npm run --workspace @groovox/plugin-database introspect:raw
       - name: generate schema
         run: npm run generate:database
       - uses: actions/upload-artifact@v2
         with:
           name: schema.prisma
-          path: packages/database/schema.prisma
+          path: packages/plugin-database/schema.prisma

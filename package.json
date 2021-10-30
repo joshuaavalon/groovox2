@@ -5,12 +5,11 @@
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "build": "concurrently npm:build:* -m 3",
-    "build:database": "npm run --prefix packages/database build",
+    "build": "npm run --workspaces build",
     "lint": "eslint --ext .ts packages",
-    "test": "concurrently npm:build:* -m 3",
-    "introspect": "npm run --prefix packages/database introspect",
-    "generate:database": "npm run --prefix packages/database generate",
+    "test": "",
+    "introspect": "npm run --workspace @groovox/plugin-database introspect",
+    "generate:database": "npm run --workspace @groovox/plugin-database generate",
     "generate:graphql": "npm run --prefix packages/graphql generate"
   },
   "keywords": [],
@@ -30,7 +29,6 @@
   "devDependencies": {
     "@joshuaavalon/eslint-config-typescript": "^5.0.0",
     "@types/node": "^16.11.6",
-    "concurrently": "^5.3.0",
     "eslint": "^8.1.0",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",

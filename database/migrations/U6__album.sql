@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS track_group_role;
+DROP TABLE IF EXISTS track_person_role;
+DROP TABLE IF EXISTS _tag_track;
+DROP TABLE IF EXISTS _attachment_track;
+DROP TABLE IF EXISTS track;
+DROP TABLE IF EXISTS album_group_role;
+DROP TABLE IF EXISTS album_person_role;
+DROP TABLE IF EXISTS _album_tag;
+DROP TABLE IF EXISTS _album_attachment;
+DROP TABLE IF EXISTS album;

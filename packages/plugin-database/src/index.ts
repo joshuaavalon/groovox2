@@ -1,14 +1,13 @@
 import fastifyPlugin from "fastify-plugin";
-import { createDatabase } from "@groovox/database";
-
-import type { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const plugin = fastifyPlugin(
   async (fastify, _opts) => {
     if (fastify.db) {
       throw new Error("@groovox/plugin-database has already registered");
     }
-    fastify.decorate("db", createDatabase());
+    const db = new PrismaClient();
+    fastify.decorate("db", db);
   },
   {
     name: "@groovox/plugin-database",
