@@ -1,6 +1,6 @@
-import type { PrismaClient, Version } from "@prisma/client";
+import type { PrismaClient } from "@prisma/client";
 
-export const getLatest = async (db: PrismaClient): Promise<Version | null> => {
+export const getLatest = (db: PrismaClient) => async () => {
   const version = await db.version.findFirst({
     orderBy: { createdAt: "desc" }
   });

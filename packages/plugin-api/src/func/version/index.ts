@@ -6,6 +6,6 @@ export interface VersionApi {
   getLatest: ReturnType<typeof getLatest>;
 }
 
-export const createVersionApi: ApiFn<VersionApi> = async fastify => ({
+export const createVersionApi: ApiFn<VersionApi> = fastify => ({
   getLatest: getLatest(fastify.db)
 });

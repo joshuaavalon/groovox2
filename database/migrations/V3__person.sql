@@ -32,7 +32,7 @@ CREATE TABLE _person_tag (
 CREATE UNIQUE INDEX _person_tag_ab_unique ON _person_tag (a, b);
 CREATE INDEX _person_tag_b_index ON _person_tag (b);
 
-CREATE TABLE group (
+CREATE TABLE unit (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name TEXT NOT NULL,
   description TEXT NOT NULL,
@@ -40,32 +40,32 @@ CREATE TABLE group (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE _attachment_group (
+CREATE TABLE _attachment_unit (
   a UUID NOT NULL,
   b UUID NOT NULL,
   FOREIGN KEY (a) REFERENCES attachment (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES group (id) ON DELETE CASCADE
+  FOREIGN KEY (b) REFERENCES unit (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _attachment_group_ab_unique ON _attachment_group (a, b);
-CREATE INDEX _attachment_group_b_index ON _attachment_group (b);
+CREATE UNIQUE INDEX _attachment_unit_ab_unique ON _attachment_unit (a, b);
+CREATE INDEX _attachment_unit_b_index ON _attachment_unit (b);
 
-CREATE TABLE _group_tag (
+CREATE TABLE _tag_unit (
   a UUID NOT NULL,
   b UUID NOT NULL,
-  FOREIGN KEY (a) REFERENCES group (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES tag (id) ON DELETE CASCADE
+  FOREIGN KEY (a) REFERENCES tag (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES unit (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _group_tag_ab_unique ON _group_tag (a, b);
-CREATE INDEX _group_tag_b_index ON _group_tag (b);
+CREATE UNIQUE INDEX _tag_unit_ab_unique ON _tag_unit (a, b);
+CREATE INDEX _tag_unit_b_index ON _tag_unit (b);
 
-CREATE TABLE _group_person (
+CREATE TABLE _person_unit (
   a UUID NOT NULL,
   b UUID NOT NULL,
-  FOREIGN KEY (a) REFERENCES group (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES person (id) ON DELETE CASCADE
+  FOREIGN KEY (a) REFERENCES person (id) ON DELETE CASCADE,
+  FOREIGN KEY (b) REFERENCES unit (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _group_person_ab_unique ON _group_person (a, b);
-CREATE INDEX _group_person_b_index ON _group_person (b);
+CREATE UNIQUE INDEX _person_unit_ab_unique ON _person_unit (a, b);
+CREATE INDEX _person_unit_b_index ON _person_unit (b);

@@ -1,11 +1,11 @@
-import { getLatest } from "./get-latest";
+import { getById } from "./get-by-id";
 
 import type { ApiFn } from "../type";
 
-export interface VersionApi {
-  getLatest: ReturnType<typeof getLatest>;
+export interface TagApi {
+  getById: ReturnType<typeof getById>;
 }
 
-export const createVersionApi: ApiFn<VersionApi> = async fastify => ({
-  getLatest: getLatest(fastify.db)
+export const createTagApi: ApiFn<TagApi> = fastify => ({
+  getById: getById(fastify.db)
 });
