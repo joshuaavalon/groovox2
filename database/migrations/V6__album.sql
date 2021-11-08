@@ -40,15 +40,15 @@ CREATE TABLE album_person_role (
   PRIMARY KEY(album_id, person_id, role_id)
 );
 
-CREATE TABLE album_group_role (
+CREATE TABLE album_unit_role (
   album_id UUID NOT NULL,
-  group_id UUID NOT NULL,
+  unit_id UUID NOT NULL,
   role_id UUID NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (album_id) REFERENCES album (id) ON DELETE CASCADE,
-  FOREIGN KEY (group_id) REFERENCES group (id) ON DELETE CASCADE,
+  FOREIGN KEY (unit_id) REFERENCES unit (id) ON DELETE CASCADE,
   FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
-  PRIMARY KEY(album_id, group_id, role_id)
+  PRIMARY KEY(album_id, unit_id, role_id)
 );
 
 CREATE TABLE track (
@@ -94,13 +94,13 @@ CREATE TABLE track_person_role (
   PRIMARY KEY(track_id, person_id, role_id)
 );
 
-CREATE TABLE track_group_role (
+CREATE TABLE track_unit_role (
   track_id UUID NOT NULL,
-  group_id UUID NOT NULL,
+  unit_id UUID NOT NULL,
   role_id UUID NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (track_id) REFERENCES track (id) ON DELETE CASCADE,
-  FOREIGN KEY (group_id) REFERENCES group (id) ON DELETE CASCADE,
+  FOREIGN KEY (unit_id) REFERENCES unit (id) ON DELETE CASCADE,
   FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
-  PRIMARY KEY(track_id, group_id, role_id)
+  PRIMARY KEY(track_id, unit_id, role_id)
 );
