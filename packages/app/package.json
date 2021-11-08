@@ -22,6 +22,6 @@
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "dependencies": {
-    "fastify": "^3.22.0"
+    "fastify": "^3.23.1"
   }
 }

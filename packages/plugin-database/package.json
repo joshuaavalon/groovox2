@@ -28,8 +28,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@prisma-fmt/cli": "^1.1.1",
-    "@prisma/client": "^3.1.1",
+    "@prisma/client": "^3.4.1",
     "fastify-plugin": "^3.0.0",
-    "prisma": "^3.1.1"
+    "prisma": "^3.4.1"
   }
 }
