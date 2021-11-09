@@ -1,5 +1,5 @@
 {
-  "name": "@groovox/app",
+  "name": "@groovox/plugin-graphql",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -7,14 +7,15 @@
   "typings": "./src/index.ts",
   "scripts": {
     "prebuild": "rimraf lib",
-    "build": "tsc"
+    "build": "tsc",
+    "generate": "ts-node-transpile-only script/generate.ts"
   },
   "keywords": [],
   "homepage": "https://github.com/groovox/groovox#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/groovox/groovox.git",
-    "directory": "packages/app"
+    "directory": "packages/plugin-graphql"
   },
   "bugs": {
     "url": "https://github.com/groovox/groovox/issues"
@@ -22,10 +23,14 @@
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "dependencies": {
-    "@groovox/plugin-api": "^1.0.0",
-    "@groovox/plugin-core": "^1.0.0",
-    "@groovox/plugin-database": "^1.0.0",
-    "@groovox/plugin-graphql": "^1.0.0",
-    "fastify": "^3.23.1"
+    "altair-fastify-plugin": "^4.1.0",
+    "fastify-plugin": "^3.0.0",
+    "graphql-scalars": "^1.13.1",
+    "lodash": "^4.17.21",
+    "mercurius": "^8.8.0",
+    "nexus": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.176"
   }
 }

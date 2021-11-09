@@ -1,5 +1,5 @@
 {
-  "name": "@groovox/app",
+  "name": "@groovox/plugin-shutdown",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -14,7 +14,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/groovox/groovox.git",
-    "directory": "packages/app"
+    "directory": "packages/plugin-shutdown"
   },
   "bugs": {
     "url": "https://github.com/groovox/groovox/issues"
@@ -22,10 +22,6 @@
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "dependencies": {
-    "@groovox/plugin-api": "^1.0.0",
-    "@groovox/plugin-core": "^1.0.0",
-    "@groovox/plugin-database": "^1.0.0",
-    "@groovox/plugin-graphql": "^1.0.0",
-    "fastify": "^3.23.1"
+    "fastify-plugin": "^3.0.0"
   }
 }

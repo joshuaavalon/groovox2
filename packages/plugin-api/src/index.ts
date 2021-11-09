@@ -10,7 +10,7 @@ const plugin = fastifyPlugin(
     await registerLoader(fastify);
   },
   {
-    name: "@groovox/plugin-core",
+    name: "@groovox/plugin-api",
     fastify: "3.x",
     dependencies: ["@groovox/plugin-database"]
   }
