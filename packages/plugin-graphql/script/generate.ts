@@ -1,3 +1,8 @@
-import { createSchema } from "../src/schema";
+import path from "path";
 
-createSchema(true);
+import { createSchema } from "../src/create-schema";
+
+const resolveRoot = (...subPath: string[]): string =>
+  path.join(__dirname, "..", ...subPath);
+
+createSchema(resolveRoot("src", "nexus.generated.ts"));

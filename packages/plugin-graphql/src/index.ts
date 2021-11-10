@@ -2,9 +2,11 @@ import fastifyPlugin from "fastify-plugin";
 import mercurius from "mercurius";
 import altairFastifyPlugin from "altair-fastify-plugin";
 
-import { createSchema } from "./schema";
+import { createSchema } from "./create-schema";
 
 import type {} from "@groovox/plugin-api";
+
+export type { nexus } from "./create-schema";
 
 const plugin = fastifyPlugin(
   async (fastify, _opts) => {

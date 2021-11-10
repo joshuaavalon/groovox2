@@ -1,3 +1,4 @@
+root: true
 extends:
   - "@joshuaavalon/eslint-config-typescript"
 env:

@@ -1,13 +1,14 @@
 import fastifyPlugin from "fastify-plugin";
+
 import { registerApi } from "./func";
-import { registerLoader } from "./loader";
+import { apiUtil } from "./util";
 
 import type {} from "@groovox/plugin-database";
 
 const plugin = fastifyPlugin(
   async (fastify, _opts) => {
     await registerApi(fastify);
-    await registerLoader(fastify);
+    fastify.decorate("apiUtil", apiUtil);
   },
   {
     name: "@groovox/plugin-api",
@@ -21,9 +22,8 @@ export default plugin;
 declare module "fastify" {
   interface FastifyInstance {
     api: GroovoxApi;
-    loader: GroovoxLoader;
+    apiUtil: typeof apiUtil;
   }
 
   interface GroovoxApi {}
-  interface GroovoxLoader {}
 }
