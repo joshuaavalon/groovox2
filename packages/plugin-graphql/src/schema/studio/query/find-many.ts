@@ -1,24 +1,4 @@
-import { arg, inputObjectType, list, nullable, queryField } from "nexus";
-
-export const findManyInput = inputObjectType({
-  name: "StudioFindManyInput",
-  definition(t) {
-    t.nullable.field("id", { type: "UUIDFilter" });
-    t.nullable.field("name", { type: "StringFilter" });
-    t.nullable.field("createdAt", { type: "DateTimeFilter" });
-    t.nullable.field("updatedAt", { type: "DateTimeFilter" });
-  }
-});
-
-export const OrderByInput = inputObjectType({
-  name: "StudioOrderByInput",
-  definition(t) {
-    t.nullable.field("id", { type: "SortOrder" });
-    t.nullable.field("name", { type: "SortOrder" });
-    t.nullable.field("createdAt", { type: "SortOrder" });
-    t.nullable.field("updatedAt", { type: "SortOrder" });
-  }
-});
+import { arg, list, nullable, queryField } from "nexus";
 
 export const findMany = queryField("studios", {
   type: list("Studio"),
@@ -28,15 +8,11 @@ export const findMany = queryField("studios", {
     orderBy: nullable(list(arg({ type: "StudioOrderByInput" })))
   },
   resolve: async (_root, args, ctx) => {
-    const { pagination, orderBy, where } = args;
-    const { methods, plugins } = ctx.server;
-    const plugin = plugins["@groovox/plugin-graphql"];
-    const context = plugin.mapGraphqlContext(ctx);
-    return methods.findStudios(
-      plugin.transformStudioFindManyInput(where),
-      plugin.compactArray(orderBy),
-      plugin.normalizePagination(pagination),
-      context
-    );
+    const { graphqlUtil, db } = ctx.fastify;
+    const { transform } = graphqlUtil;
+    const pagination = transform.input.pagination(args.pagination);
+    const orderBy = transform.studio.input.orderBy(args.orderBy);
+    const where = transform.studio.input.findMany(args.where);
+    return db.studio.findMany({ where, orderBy, ...pagination });
   }
 });

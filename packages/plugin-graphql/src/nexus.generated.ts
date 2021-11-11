@@ -91,10 +91,17 @@ export interface NexusGenInputs {
     notIn?: string[] | null; // [String!]
     startWith?: string | null; // String
   }
+  StudioCreateOneInput: { // input type
+    description: string; // String!
+    name: string; // String!
+  }
   StudioFindManyInput: { // input type
+    and?: Array<NexusGenInputs['StudioFindManyInput'] | null> | null; // [StudioFindManyInput]
     createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     id?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    not?: Array<NexusGenInputs['StudioFindManyInput'] | null> | null; // [StudioFindManyInput]
+    or?: Array<NexusGenInputs['StudioFindManyInput'] | null> | null; // [StudioFindManyInput]
     updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
   }
   StudioFindOneInput: { // input type
@@ -105,6 +112,10 @@ export interface NexusGenInputs {
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
     updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
+  StudioUpdateOneInput: { // input type
+    description?: string | null; // String
+    name?: string | null; // String
   }
   UUIDFilter: { // input type
     equal?: string | null; // String
@@ -132,6 +143,10 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  AffectedRowsOutput: { // root type
+    count: number; // Int!
+  }
+  Mutation: {};
   Query: {};
   Studio: Studio;
 }
@@ -147,6 +162,14 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  AffectedRowsOutput: { // field return type
+    count: number; // Int!
+  }
+  Mutation: { // field return type
+    createStudio: NexusGenRootTypes['Studio']; // Studio!
+    removeStudios: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
+    updateStudio: NexusGenRootTypes['Studio']; // Studio!
+  }
   Query: { // field return type
     studio: NexusGenRootTypes['Studio'] | null; // Studio
     studios: NexusGenRootTypes['Studio'][]; // [Studio!]!
@@ -162,6 +185,14 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  AffectedRowsOutput: { // field return type name
+    count: 'Int'
+  }
+  Mutation: { // field return type name
+    createStudio: 'Studio'
+    removeStudios: 'AffectedRowsOutput'
+    updateStudio: 'Studio'
+  }
   Query: { // field return type name
     studio: 'Studio'
     studios: 'Studio'
@@ -177,6 +208,18 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    createStudio: { // args
+      data: NexusGenInputs['StudioCreateOneInput']; // StudioCreateOneInput!
+    }
+    removeStudios: { // args
+      where: NexusGenInputs['StudioFindManyInput']; // StudioFindManyInput!
+    }
+    updateStudio: { // args
+      data: NexusGenInputs['StudioUpdateOneInput']; // StudioUpdateOneInput!
+      where: NexusGenInputs['StudioFindOneInput']; // StudioFindOneInput!
+    }
+  }
   Query: {
     studio: { // args
       where: NexusGenInputs['StudioFindOneInput']; // StudioFindOneInput!

@@ -1,11 +1,4 @@
-import { arg, inputObjectType, nullable, queryField } from "nexus";
-
-export const findOneInput = inputObjectType({
-  name: "StudioFindOneInput",
-  definition(t) {
-    t.uuid("id");
-  }
-});
+import { arg, nullable, queryField } from "nexus";
 
 export const findOne = queryField("studio", {
   type: nullable("Studio"),
@@ -13,8 +6,9 @@ export const findOne = queryField("studio", {
     where: arg({ type: "StudioFindOneInput" })
   },
   resolve: async (_root, args, ctx) => {
-    const { where } = args;
-    const { db } = ctx.fastify;
+    const { db, graphqlUtil } = ctx.fastify;
+    const { transform } = graphqlUtil;
+    const where = transform.studio.input.findOne(args.where);
     return await db.studio.findUnique({ where });
   }
 });

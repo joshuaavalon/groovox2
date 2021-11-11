@@ -3,6 +3,7 @@ import mercurius from "mercurius";
 import altairFastifyPlugin from "altair-fastify-plugin";
 
 import { createSchema } from "./create-schema";
+import { graphqlUtil } from "./util";
 
 import type {} from "@groovox/plugin-api";
 
@@ -23,6 +24,7 @@ const plugin = fastifyPlugin(
       })
     });
     fastify.register(altairFastifyPlugin);
+    fastify.decorate("graphqlUtil", graphqlUtil);
   },
   {
     name: "@groovox/plugin-graphql",
@@ -32,3 +34,9 @@ const plugin = fastifyPlugin(
 );
 
 export default plugin;
+
+declare module "fastify" {
+  interface FastifyInstance {
+    graphqlUtil: typeof graphqlUtil;
+  }
+}
