@@ -7,9 +7,9 @@ type Input = NexusGenInputs["UUIDFilter"];
 
 type Output = Prisma.StringFilter;
 
-export const uuid = (input?: Input | null): Output => {
+export const uuid = (input?: Input | null): Output | undefined => {
   if (_.isNil(input)) {
-    return {};
+    return undefined;
   }
   return {
     equals: input.equal ?? undefined,

@@ -9,12 +9,13 @@ type Output = {
   take?: number;
 };
 
-export const pagination = (input?: Input | null): Output => {
+export const pagination = (input?: Input | null): Output | undefined => {
   if (_.isNil(input)) {
-    return {};
+    return undefined;
   }
-  return {
+  const result = {
     skip: input.skip ?? undefined,
     take: input.take ?? undefined
   };
+  return _.omitBy(result, _.isUndefined);
 };

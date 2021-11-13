@@ -9,21 +9,22 @@ type Output = Prisma.StudioOrderByWithRelationInput[];
 
 const mapValue = (
   input?: NexusGenInputs["StudioOrderByInput"] | null
-): Prisma.StudioOrderByWithRelationInput => {
+): Prisma.StudioOrderByWithRelationInput | undefined => {
   if (_.isNil(input)) {
-    return {};
+    return undefined;
   }
-  return {
+  const result = {
     id: input.id ?? undefined,
     name: input.name ?? undefined,
     createdAt: input.createdAt ?? undefined,
     updatedAt: input.updatedAt ?? undefined
   };
+  return _.omitBy(result, _.isUndefined);
 };
 
-export const orderBy = (input?: Input | null): Output => {
+export const orderBy = (input?: Input | null): Output | undefined => {
   if (_.isNil(input)) {
-    return [];
+    return undefined;
   }
-  return input.map(mapValue);
+  return _.compact(input.map(mapValue));
 };

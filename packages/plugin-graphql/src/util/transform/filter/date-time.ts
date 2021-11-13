@@ -7,11 +7,11 @@ type Input = NexusGenInputs["DateTimeFilter"];
 
 type Output = Prisma.DateTimeFilter;
 
-export const dataTime = (input?: Input | null): Output => {
+export const dataTime = (input?: Input | null): Output | undefined => {
   if (_.isNil(input)) {
-    return {};
+    return undefined;
   }
-  return {
+  const result = {
     equals: input.equal ?? undefined,
     in: input.in ?? undefined,
     notIn: input.notIn ?? undefined,
@@ -21,4 +21,5 @@ export const dataTime = (input?: Input | null): Output => {
     gte: input.gte ?? undefined,
     not: dataTime(input.not)
   };
+  return _.omitBy(result, _.isUndefined);
 };

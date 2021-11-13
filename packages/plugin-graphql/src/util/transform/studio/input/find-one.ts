@@ -11,7 +11,8 @@ export const findOne = (input?: Input | null): Output => {
   if (_.isNil(input)) {
     return {};
   }
-  return {
+  const result = {
     id: input.id ?? undefined
   };
+  return _.omitBy(result, _.isUndefined);
 };

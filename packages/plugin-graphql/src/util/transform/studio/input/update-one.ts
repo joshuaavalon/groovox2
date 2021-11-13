@@ -11,8 +11,9 @@ export const updateOne = (input: Input): Output => {
   if (_.isNil(input)) {
     return {};
   }
-  return {
+  const result = {
     name: input.name ?? undefined,
     description: input.description ?? undefined
   };
+  return _.omitBy(result, _.isUndefined);
 };

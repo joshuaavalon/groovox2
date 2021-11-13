@@ -78,6 +78,16 @@ export interface NexusGenInputs {
     not?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
   }
+  DecimalFilter: { // input type
+    equal?: NexusGenScalars['Decimal'] | null; // Decimal
+    gt?: NexusGenScalars['Decimal'] | null; // Decimal
+    gte?: NexusGenScalars['Decimal'] | null; // Decimal
+    in?: NexusGenScalars['Decimal'][] | null; // [Decimal!]
+    lt?: NexusGenScalars['Decimal'] | null; // Decimal
+    lte?: NexusGenScalars['Decimal'] | null; // Decimal
+    not?: NexusGenInputs['DecimalFilter'] | null; // DecimalFilter
+    notIn?: NexusGenScalars['Decimal'][] | null; // [Decimal!]
+  }
   Pagination: { // input type
     skip?: number | null; // Int
     take?: number | null; // Int

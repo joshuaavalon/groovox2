@@ -7,11 +7,11 @@ type Input = NexusGenInputs["StringFilter"];
 
 type Output = Prisma.StringFilter;
 
-export const string = (input?: Input | null): Output => {
+export const string = (input?: Input | null): Output | undefined => {
   if (_.isNil(input)) {
-    return {};
+    return undefined;
   }
-  return {
+  const result = {
     contains: input.contain ?? undefined,
     endsWith: input.endWith ?? undefined,
     equals: input.equal ?? undefined,
@@ -20,4 +20,5 @@ export const string = (input?: Input | null): Output => {
     not: string(input.not),
     startsWith: input.startWith ?? undefined
   };
+  return _.omitBy(result, _.isUndefined);
 };
