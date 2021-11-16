@@ -66,7 +66,7 @@ declare global {
 export interface NexusGenInputs {
   AttachmentCreateOneInput: { // input type
     description: string; // String!
-    id: NexusGenScalars['UUID']; // UUID!
+    fileId: NexusGenScalars['UUID']; // UUID!
     tagId?: NexusGenScalars['UUID'] | null; // UUID
   }
   AttachmentFindManyInput: { // input type
@@ -337,6 +337,7 @@ export interface NexusGenFieldTypes {
   }
   Tag: { // field return type
     _id: string; // ID!
+    attachments: NexusGenRootTypes['Attachment'][]; // [Attachment!]!
     category: NexusGenRootTypes['TagCategory']; // TagCategory!
     categoryId: NexusGenScalars['UUID']; // UUID!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
@@ -411,6 +412,7 @@ export interface NexusGenFieldTypeNames {
   }
   Tag: { // field return type name
     _id: 'ID'
+    attachments: 'Attachment'
     category: 'TagCategory'
     categoryId: 'UUID'
     createdAt: 'DateTime'

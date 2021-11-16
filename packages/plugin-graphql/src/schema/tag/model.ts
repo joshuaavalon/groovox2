@@ -24,6 +24,15 @@ const tag = objectType({
         });
       }
     });
+    t.nonNull.list.nonNull.field("attachments", {
+      type: "Attachment",
+      resolve: (tag, _args, ctx) => {
+        const { db } = ctx.fastify;
+        return db.attachment.findMany({
+          where: { tag: { every: { id: tag.id } } }
+        });
+      }
+    });
   }
 });
 
