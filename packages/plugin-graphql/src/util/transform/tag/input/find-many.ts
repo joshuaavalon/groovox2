@@ -15,6 +15,7 @@ export const findMany = (input?: Input | null): Output | undefined => {
   const result = {
     id: filter.uuid(input.id),
     name: filter.string(input.name),
+    description: filter.string(input.description),
     categoryId: filter.uuid(input.categoryId),
     createdAt: filter.dataTime(input.createdAt),
     updatedAt: filter.dataTime(input.updatedAt),

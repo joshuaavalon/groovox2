@@ -4,9 +4,9 @@ import { filter } from "../../filter";
 import type { Prisma } from "@prisma/client";
 import type { NexusGenInputs } from "../../../../nexus.generated";
 
-type Input = NexusGenInputs["RoleFindManyInput"];
+type Input = NexusGenInputs["AttachmentFindManyInput"];
 
-type Output = Prisma.RoleWhereInput;
+type Output = Prisma.AttachmentWhereInput;
 
 export const findMany = (input?: Input | null): Output | undefined => {
   if (_.isNil(input)) {
@@ -14,10 +14,8 @@ export const findMany = (input?: Input | null): Output | undefined => {
   }
   const result = {
     id: filter.uuid(input.id),
-    name: filter.string(input.name),
     description: filter.string(input.description),
     createdAt: filter.dataTime(input.createdAt),
-    updatedAt: filter.dataTime(input.updatedAt),
     AND: input.and?.map(i => findMany(i)),
     OR: input.or?.map(i => findMany(i)),
     NOT: input.not?.map(i => findMany(i))
