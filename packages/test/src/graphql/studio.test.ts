@@ -85,7 +85,7 @@ describe("plugin-graphql", () => {
     test("remove studios", async () => {
       const value = { name: { startWith: "Studio" } };
       const { data, errors } = await enquiry(server, removeStudiosQuery, {
-        data: value
+        where: value
       });
       expect(errors).toBeUndefined();
       expect(data?.removeStudios).toBeDefined();
@@ -95,7 +95,7 @@ describe("plugin-graphql", () => {
         server,
         findStudiosQuery,
         {
-          data: value
+          where: value
         }
       );
       expect(errors2).toBeUndefined();
