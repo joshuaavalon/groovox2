@@ -3,6 +3,7 @@ import inputTypes from "./input";
 import outputTypes from "./output";
 import roleTypes from "./role";
 import studioTypes from "./studio";
+import tagTypes from "./tag";
 import tagCategoryTypes from "./tag-category";
 
 const types = [
@@ -11,6 +12,7 @@ const types = [
   ...outputTypes,
   ...roleTypes,
   ...studioTypes,
+  ...tagTypes,
   ...tagCategoryTypes
 ];
 
