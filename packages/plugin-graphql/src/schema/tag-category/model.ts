@@ -1,10 +1,10 @@
 import { objectType } from "nexus";
 
-const studio = objectType({
-  name: "Studio",
+const tagCategory = objectType({
+  name: "TagCategory",
   sourceType: {
     module: "@prisma/client",
-    export: "Studio"
+    export: "TagCategory"
   },
   definition(t) {
     t.id("_id", { resolve: root => root.id });
@@ -16,4 +16,4 @@ const studio = objectType({
   }
 });
 
-export const models = [studio];
+export const models = [tagCategory];

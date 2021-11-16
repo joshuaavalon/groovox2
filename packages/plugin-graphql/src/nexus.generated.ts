@@ -5,7 +5,7 @@
 
 
 import type { GraphqlContext } from "./context"
-import type { Studio } from "@prisma/client"
+import type { Role, Studio, TagCategory } from "@prisma/client"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { QueryComplexity } from "nexus/dist/plugins/queryComplexityPlugin"
 import type { core } from "nexus"
@@ -92,6 +92,32 @@ export interface NexusGenInputs {
     skip?: number | null; // Int
     take?: number | null; // Int
   }
+  RoleCreateOneInput: { // input type
+    description: string; // String!
+    name: string; // String!
+  }
+  RoleFindManyInput: { // input type
+    and?: Array<NexusGenInputs['RoleFindManyInput'] | null> | null; // [RoleFindManyInput]
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    id?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    not?: Array<NexusGenInputs['RoleFindManyInput'] | null> | null; // [RoleFindManyInput]
+    or?: Array<NexusGenInputs['RoleFindManyInput'] | null> | null; // [RoleFindManyInput]
+    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+  }
+  RoleFindOneInput: { // input type
+    id: NexusGenScalars['UUID']; // UUID!
+  }
+  RoleOrderByInput: { // input type
+    createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    id?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    name?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
+  RoleUpdateOneInput: { // input type
+    description?: string | null; // String
+    name?: string | null; // String
+  }
   StringFilter: { // input type
     contain?: string | null; // String
     endWith?: string | null; // String
@@ -127,6 +153,32 @@ export interface NexusGenInputs {
     description?: string | null; // String
     name?: string | null; // String
   }
+  TagCategoryCreateOneInput: { // input type
+    description: string; // String!
+    name: string; // String!
+  }
+  TagCategoryFindManyInput: { // input type
+    and?: Array<NexusGenInputs['TagCategoryFindManyInput'] | null> | null; // [TagCategoryFindManyInput]
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    id?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    not?: Array<NexusGenInputs['TagCategoryFindManyInput'] | null> | null; // [TagCategoryFindManyInput]
+    or?: Array<NexusGenInputs['TagCategoryFindManyInput'] | null> | null; // [TagCategoryFindManyInput]
+    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+  }
+  TagCategoryFindOneInput: { // input type
+    id: NexusGenScalars['UUID']; // UUID!
+  }
+  TagCategoryOrderByInput: { // input type
+    createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    id?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    name?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
+  TagCategoryUpdateOneInput: { // input type
+    description?: string | null; // String
+    name?: string | null; // String
+  }
   UUIDFilter: { // input type
     equal?: string | null; // String
     in?: string[] | null; // [String!]
@@ -158,7 +210,9 @@ export interface NexusGenObjects {
   }
   Mutation: {};
   Query: {};
+  Role: Role;
   Studio: Studio;
+  TagCategory: TagCategory;
 }
 
 export interface NexusGenInterfaces {
@@ -176,15 +230,41 @@ export interface NexusGenFieldTypes {
     count: number; // Int!
   }
   Mutation: { // field return type
+    createRole: NexusGenRootTypes['Role']; // Role!
     createStudio: NexusGenRootTypes['Studio']; // Studio!
+    createTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
+    removeRoles: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeStudios: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
+    removeTagCategories: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
+    updateRole: NexusGenRootTypes['Role']; // Role!
     updateStudio: NexusGenRootTypes['Studio']; // Studio!
+    updateTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
   }
   Query: { // field return type
+    role: NexusGenRootTypes['Role'] | null; // Role
+    roles: NexusGenRootTypes['Role'][]; // [Role!]!
     studio: NexusGenRootTypes['Studio'] | null; // Studio
     studios: NexusGenRootTypes['Studio'][]; // [Studio!]!
+    tagCategories: NexusGenRootTypes['TagCategory'][]; // [TagCategory!]!
+    tagCategory: NexusGenRootTypes['TagCategory'] | null; // TagCategory
+  }
+  Role: { // field return type
+    _id: string; // ID!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    description: string; // String!
+    id: NexusGenScalars['UUID']; // UUID!
+    name: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Studio: { // field return type
+    _id: string; // ID!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    description: string; // String!
+    id: NexusGenScalars['UUID']; // UUID!
+    name: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
+  TagCategory: { // field return type
     _id: string; // ID!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     description: string; // String!
@@ -199,15 +279,41 @@ export interface NexusGenFieldTypeNames {
     count: 'Int'
   }
   Mutation: { // field return type name
+    createRole: 'Role'
     createStudio: 'Studio'
+    createTagCategory: 'TagCategory'
+    removeRoles: 'AffectedRowsOutput'
     removeStudios: 'AffectedRowsOutput'
+    removeTagCategories: 'AffectedRowsOutput'
+    updateRole: 'Role'
     updateStudio: 'Studio'
+    updateTagCategory: 'TagCategory'
   }
   Query: { // field return type name
+    role: 'Role'
+    roles: 'Role'
     studio: 'Studio'
     studios: 'Studio'
+    tagCategories: 'TagCategory'
+    tagCategory: 'TagCategory'
+  }
+  Role: { // field return type name
+    _id: 'ID'
+    createdAt: 'DateTime'
+    description: 'String'
+    id: 'UUID'
+    name: 'String'
+    updatedAt: 'DateTime'
   }
   Studio: { // field return type name
+    _id: 'ID'
+    createdAt: 'DateTime'
+    description: 'String'
+    id: 'UUID'
+    name: 'String'
+    updatedAt: 'DateTime'
+  }
+  TagCategory: { // field return type name
     _id: 'ID'
     createdAt: 'DateTime'
     description: 'String'
@@ -219,18 +325,46 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    createRole: { // args
+      data: NexusGenInputs['RoleCreateOneInput']; // RoleCreateOneInput!
+    }
     createStudio: { // args
       data: NexusGenInputs['StudioCreateOneInput']; // StudioCreateOneInput!
     }
+    createTagCategory: { // args
+      data: NexusGenInputs['TagCategoryCreateOneInput']; // TagCategoryCreateOneInput!
+    }
+    removeRoles: { // args
+      where: NexusGenInputs['RoleFindManyInput']; // RoleFindManyInput!
+    }
     removeStudios: { // args
       where: NexusGenInputs['StudioFindManyInput']; // StudioFindManyInput!
+    }
+    removeTagCategories: { // args
+      where: NexusGenInputs['TagCategoryFindManyInput']; // TagCategoryFindManyInput!
+    }
+    updateRole: { // args
+      data: NexusGenInputs['RoleUpdateOneInput']; // RoleUpdateOneInput!
+      where: NexusGenInputs['RoleFindOneInput']; // RoleFindOneInput!
     }
     updateStudio: { // args
       data: NexusGenInputs['StudioUpdateOneInput']; // StudioUpdateOneInput!
       where: NexusGenInputs['StudioFindOneInput']; // StudioFindOneInput!
     }
+    updateTagCategory: { // args
+      data: NexusGenInputs['TagCategoryUpdateOneInput']; // TagCategoryUpdateOneInput!
+      where: NexusGenInputs['TagCategoryFindOneInput']; // TagCategoryFindOneInput!
+    }
   }
   Query: {
+    role: { // args
+      where: NexusGenInputs['RoleFindOneInput']; // RoleFindOneInput!
+    }
+    roles: { // args
+      orderBy?: NexusGenInputs['RoleOrderByInput'][] | null; // [RoleOrderByInput!]
+      pagination?: NexusGenInputs['Pagination'] | null; // Pagination
+      where?: NexusGenInputs['RoleFindManyInput'] | null; // RoleFindManyInput
+    }
     studio: { // args
       where: NexusGenInputs['StudioFindOneInput']; // StudioFindOneInput!
     }
@@ -238,6 +372,14 @@ export interface NexusGenArgTypes {
       orderBy?: NexusGenInputs['StudioOrderByInput'][] | null; // [StudioOrderByInput!]
       pagination?: NexusGenInputs['Pagination'] | null; // Pagination
       where?: NexusGenInputs['StudioFindManyInput'] | null; // StudioFindManyInput
+    }
+    tagCategories: { // args
+      orderBy?: NexusGenInputs['TagCategoryOrderByInput'][] | null; // [TagCategoryOrderByInput!]
+      pagination?: NexusGenInputs['Pagination'] | null; // Pagination
+      where?: NexusGenInputs['TagCategoryFindManyInput'] | null; // TagCategoryFindManyInput
+    }
+    tagCategory: { // args
+      where: NexusGenInputs['TagCategoryFindOneInput']; // TagCategoryFindOneInput!
     }
   }
 }
