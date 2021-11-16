@@ -14,8 +14,8 @@ const createStudioQuery = gql`
 `;
 
 const findStudioQuery = gql`
-  query studio($data: StudioFindOneInput!) {
-    studio(data: $data) {
+  query studio($where: StudioFindOneInput!) {
+    studio(where: $where) {
       id
       name
     }
@@ -23,8 +23,8 @@ const findStudioQuery = gql`
 `;
 
 const findStudiosQuery = gql`
-  query studios($data: StudioFindManyInput!) {
-    studios(data: $data) {
+  query studios($where: StudioFindManyInput!) {
+    studios(where: $where) {
       id
       name
     }
@@ -50,9 +50,8 @@ describe("plugin-graphql", () => {
     });
 
     test("create one studio", async () => {
-      const value = { name };
       const { data, errors } = await enquiry(server, createStudioQuery, {
-        data: value
+        data: { name }
       });
       expect(errors).toBeUndefined();
       expect(data?.createStudio).toBeDefined();
@@ -62,9 +61,8 @@ describe("plugin-graphql", () => {
     });
 
     test("find studio", async () => {
-      const value = { id: studioId };
       const { data, errors } = await enquiry(server, findStudioQuery, {
-        data: value
+        where: { id: studioId }
       });
       expect(errors).toBeUndefined();
       expect(data?.studio).toBeDefined();
@@ -73,9 +71,8 @@ describe("plugin-graphql", () => {
     });
 
     test("find studios", async () => {
-      const value = { name: { startWith: "Studio" } };
       const { data, errors } = await enquiry(server, findStudiosQuery, {
-        data: value
+        where: { name: { startWith: "Studio" } }
       });
       expect(errors).toBeUndefined();
       expect(data?.studios).toBeDefined();
