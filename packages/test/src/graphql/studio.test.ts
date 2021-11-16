@@ -5,7 +5,7 @@ import { enquiry, gql } from "./util";
 import type { FastifyInstance } from "fastify";
 
 describe("plugin-graphql", () => {
-  describe("studio", async () => {
+  describe("studio", () => {
     let server: FastifyInstance;
 
     beforeAll(async () => {
