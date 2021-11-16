@@ -18,7 +18,5 @@ export const enquiry = async (
       variables
     }
   });
-  const json = res.json();
-  console.log({ json });
-  return json?.data;
+  return res.json();
 };

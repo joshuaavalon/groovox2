@@ -23,7 +23,8 @@ describe("plugin-graphql", () => {
       `;
       const name = "Studio 1";
       const value = { name };
-      const data = await enquiry(server, query, { data: value });
+      const { data, errors } = await enquiry(server, query, { data: value });
+      expect(errors).toBeUndefined();
       expect(data?.createStudio?.id).toBeDefined();
       expect(data?.createStudio?.name).toBe(name);
     });
