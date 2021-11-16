@@ -7,7 +7,7 @@
     "start": "node index.js",
     "build": "npm run --workspaces build",
     "lint": "eslint --ext .ts packages",
-    "test": "",
+    "test": "jest --ci --coverage",
     "introspect": "npm run --workspace @groovox/plugin-database introspect",
     "generate:database": "npm run --workspace @groovox/plugin-database generate",
     "generate:graphql": "npm run --workspace @groovox/plugin-graphql generate"
@@ -28,9 +28,11 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@joshuaavalon/eslint-config-typescript": "^5.0.0",
+    "@types/jest": "^27.0.2",
     "@types/node": "^16.11.6",
     "dotenv": "^10.0.0",
     "eslint": "^8.2.0",
+    "jest": "^27.3.1",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",

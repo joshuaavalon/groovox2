@@ -1,6 +1,6 @@
 import fastifyPlugin from "fastify-plugin";
 import mercurius from "mercurius";
-import altairFastifyPlugin from "altair-fastify-plugin";
+import altairPlugin from "@groovox/plugin-altair";
 
 import { createSchema } from "./create-schema";
 import { graphqlUtil } from "./util";
@@ -11,7 +11,6 @@ export type { nexus } from "./create-schema";
 
 const plugin = fastifyPlugin(
   async (fastify, _opts) => {
-    // altair-fastify-plugin
     const schema = createSchema();
     fastify.register(mercurius, {
       schema,
@@ -23,7 +22,7 @@ const plugin = fastifyPlugin(
         reply
       })
     });
-    fastify.register(altairFastifyPlugin);
+    fastify.register(altairPlugin);
     fastify.decorate("graphqlUtil", graphqlUtil);
   },
   {

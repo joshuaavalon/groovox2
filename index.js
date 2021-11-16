@@ -1,5 +1,6 @@
 require("dotenv").config();
 
-const { main } = require("@groovox/app");
+const { createApp } = require("@groovox/app");
 
-main();
+const server = createApp();
+server.listen(3000);
