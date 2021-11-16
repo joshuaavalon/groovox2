@@ -32,8 +32,8 @@ const findStudiosQuery = gql`
 `;
 
 const removeStudiosQuery = gql`
-  mutation removeStudios($data: StudioFindManyInput!) {
-    removeStudios(data: $data) {
+  mutation removeStudios($where: StudioFindManyInput!) {
+    removeStudios(where: $where) {
       count
     }
   }
