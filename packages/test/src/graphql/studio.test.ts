@@ -89,7 +89,7 @@ describe("plugin-graphql", () => {
       });
       expect(errors).toBeUndefined();
       expect(data?.removeStudios).toBeDefined();
-      expect(data.studios.count).toBe(1);
+      expect(data.removeStudios.count).toBe(1);
 
       const { data: data2, errors: errors2 } = await enquiry(
         server,
