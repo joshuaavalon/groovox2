@@ -2,9 +2,16 @@ import { createApp } from "@groovox/app";
 
 import { enquiry, gql } from "./util";
 
+import type { FastifyInstance } from "fastify";
+
 describe("plugin-graphql", () => {
   describe("studio", async () => {
-    const server = await createApp();
+    let server: FastifyInstance;
+
+    beforeAll(async () => {
+      server = await createApp();
+    });
+
     test("create-one", async () => {
       const query = gql`
         query createStudio($data: StudioCreateOneInput!) {
