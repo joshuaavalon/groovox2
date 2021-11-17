@@ -7,7 +7,7 @@ const tag = objectType({
     export: "Tag"
   },
   definition(t) {
-    t.id("_id", { resolve: root => root.id });
+    t.id("_id", { resolve: root => `tag:${root.id}` });
     t.uuid("id");
     t.string("name");
     t.string("description");

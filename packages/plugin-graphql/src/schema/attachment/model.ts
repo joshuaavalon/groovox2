@@ -7,7 +7,7 @@ const attachment = objectType({
     export: "Attachment"
   },
   definition(t) {
-    t.id("_id", { resolve: root => root.id });
+    t.id("_id", { resolve: root => `attachment:${root.id}` });
     t.uuid("id");
     t.string("description");
     t.dateTime("createdAt");

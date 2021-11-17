@@ -7,7 +7,7 @@ const role = objectType({
     export: "Role"
   },
   definition(t) {
-    t.id("_id", { resolve: root => root.id });
+    t.id("_id", { resolve: root => `role:${root.id}` });
     t.uuid("id");
     t.string("name");
     t.string("description");

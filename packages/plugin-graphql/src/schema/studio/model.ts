@@ -7,7 +7,7 @@ const studio = objectType({
     export: "Studio"
   },
   definition(t) {
-    t.id("_id", { resolve: root => root.id });
+    t.id("_id", { resolve: root => `studio:${root.id}` });
     t.uuid("id");
     t.string("name");
     t.string("description");

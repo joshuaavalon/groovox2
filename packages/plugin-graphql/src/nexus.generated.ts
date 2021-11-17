@@ -5,7 +5,7 @@
 
 
 import type { GraphqlContext } from "./context"
-import type { Attachment, Role, Studio, Tag, TagCategory } from "@prisma/client"
+import type { Attachment, Person, Role, Studio, Tag, TagCategory } from "@prisma/client"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { QueryComplexity } from "nexus/dist/plugins/queryComplexityPlugin"
 import type { core } from "nexus"
@@ -88,6 +88,16 @@ export interface NexusGenInputs {
     equal?: boolean | null; // Boolean
     not?: NexusGenInputs['BooleanFilter'] | null; // BooleanFilter
   }
+  DateNullableFilter: { // input type
+    equal?: NexusGenScalars['Date'] | null; // Date
+    gt?: NexusGenScalars['Date'] | null; // Date
+    gte?: NexusGenScalars['Date'] | null; // Date
+    in?: NexusGenScalars['Date'][] | null; // [Date!]
+    lt?: NexusGenScalars['Date'] | null; // Date
+    lte?: NexusGenScalars['Date'] | null; // Date
+    not?: NexusGenInputs['DateNullableFilter'] | null; // DateNullableFilter
+    notIn?: NexusGenScalars['Date'][] | null; // [Date!]
+  }
   DateTimeFilter: { // input type
     equal?: NexusGenScalars['DateTime'] | null; // DateTime
     gt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -111,6 +121,57 @@ export interface NexusGenInputs {
   Pagination: { // input type
     skip?: number | null; // Int
     take?: number | null; // Int
+  }
+  PersonCreateOneInput: { // input type
+    birthDate?: NexusGenScalars['Date'] | null; // Date
+    deathDate?: NexusGenScalars['Date'] | null; // Date
+    description: string; // String!
+    nameFirst: string; // String!
+    nameLast: string; // String!
+    nameMiddle: string; // String!
+    nameSort: string; // String!
+    sex: string; // String!
+  }
+  PersonFindManyInput: { // input type
+    and?: Array<NexusGenInputs['PersonFindManyInput'] | null> | null; // [PersonFindManyInput]
+    birthDate?: NexusGenInputs['DateNullableFilter'] | null; // DateNullableFilter
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    deathDate?: NexusGenInputs['DateNullableFilter'] | null; // DateNullableFilter
+    description?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    id?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
+    nameFirst?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    nameLast?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    nameMiddle?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    nameSort?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    not?: Array<NexusGenInputs['PersonFindManyInput'] | null> | null; // [PersonFindManyInput]
+    or?: Array<NexusGenInputs['PersonFindManyInput'] | null> | null; // [PersonFindManyInput]
+    sex?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+  }
+  PersonFindOneInput: { // input type
+    id: NexusGenScalars['UUID']; // UUID!
+  }
+  PersonOrderByInput: { // input type
+    birthDate?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    deathDate?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    id?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    nameFirst?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    nameLast?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    nameMiddle?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    nameSort?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sex?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
+  PersonUpdateOneInput: { // input type
+    birthDate?: NexusGenScalars['Date'] | null; // Date
+    deathDate?: NexusGenScalars['Date'] | null; // Date
+    description?: string | null; // String
+    nameFirst?: string | null; // String
+    nameLast?: string | null; // String
+    nameMiddle?: string | null; // String
+    nameSort?: string | null; // String
+    sex?: string | null; // String
   }
   RoleCreateOneInput: { // input type
     description: string; // String!
@@ -264,6 +325,7 @@ export interface NexusGenObjects {
   }
   Attachment: Attachment;
   Mutation: {};
+  Person: Person;
   Query: {};
   Role: Role;
   Studio: Studio;
@@ -293,23 +355,42 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createAttachment: NexusGenRootTypes['Attachment']; // Attachment!
+    createPerson: NexusGenRootTypes['Person']; // Person!
     createRole: NexusGenRootTypes['Role']; // Role!
     createStudio: NexusGenRootTypes['Studio']; // Studio!
     createTag: NexusGenRootTypes['Tag']; // Tag!
     createTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
     removeAttachments: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
+    removePeople: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeRoles: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeStudios: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeTagCategories: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeTags: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
+    updatePerson: NexusGenRootTypes['Person']; // Person!
     updateRole: NexusGenRootTypes['Role']; // Role!
     updateStudio: NexusGenRootTypes['Studio']; // Studio!
     updateTag: NexusGenRootTypes['Tag']; // Tag!
     updateTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
   }
+  Person: { // field return type
+    _id: string; // ID!
+    birthDate: NexusGenScalars['Date'] | null; // Date
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    deathDate: NexusGenScalars['Date'] | null; // Date
+    description: string; // String!
+    id: NexusGenScalars['UUID']; // UUID!
+    nameFirst: string; // String!
+    nameLast: string; // String!
+    nameMiddle: string; // String!
+    nameSort: string; // String!
+    sex: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
   Query: { // field return type
     attachment: NexusGenRootTypes['Attachment'] | null; // Attachment
     attachments: NexusGenRootTypes['Attachment'][]; // [Attachment!]!
+    person: NexusGenRootTypes['Person'] | null; // Person
+    persons: NexusGenRootTypes['Person'][]; // [Person!]!
     role: NexusGenRootTypes['Role'] | null; // Role
     roles: NexusGenRootTypes['Role'][]; // [Role!]!
     studio: NexusGenRootTypes['Studio'] | null; // Studio
@@ -368,23 +449,42 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createAttachment: 'Attachment'
+    createPerson: 'Person'
     createRole: 'Role'
     createStudio: 'Studio'
     createTag: 'Tag'
     createTagCategory: 'TagCategory'
     removeAttachments: 'AffectedRowsOutput'
+    removePeople: 'AffectedRowsOutput'
     removeRoles: 'AffectedRowsOutput'
     removeStudios: 'AffectedRowsOutput'
     removeTagCategories: 'AffectedRowsOutput'
     removeTags: 'AffectedRowsOutput'
+    updatePerson: 'Person'
     updateRole: 'Role'
     updateStudio: 'Studio'
     updateTag: 'Tag'
     updateTagCategory: 'TagCategory'
   }
+  Person: { // field return type name
+    _id: 'ID'
+    birthDate: 'Date'
+    createdAt: 'DateTime'
+    deathDate: 'Date'
+    description: 'String'
+    id: 'UUID'
+    nameFirst: 'String'
+    nameLast: 'String'
+    nameMiddle: 'String'
+    nameSort: 'String'
+    sex: 'String'
+    updatedAt: 'DateTime'
+  }
   Query: { // field return type name
     attachment: 'Attachment'
     attachments: 'Attachment'
+    person: 'Person'
+    persons: 'Person'
     role: 'Role'
     roles: 'Role'
     studio: 'Studio'
@@ -436,6 +536,9 @@ export interface NexusGenArgTypes {
     createAttachment: { // args
       data: NexusGenInputs['AttachmentCreateOneInput']; // AttachmentCreateOneInput!
     }
+    createPerson: { // args
+      data: NexusGenInputs['PersonCreateOneInput']; // PersonCreateOneInput!
+    }
     createRole: { // args
       data: NexusGenInputs['RoleCreateOneInput']; // RoleCreateOneInput!
     }
@@ -451,6 +554,9 @@ export interface NexusGenArgTypes {
     removeAttachments: { // args
       where: NexusGenInputs['AttachmentFindManyInput']; // AttachmentFindManyInput!
     }
+    removePeople: { // args
+      where: NexusGenInputs['PersonFindManyInput']; // PersonFindManyInput!
+    }
     removeRoles: { // args
       where: NexusGenInputs['RoleFindManyInput']; // RoleFindManyInput!
     }
@@ -462,6 +568,10 @@ export interface NexusGenArgTypes {
     }
     removeTags: { // args
       where: NexusGenInputs['TagFindManyInput']; // TagFindManyInput!
+    }
+    updatePerson: { // args
+      data: NexusGenInputs['PersonUpdateOneInput']; // PersonUpdateOneInput!
+      where: NexusGenInputs['PersonFindOneInput']; // PersonFindOneInput!
     }
     updateRole: { // args
       data: NexusGenInputs['RoleUpdateOneInput']; // RoleUpdateOneInput!
@@ -488,6 +598,14 @@ export interface NexusGenArgTypes {
       orderBy?: NexusGenInputs['AttachmentOrderByInput'][] | null; // [AttachmentOrderByInput!]
       pagination?: NexusGenInputs['Pagination'] | null; // Pagination
       where?: NexusGenInputs['AttachmentFindManyInput'] | null; // AttachmentFindManyInput
+    }
+    person: { // args
+      where: NexusGenInputs['PersonFindOneInput']; // PersonFindOneInput!
+    }
+    persons: { // args
+      orderBy?: NexusGenInputs['PersonOrderByInput'][] | null; // [PersonOrderByInput!]
+      pagination?: NexusGenInputs['Pagination'] | null; // Pagination
+      where?: NexusGenInputs['PersonFindManyInput'] | null; // PersonFindManyInput
     }
     role: { // args
       where: NexusGenInputs['RoleFindOneInput']; // RoleFindOneInput!
