@@ -42,7 +42,7 @@ const removeStudiosQuery = gql`
 describe("plugin-graphql", () => {
   describe("studio", () => {
     let server: FastifyInstance;
-    let studioId: string;
+    let id: string;
     const name = "Studio 1";
 
     beforeAll(async () => {
@@ -57,16 +57,16 @@ describe("plugin-graphql", () => {
       expect(data?.createStudio).toBeDefined();
       expect(data.createStudio.id).toBeDefined();
       expect(data.createStudio.name).toBe(name);
-      studioId = data.createStudio.id;
+      id = data.createStudio.id;
     });
 
     test("find studio", async () => {
       const { data, errors } = await enquiry(server, findStudioQuery, {
-        where: { id: studioId }
+        where: { id: id }
       });
       expect(errors).toBeUndefined();
       expect(data?.studio).toBeDefined();
-      expect(data.studio.id).toBe(studioId);
+      expect(data.studio.id).toBe(id);
       expect(data.studio.name).toBe(name);
     });
 
@@ -78,14 +78,14 @@ describe("plugin-graphql", () => {
       expect(data?.studios).toBeDefined();
       expect(data.studios.length).toBe(1);
       const studio = data.studios[0];
-      expect(studio.id).toBe(studioId);
+      expect(studio.id).toBe(id);
       expect(studio.name).toBe(name);
     });
 
     test("remove studios", async () => {
-      const value = { name: { startWith: "Studio" } };
+      const where = { name: { startWith: "Studio" } };
       const { data, errors } = await enquiry(server, removeStudiosQuery, {
-        where: value
+        where
       });
       expect(errors).toBeUndefined();
       expect(data?.removeStudios).toBeDefined();
@@ -94,9 +94,7 @@ describe("plugin-graphql", () => {
       const { data: data2, errors: errors2 } = await enquiry(
         server,
         findStudiosQuery,
-        {
-          where: value
-        }
+        { where }
       );
       expect(errors2).toBeUndefined();
       expect(data2?.studios).toBeDefined();
