@@ -53,8 +53,14 @@ const findTagsQuery = gql`
 `;
 
 const removeTagsQuery = gql`
-  mutation removeTags($where: TagFindManyInput!) {
+  mutation removeTags(
+    $where: TagFindManyInput!
+    $where2: TagCategoryFindManyInput!
+  ) {
     removeTags(where: $where) {
+      count
+    }
+    removeTagCategories(where: $where2) {
       count
     }
   }
@@ -118,11 +124,14 @@ describe("plugin-graphql", () => {
     test("remove tags", async () => {
       const where = { name: { startWith: "Tag" } };
       const { data, errors } = await enquiry(server, removeTagsQuery, {
-        where
+        where,
+        where2: { id: { equals: categoryId } }
       });
       expect(errors).toBeUndefined();
       expect(data?.removeTags).toBeDefined();
       expect(data.removeTags.count).toBe(1);
+      expect(data?.removeTagCategories).toBeDefined();
+      expect(data.removeTagCategories.count).toBe(1);
 
       const { data: data2, errors: errors2 } = await enquiry(
         server,
