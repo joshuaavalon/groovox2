@@ -1,5 +1,5 @@
 {
-  "name": "@groovox/app",
+  "name": "@groovox/nexus-ajv",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -14,21 +14,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/groovox/groovox.git",
-    "directory": "packages/app"
+    "directory": "packages/nexus-ajv"
   },
   "bugs": {
     "url": "https://github.com/groovox/groovox/issues"
   },
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
-  "dependencies": {
-    "@fastify/ajv-compiler": "^2.1.0",
-    "@groovox/plugin-api": "^1.0.0",
-    "@groovox/plugin-core": "^1.0.0",
-    "@groovox/plugin-database": "^1.0.0",
-    "@groovox/plugin-graphql": "^1.0.0",
+  "devDependencies": {
     "ajv": "^8.8.1",
-    "ajv-formats": "^2.1.1",
-    "fastify": "^3.23.1"
+    "nexus": "^1.1.0"
   }
 }
