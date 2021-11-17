@@ -13,7 +13,6 @@ export const findMany = queryField("tagCategories", {
     const pagination = transform.input.pagination(args.pagination);
     const orderBy = transform.tagCategory.input.orderBy(args.orderBy);
     const where = transform.tagCategory.input.findMany(args.where);
-    console.log({ where });
     return db.tagCategory.findMany({ where, orderBy, ...pagination });
   }
 });

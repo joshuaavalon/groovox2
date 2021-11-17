@@ -13,7 +13,6 @@ export const findMany = queryField("roles", {
     const pagination = transform.input.pagination(args.pagination);
     const orderBy = transform.role.input.orderBy(args.orderBy);
     const where = transform.role.input.findMany(args.where);
-    console.log({ where });
     return db.role.findMany({ where, orderBy, ...pagination });
   }
 });

@@ -13,7 +13,6 @@ export const findMany = queryField("studios", {
     const pagination = transform.input.pagination(args.pagination);
     const orderBy = transform.studio.input.orderBy(args.orderBy);
     const where = transform.studio.input.findMany(args.where);
-    console.log({ where });
     return db.studio.findMany({ where, orderBy, ...pagination });
   }
 });

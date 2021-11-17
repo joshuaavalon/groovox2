@@ -62,7 +62,7 @@ describe("plugin-graphql", () => {
 
     test("find tagCategory", async () => {
       const { data, errors } = await enquiry(server, findTagCategoryQuery, {
-        where: { id: id }
+        where: { id }
       });
       expect(errors).toBeUndefined();
       expect(data?.tagCategory).toBeDefined();

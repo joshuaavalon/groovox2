@@ -125,7 +125,7 @@ describe("plugin-graphql", () => {
       const where = { name: { startWith: "Tag" } };
       const { data, errors } = await enquiry(server, removeTagsQuery, {
         where,
-        where2: { id: { equals: categoryId } }
+        where2: { id: { equal: categoryId } }
       });
       expect(errors).toBeUndefined();
       expect(data?.removeTags).toBeDefined();
