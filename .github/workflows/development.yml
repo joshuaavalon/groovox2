@@ -75,6 +75,5 @@ jobs:
       - run: npm ci
       - run: chmod -R 777 .
       - run: npm run generate:database
-      - run: npm run generate:graphql
       - run: npm run build
       - run: npm run test
