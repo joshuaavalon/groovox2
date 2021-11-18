@@ -13,14 +13,9 @@ import type {
 } from "nexus/dist/core";
 import type { AsyncValidateFunction, ValidateFunction } from "ajv";
 import type { FastifyInstance } from "fastify";
+import type {} from "@groovox/ajv-compiler";
 
 const { ErrorWithProps } = mercurius;
-
-declare module "fastify" {
-  interface FastifyInstance {
-    validatorCompiler: <T>(values: any) => AnyValidateFunction<T>;
-  }
-}
 
 export type FieldSchemaResolver<
   TypeName extends string,
