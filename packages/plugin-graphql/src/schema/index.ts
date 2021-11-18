@@ -1,14 +1,14 @@
 import attachmentTypes from "./attachment";
 import filterTypes from "./filter";
-import inputTypes from "./input";
+import { inputSchemas, inputTypes } from "./input";
 import outputTypes from "./output";
 import personTypes from "./person";
 import roleTypes from "./role";
 import studioTypes from "./studio";
-import tagTypes from "./tag";
+import { tagSchemas, tagTypes } from "./tag";
 import tagCategoryTypes from "./tag-category";
 
-const types = [
+export const types = [
   ...attachmentTypes,
   ...filterTypes,
   ...inputTypes,
@@ -20,4 +20,4 @@ const types = [
   ...tagCategoryTypes
 ];
 
-export default types;
+export const schemas = [...inputSchemas, ...tagSchemas];

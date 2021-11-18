@@ -1,11 +1,11 @@
 import { inputObjectType } from "nexus";
+import jsonSchema from "./pagination.schema.json";
 
-const input = inputObjectType({
+export const paginationType = inputObjectType({
   name: "Pagination",
   definition(t) {
     t.nullable.int("take");
     t.nullable.int("skip");
   }
 });
-
-export default input;
+export const paginationSchema = jsonSchema;

@@ -23,6 +23,7 @@
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "dependencies": {
+    "@groovox/nexus-ajv": "^1.0.0",
     "@groovox/plugin-altair": "^1.0.0",
     "fastify-plugin": "^3.0.0",
     "graphql-scalars": "^1.13.1",

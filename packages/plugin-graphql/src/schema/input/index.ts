@@ -1,6 +1,5 @@
-import sortOrder from "./sort-order";
-import pagination from "./pagination";
+import { sortOrderType } from "./sort-order";
+import { paginationSchema, paginationType } from "./pagination";
 
-const inputs = [sortOrder, pagination];
-
-export default inputs;
+export const inputTypes = [sortOrderType, paginationType];
+export const inputSchemas = [paginationSchema];

@@ -11,7 +11,9 @@ import {
   TimeResolver,
   UUIDResolver
 } from "graphql-scalars";
-import schemaTypes from "./schema";
+import { nexusAjvPlugin } from "@groovox/nexus-ajv";
+
+import { types as schemaTypes } from "./schema";
 import { GraphQLDecimal } from "./scalar";
 
 import type {} from "./nexus.generated";
@@ -35,7 +37,11 @@ export const createSchema = (typegen?: string): ReturnType<typeof makeSchema> =>
       asNexusMethod(GraphQLDecimal, "decimal", "number"),
       ...schemaTypes
     ],
-    plugins: [fieldAuthorizePlugin(), queryComplexityPlugin()],
+    plugins: [
+      fieldAuthorizePlugin(),
+      queryComplexityPlugin(),
+      nexusAjvPlugin()
+    ],
     contextType: {
       module: path.join(__dirname, "context.ts"),
       export: "GraphqlContext"

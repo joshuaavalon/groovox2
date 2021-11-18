@@ -8,6 +8,7 @@ import type { GraphqlContext } from "./context"
 import type { Attachment, Person, Role, Studio, Tag, TagCategory } from "@prisma/client"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { QueryComplexity } from "nexus/dist/plugins/queryComplexityPlugin"
+import type { FieldSchemaResolver } from "@groovox/nexus-ajv"
 import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -720,6 +721,10 @@ declare global {
      * complexity for this field.
      */
     complexity?: QueryComplexity<TypeName, FieldName>
+    /**
+     * Schema validation with ajv
+     */
+    schema?: FieldSchemaResolver<TypeName, FieldName>
   }
   interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
   }

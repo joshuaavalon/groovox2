@@ -1,8 +1,6 @@
 import { enumType } from "nexus";
 
-const input = enumType({
+export const sortOrderType = enumType({
   name: "SortOrder",
   members: ["asc", "desc"]
 });
-
-export default input;

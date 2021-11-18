@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joshuaavalon.github.io/groovox/plugin-graphql/schema/input/pagination",
+  "type": "object",
+  "properties": {
+    "take": {
+      "type": ["integer", "null"],
+      "minimum": 1
+    },
+    "skip": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false
+}

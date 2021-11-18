@@ -2,6 +2,7 @@ import fastifyPlugin from "fastify-plugin";
 import mercurius from "mercurius";
 import altairPlugin from "@groovox/plugin-altair";
 
+import { schemas as jsonSchemas } from "./schema";
 import { createSchema } from "./create-schema";
 import { graphqlUtil } from "./util";
 
@@ -22,6 +23,7 @@ const plugin = fastifyPlugin(
         reply
       })
     });
+    jsonSchemas.forEach(fastify.addSchema);
     fastify.register(altairPlugin);
     fastify.decorate("graphqlUtil", graphqlUtil);
   },

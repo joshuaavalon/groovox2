@@ -52,6 +52,19 @@ const findTagsQuery = gql`
   }
 `;
 
+const findTagsPaginationQuery = gql`
+  query tags($pagination: Pagination!) {
+    tags(pagination: $pagination) {
+      id
+      name
+      category {
+        id
+        name
+      }
+    }
+  }
+`;
+
 const removeTagsQuery = gql`
   mutation removeTags(
     $where: TagFindManyInput!
@@ -119,6 +132,14 @@ describe("plugin-graphql", () => {
       expect(tag.name).toBe(name);
       expect(tag.category.id).toBe(categoryId);
       expect(tag.category.name).toBe(categoryName);
+    });
+
+    test("find tags pagination", async () => {
+      const { errors } = await enquiry(server, findTagsPaginationQuery, {
+        pagination: { take: -1 }
+      });
+      expect(errors).toBeDefined();
+      console.log(errors);
     });
 
     test("remove tags", async () => {

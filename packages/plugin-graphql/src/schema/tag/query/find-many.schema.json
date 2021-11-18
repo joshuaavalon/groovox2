@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://joshuaavalon.github.io/groovox/plugin-graphql/schema/tag/query/find-many",
+  "type": "object",
+  "properties": {
+    "where": {
+      "type": ["object", "null"]
+    },
+    "pagination": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "../../input/pagination"
+        }
+      ]
+    },
+    "orderBy": {
+      "type": ["object", "null"]
+    }
+  },
+  "additionalProperties": false
+}

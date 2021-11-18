@@ -1,54 +1,102 @@
-import { UserInputError } from "apollo-server";
+import _ from "lodash";
 import { plugin } from "nexus";
+import mercurius from "mercurius";
 import { printedGenTyping, printedGenTypingImport } from "nexus/dist/core";
 
-export type FieldValidationResolver = (yup: yupType) => yup.AnyObjectSchema;
+import type { GraphQLResolveInfo } from "graphql";
+import type {
+  ArgsValue,
+  GetGen,
+  MaybePromise,
+  NexusPlugin,
+  SourceValue
+} from "nexus/dist/core";
+import type { AsyncValidateFunction, ValidateFunction } from "ajv";
+import type { FastifyInstance } from "fastify";
 
-const FieldValidationResolverImport = printedGenTypingImport({
+const { ErrorWithProps } = mercurius;
+
+export type FieldSchemaResolver<
+  TypeName extends string,
+  FieldName extends string
+> = (
+  root: SourceValue<TypeName>,
+  args: ArgsValue<TypeName, FieldName>,
+  context: GetGen<"context">,
+  info: GraphQLResolveInfo
+) => MaybePromise<string>;
+
+const FieldSchemaResolverImport = printedGenTypingImport({
   module: "@groovox/nexus-ajv",
-  bindings: ["FieldValidationResolver"]
+  bindings: ["FieldSchemaResolver"]
 });
 
 const fieldDefTypes = printedGenTyping({
   optional: true,
-  name: "validation",
-  description: "Validation Arguments with ajv",
-  type: "FieldValidationResolver",
-  imports: [FieldValidationResolverImport]
+  name: "schema",
+  description: "Schema validation with ajv",
+  type: "FieldSchemaResolver<TypeName, FieldName>",
+  imports: [FieldSchemaResolverImport]
 });
 
-export const nexusArgsValidation = () =>
+type AnyValidateFunction<T = any> =
+  | ValidateFunction<T>
+  | AsyncValidateFunction<T>
+  | undefined;
+
+export const nexusAjvPlugin = (): NexusPlugin =>
   plugin({
-    name: "Nexus Arguments Validation Plugin",
-    description: "Validate Arguments in Nexus using yup",
+    name: "Nexus Arguments ajv Validation Plugin",
+    description: "Schema validation with ajv",
     fieldDefTypes: fieldDefTypes,
     onCreateFieldResolver(config) {
-      const validation =
-        config.fieldConfig.extensions?.nexus?.config.validation;
-      if (!validation) {
-        return;
+      const { fieldConfig } = config;
+      const schemaId = fieldConfig.extensions?.nexus?.config.schema;
+      if (!schemaId) {
+        return undefined;
       }
-      if (typeof validation !== "function") {
+      if (!_.isString(schemaId)) {
         console.error(
           new Error(
-            `The validation property provided to ${
-              config.fieldConfig.name
-            } with type ${
-              config.fieldConfig.type
-            } should be a function, saw ${typeof validation}`
+            `The schema property provided to ${fieldConfig.name} with type ${
+              fieldConfig.type
+            } should be a string, saw ${typeof schemaId}`
           )
         );
-        return;
+        return undefined;
       }
 
-      return function (root, args, ctx, info, next) {
-        const schema: yup.AnyObjectSchema = validation(yup);
-        try {
-          schema.validateSync(args);
-          return next(root, args, ctx, info);
-        } catch (error) {
-          throw new UserInputError(error, error.errors);
+      return async function (root, args, ctx, info, next) {
+        const fastify: FastifyInstance = ctx.fastify;
+        const validate = fastify.getSchema(schemaId) as AnyValidateFunction;
+        if (!validate) {
+          throw new ErrorWithProps("Unable to load schema", {
+            code: "AJV_SCHEMA_NOT_FOUND",
+            fieldConfig: {
+              name: fieldConfig.name,
+              type: fieldConfig.type
+            }
+          });
         }
+
+        await validate(args);
+        const { errors } = validate;
+        if (errors && errors.length > 0) {
+          throw new ErrorWithProps(
+            "Invalid arguments",
+            {
+              code: "AJV_SCHEMA_INVALID_ARGS",
+              fieldConfig: {
+                name: fieldConfig.name,
+                type: fieldConfig.type
+              },
+              errors
+            },
+            400
+          );
+        }
+
+        return next(root, args, ctx, info);
       };
     }
   });
