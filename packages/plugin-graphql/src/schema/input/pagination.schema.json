@@ -2,15 +2,18 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://joshuaavalon.github.io/groovox/plugin-graphql/schema/input/pagination",
   "type": "object",
+  "title": "Pagination",
+  "description": "Control the range of the records to return.",
   "properties": {
     "take": {
       "type": ["integer", "null"],
+      "description": "Maximum number of records to return. Must be greater than 0.",
       "minimum": 1
     },
     "skip": {
       "type": ["integer", "null"],
+      "description": "Number of records to skip. Must be greater or equal than 0.",
       "minimum": 0
     }
-  },
-  "additionalProperties": false
+  }
 }
