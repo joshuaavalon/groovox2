@@ -134,12 +134,14 @@ describe("plugin-graphql", () => {
       expect(tag.category.name).toBe(categoryName);
     });
 
-    test("find tags pagination", async () => {
-      const { errors } = await enquiry(server, findTagsPaginationQuery, {
+    test("find tags pagination ajv", async () => {
+      const { data, errors } = await enquiry(server, findTagsPaginationQuery, {
         pagination: { take: -1 }
       });
+      expect(data).toBe(null);
       expect(errors).toBeDefined();
-      console.log(errors);
+      expect(errors.length).toBe(1);
+      expect(errors[0].extensions.code).toBe("AJV_SCHEMA_INVALID_ARGS");
     });
 
     test("remove tags", async () => {
