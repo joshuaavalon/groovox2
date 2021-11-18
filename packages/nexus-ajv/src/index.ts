@@ -11,9 +11,8 @@ import type {
   NexusPlugin,
   SourceValue
 } from "nexus/dist/core";
-import type { AsyncValidateFunction, ValidateFunction } from "ajv";
 import type { FastifyInstance } from "fastify";
-import type {} from "@groovox/ajv-compiler";
+import type {} from "@groovox/plugin-ajv";
 
 const { ErrorWithProps } = mercurius;
 
@@ -39,11 +38,6 @@ const fieldDefTypes = printedGenTyping({
   type: "FieldSchemaResolver<TypeName, FieldName>",
   imports: [FieldSchemaResolverImport]
 });
-
-type AnyValidateFunction<T = any> =
-  | ValidateFunction<T>
-  | AsyncValidateFunction<T>
-  | undefined;
 
 export const nexusAjvPlugin = (): NexusPlugin =>
   plugin({
@@ -73,9 +67,7 @@ export const nexusAjvPlugin = (): NexusPlugin =>
         if (!schemaId) {
           return next(root, args, ctx, info);
         }
-        const validate = fastify.validatorCompiler({
-          schemaId
-        }) as AnyValidateFunction;
+        const validate = fastify.ajv.getSchema(schemaId);
         if (!validate) {
           throw new ErrorWithProps("Unable to load schema", {
             code: "AJV_SCHEMA_NOT_FOUND",
