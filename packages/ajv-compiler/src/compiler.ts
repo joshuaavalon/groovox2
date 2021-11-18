@@ -27,6 +27,11 @@ declare module "@fastify/ajv-compiler" {
   interface Options extends AjvOptions {}
 }
 
+declare module "fastify" {
+  interface FastifyInstance {
+    validatorCompiler: ValidatorCompiler["buildValidatorFunction"];
+  }
+}
 export class ValidatorCompiler {
   private ajv: Ajv;
 
@@ -65,13 +70,15 @@ export class ValidatorCompiler {
   }
 
   buildValidatorFunction<T>({
-    schema /*, method, url, httpPart */
+    schema /*, method, url, httpPart */,
+    schemaId
   }: any): AnyValidateFunction<T> {
     // Ajv does not support compiling two schemas with the same
     // id inside the same instance. Therefore if we have already
     // compiled the schema with the given id, we just return it.
-    if (schema.$id) {
-      const stored = this.ajv.getSchema(schema.$id);
+    const id = schemaId ?? schema.$id;
+    if (id) {
+      const stored = this.ajv.getSchema(id);
       if (stored) {
         return stored as AnyValidateFunction<T>;
       }

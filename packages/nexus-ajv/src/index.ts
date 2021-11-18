@@ -16,6 +16,12 @@ import type { FastifyInstance } from "fastify";
 
 const { ErrorWithProps } = mercurius;
 
+declare module "fastify" {
+  interface FastifyInstance {
+    validatorCompiler: <T>(values: any) => AnyValidateFunction<T>;
+  }
+}
+
 export type FieldSchemaResolver<
   TypeName extends string,
   FieldName extends string
@@ -72,8 +78,9 @@ export const nexusAjvPlugin = (): NexusPlugin =>
         if (!schemaId) {
           return next(root, args, ctx, info);
         }
-        const validate = fastify.getSchema(schemaId) as AnyValidateFunction;
-        console.log(fastify.getSchemas());
+        const validate = fastify.validatorCompiler({
+          schemaId
+        }) as AnyValidateFunction;
         if (!validate) {
           throw new ErrorWithProps("Unable to load schema", {
             code: "AJV_SCHEMA_NOT_FOUND",
