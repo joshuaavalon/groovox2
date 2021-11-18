@@ -23,9 +23,11 @@ const plugin = fastifyPlugin(
         reply
       })
     });
-    jsonSchemas.forEach(schema => fastify.addSchema(schema));
     fastify.register(altairPlugin);
     fastify.decorate("graphqlUtil", graphqlUtil);
+    fastify.addHook("onReady", async () => {
+      jsonSchemas.forEach(schema => fastify.ajv.addSchema(schema));
+    });
   },
   {
     name: "@groovox/plugin-graphql",
