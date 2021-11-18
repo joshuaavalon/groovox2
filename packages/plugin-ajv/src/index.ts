@@ -23,7 +23,7 @@ const plugin = fastifyPlugin<Options>(
     });
   },
   {
-    name: "@groovox/plugin-shutdown",
+    name: "@groovox/plugin-ajv",
     fastify: "3.x"
   }
 );
