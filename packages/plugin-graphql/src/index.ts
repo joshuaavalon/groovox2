@@ -30,7 +30,7 @@ const plugin = fastifyPlugin(
   {
     name: "@groovox/plugin-graphql",
     fastify: "3.x",
-    dependencies: ["@groovox/plugin-api", "plugin-ajv"]
+    dependencies: ["@groovox/plugin-api", "@groovox/plugin-ajv"]
   }
 );
 
