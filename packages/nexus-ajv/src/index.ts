@@ -73,6 +73,7 @@ export const nexusAjvPlugin = (): NexusPlugin =>
           return next(root, args, ctx, info);
         }
         const validate = fastify.getSchema(schemaId) as AnyValidateFunction;
+        console.log(fastify.getSchemas());
         if (!validate) {
           throw new ErrorWithProps("Unable to load schema", {
             code: "AJV_SCHEMA_NOT_FOUND",

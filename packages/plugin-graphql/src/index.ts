@@ -23,7 +23,7 @@ const plugin = fastifyPlugin(
         reply
       })
     });
-    jsonSchemas.forEach(fastify.addSchema);
+    jsonSchemas.forEach(schema => fastify.addSchema(schema));
     fastify.register(altairPlugin);
     fastify.decorate("graphqlUtil", graphqlUtil);
   },
