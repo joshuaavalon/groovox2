@@ -24,7 +24,7 @@ export type FieldSchemaResolver<
   args: ArgsValue<TypeName, FieldName>,
   context: GetGen<"context">,
   info: GraphQLResolveInfo
-) => MaybePromise<string>;
+) => MaybePromise<string | undefined | null>;
 
 const FieldSchemaResolverImport = printedGenTypingImport({
   module: "@groovox/nexus-ajv",
@@ -51,16 +51,16 @@ export const nexusAjvPlugin = (): NexusPlugin =>
     fieldDefTypes: fieldDefTypes,
     onCreateFieldResolver(config) {
       const { fieldConfig } = config;
-      const schemaId = fieldConfig.extensions?.nexus?.config.schema;
-      if (!schemaId) {
+      const schemaFn = fieldConfig.extensions?.nexus?.config.schema;
+      if (!schemaFn) {
         return undefined;
       }
-      if (!_.isString(schemaId)) {
+      if (!_.isFunction(schemaFn)) {
         console.error(
           new Error(
             `The schema property provided to ${fieldConfig.name} with type ${
               fieldConfig.type
-            } should be a string, saw ${typeof schemaId}`
+            } should be a function, saw ${typeof schemaFn}`
           )
         );
         return undefined;
@@ -68,6 +68,10 @@ export const nexusAjvPlugin = (): NexusPlugin =>
 
       return async function (root, args, ctx, info, next) {
         const fastify: FastifyInstance = ctx.fastify;
+        const schemaId = schemaFn(root, args, ctx, info);
+        if (!schemaId) {
+          return next(root, args, ctx, info);
+        }
         const validate = fastify.getSchema(schemaId) as AnyValidateFunction;
         if (!validate) {
           throw new ErrorWithProps("Unable to load schema", {
