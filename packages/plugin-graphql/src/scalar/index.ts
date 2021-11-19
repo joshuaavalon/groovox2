@@ -1,1 +1,0 @@
-export { GraphQLDecimal } from "./decimal";

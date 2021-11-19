@@ -1,5 +1,5 @@
 {
-  "name": "@groovox/plugin-graphql",
+  "name": "@groovox/graphql-util",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -14,7 +14,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/groovox/groovox.git",
-    "directory": "packages/plugin-graphql"
+    "directory": "packages/graphql-util"
   },
   "bugs": {
     "url": "https://github.com/groovox/groovox/issues"
@@ -22,11 +22,8 @@
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "dependencies": {
-    "@groovox/graphql": "^1.0.0",
-    "@groovox/plugin-altair": "^1.0.0",
-    "fastify-plugin": "^3.0.0",
-    "lodash": "^4.17.21",
-    "mercurius": "^8.8.0"
+    "@groovox/graphql-type": "^1.0.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.176"
