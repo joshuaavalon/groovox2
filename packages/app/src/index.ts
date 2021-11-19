@@ -3,7 +3,7 @@ import apiPlugin from "@groovox/plugin-api";
 import corePlugin from "@groovox/plugin-core";
 import databasePlugin from "@groovox/plugin-database";
 import graphqlPlugin from "@groovox/plugin-graphql";
-import ajvPlugin from "@groovox/plugin-ajv";
+import ajvPlugin from "@groovox/plugin-validate";
 
 import type { FastifyInstance } from "fastify";
 

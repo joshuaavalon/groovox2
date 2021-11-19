@@ -1,5 +1,5 @@
 {
-  "name": "@groovox/plugin-ajv",
+  "name": "@groovox/plugin-validate",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -14,7 +14,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/groovox/groovox.git",
-    "directory": "packages/plugin-ajv"
+    "directory": "packages/plugin-validate"
   },
   "bugs": {
     "url": "https://github.com/groovox/groovox/issues"

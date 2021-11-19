@@ -26,13 +26,13 @@ const plugin = fastifyPlugin(
     fastify.register(altairPlugin);
     fastify.decorate("graphqlUtil", graphqlUtil);
     fastify.addHook("onReady", async () => {
-      jsonSchemas.forEach(schema => fastify.ajv.addSchema(schema));
+      jsonSchemas.forEach(schema => fastify.validate.addSchema(schema));
     });
   },
   {
     name: "@groovox/plugin-graphql",
     fastify: "3.x",
-    dependencies: ["@groovox/plugin-api", "@groovox/plugin-ajv"]
+    dependencies: ["@groovox/plugin-api", "@groovox/plugin-validate"]
   }
 );
 

@@ -12,7 +12,7 @@ import type {
   SourceValue
 } from "nexus/dist/core";
 import type { FastifyInstance } from "fastify";
-import type {} from "@groovox/plugin-ajv";
+import type {} from "@groovox/plugin-validate";
 
 const { ErrorWithProps } = mercurius;
 
@@ -67,7 +67,7 @@ export const nexusAjvPlugin = (): NexusPlugin =>
         if (!schemaId) {
           return next(root, args, ctx, info);
         }
-        const validate = fastify.ajv.getSchema(schemaId);
+        const validate = fastify.validate.getSchema(schemaId);
         if (!validate) {
           throw new ErrorWithProps("Unable to load schema", {
             code: "AJV_SCHEMA_NOT_FOUND",
@@ -78,8 +78,7 @@ export const nexusAjvPlugin = (): NexusPlugin =>
           });
         }
 
-        await validate(args);
-        const { errors } = validate;
+        const errors = await validate(args);
         if (errors && errors.length > 0) {
           throw new ErrorWithProps(
             "Invalid arguments",
