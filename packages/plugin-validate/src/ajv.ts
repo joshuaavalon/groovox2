@@ -2,6 +2,7 @@ import Ajv from "ajv/dist/2020";
 import addFormats from "ajv-formats";
 
 import type {
+  AnySchema,
   AsyncValidateFunction,
   Options,
   ValidateFunction
@@ -37,7 +38,7 @@ export class AjvValidator implements Validator {
   }
 
   addSchema(schema: unknown): void {
-    this.addSchema(schema);
+    this.ajv.addSchema(schema as AnySchema);
   }
 
   getSchema(id: string): Validate | null | undefined {
