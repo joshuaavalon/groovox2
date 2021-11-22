@@ -3,12 +3,9 @@ import { inputObjectType } from "nexus";
 import type { SchemaModel } from "@groovox/graphql-type";
 
 const type = inputObjectType({
-  name: "UUIDFilter",
+  name: "UnitFindOneInput",
   definition(t) {
-    t.nullable.string("equal");
-    t.nullable.list.string("in");
-    t.nullable.list.string("notIn");
-    t.nullable.field("not", { type: "UUIDFilter" });
+    t.uuid("id");
   }
 });
 

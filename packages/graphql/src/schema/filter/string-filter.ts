@@ -9,8 +9,8 @@ const type = inputObjectType({
     t.nullable.string("endWith");
     t.nullable.string("equal");
     t.nullable.string("startWith");
-    t.nullable.list.nonNull.string("in");
-    t.nullable.list.nonNull.string("notIn");
+    t.nullable.list.string("in");
+    t.nullable.list.string("notIn");
     t.nullable.field("not", { type: "StringFilter" });
   }
 });

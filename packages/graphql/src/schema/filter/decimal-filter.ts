@@ -10,8 +10,8 @@ const type = inputObjectType({
     t.nullable.decimal("gte");
     t.nullable.decimal("lt");
     t.nullable.decimal("lte");
-    t.nullable.list.nonNull.decimal("in");
-    t.nullable.list.nonNull.decimal("notIn");
+    t.nullable.list.decimal("in");
+    t.nullable.list.decimal("notIn");
     t.nullable.field("not", { type: "DecimalFilter" });
   }
 });

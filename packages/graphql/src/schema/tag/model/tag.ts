@@ -16,22 +16,22 @@ const type = objectType({
     t.uuid("categoryId");
     t.dateTime("createdAt");
     t.dateTime("updatedAt");
-    t.nonNull.field("category", {
+    t.field("category", {
       type: "TagCategory",
-      resolve: (tag, _args, ctx) => {
+      resolve: (root, _args, ctx) => {
         const { db } = ctx.fastify;
         return db.tagCategory.findUnique({
-          where: { id: tag.categoryId },
+          where: { id: root.categoryId },
           rejectOnNotFound: true
         });
       }
     });
-    t.nonNull.list.nonNull.field("attachments", {
+    t.list.field("attachments", {
       type: "Attachment",
-      resolve: (tag, _args, ctx) => {
+      resolve: (root, _args, ctx) => {
         const { db } = ctx.fastify;
         return db.attachment.findMany({
-          where: { tag: { every: { id: tag.id } } }
+          where: { tag: { every: { id: root.id } } }
         });
       }
     });

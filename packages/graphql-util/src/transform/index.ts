@@ -6,6 +6,7 @@ import { role } from "./role";
 import { studio } from "./studio";
 import { tag } from "./tag";
 import { tagCategory } from "./tag-category";
+import { unit } from "./unit";
 
 export const transform = {
   attachment,
@@ -15,5 +16,6 @@ export const transform = {
   role,
   studio,
   tag,
-  tagCategory
+  tagCategory,
+  unit
 };

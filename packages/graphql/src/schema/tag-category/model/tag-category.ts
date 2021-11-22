@@ -15,6 +15,13 @@ const type = objectType({
     t.string("description");
     t.dateTime("createdAt");
     t.dateTime("updatedAt");
+    t.list.field("tags", {
+      type: "Tag",
+      resolve: (root, _args, ctx) => {
+        const { db } = ctx.fastify;
+        return db.tag.findMany({ where: { categoryId: root.id } });
+      }
+    });
   }
 });
 

@@ -5,7 +5,7 @@
 
 
 import type { GraphqlContext } from "./context"
-import type { Attachment, Person, Unit, Role, Studio, Tag, TagCategory } from "@prisma/client"
+import type { Attachment, Person, Role, Studio, Tag, TagCategory, Unit } from "@prisma/client"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { QueryComplexity } from "nexus/dist/plugins/queryComplexityPlugin"
 import type { FieldSchemaResolver } from "@groovox/nexus-ajv"
@@ -301,6 +301,33 @@ export interface NexusGenInputs {
     not?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
     notIn?: string[] | null; // [String!]
   }
+  UnitCreateOneInput: { // input type
+    description: string; // String!
+    name: string; // String!
+  }
+  UnitFindManyInput: { // input type
+    and?: Array<NexusGenInputs['UnitFindManyInput'] | null> | null; // [UnitFindManyInput]
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    description?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    id?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    not?: Array<NexusGenInputs['UnitFindManyInput'] | null> | null; // [UnitFindManyInput]
+    or?: Array<NexusGenInputs['UnitFindManyInput'] | null> | null; // [UnitFindManyInput]
+    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+  }
+  UnitFindOneInput: { // input type
+    id: NexusGenScalars['UUID']; // UUID!
+  }
+  UnitOrderByInput: { // input type
+    createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    id?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    name?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
+  UnitUpdateOneInput: { // input type
+    description?: string | null; // String
+    name?: string | null; // String
+  }
 }
 
 export interface NexusGenEnums {
@@ -362,17 +389,20 @@ export interface NexusGenFieldTypes {
     createStudio: NexusGenRootTypes['Studio']; // Studio!
     createTag: NexusGenRootTypes['Tag']; // Tag!
     createTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
+    createUnit: NexusGenRootTypes['Unit']; // Unit!
     removeAttachments: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removePeople: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeRoles: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeStudios: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeTagCategories: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeTags: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
+    removeUnits: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     updatePerson: NexusGenRootTypes['Person']; // Person!
     updateRole: NexusGenRootTypes['Role']; // Role!
     updateStudio: NexusGenRootTypes['Studio']; // Studio!
     updateTag: NexusGenRootTypes['Tag']; // Tag!
     updateTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
+    updateUnit: NexusGenRootTypes['Unit']; // Unit!
   }
   Person: { // field return type
     _id: string; // ID!
@@ -401,6 +431,8 @@ export interface NexusGenFieldTypes {
     tagCategories: NexusGenRootTypes['TagCategory'][]; // [TagCategory!]!
     tagCategory: NexusGenRootTypes['TagCategory'] | null; // TagCategory
     tags: NexusGenRootTypes['Tag'][]; // [Tag!]!
+    unit: NexusGenRootTypes['Unit'] | null; // Unit
+    units: NexusGenRootTypes['Unit'][]; // [Unit!]!
   }
   Role: { // field return type
     _id: string; // ID!
@@ -435,6 +467,7 @@ export interface NexusGenFieldTypes {
     description: string; // String!
     id: NexusGenScalars['UUID']; // UUID!
     name: string; // String!
+    tags: NexusGenRootTypes['Tag'][]; // [Tag!]!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Unit: { // field return type
@@ -442,6 +475,7 @@ export interface NexusGenFieldTypes {
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     description: string; // String!
     id: NexusGenScalars['UUID']; // UUID!
+    member: NexusGenRootTypes['Person'][]; // [Person!]!
     name: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
@@ -464,17 +498,20 @@ export interface NexusGenFieldTypeNames {
     createStudio: 'Studio'
     createTag: 'Tag'
     createTagCategory: 'TagCategory'
+    createUnit: 'Unit'
     removeAttachments: 'AffectedRowsOutput'
     removePeople: 'AffectedRowsOutput'
     removeRoles: 'AffectedRowsOutput'
     removeStudios: 'AffectedRowsOutput'
     removeTagCategories: 'AffectedRowsOutput'
     removeTags: 'AffectedRowsOutput'
+    removeUnits: 'AffectedRowsOutput'
     updatePerson: 'Person'
     updateRole: 'Role'
     updateStudio: 'Studio'
     updateTag: 'Tag'
     updateTagCategory: 'TagCategory'
+    updateUnit: 'Unit'
   }
   Person: { // field return type name
     _id: 'ID'
@@ -503,6 +540,8 @@ export interface NexusGenFieldTypeNames {
     tagCategories: 'TagCategory'
     tagCategory: 'TagCategory'
     tags: 'Tag'
+    unit: 'Unit'
+    units: 'Unit'
   }
   Role: { // field return type name
     _id: 'ID'
@@ -537,6 +576,7 @@ export interface NexusGenFieldTypeNames {
     description: 'String'
     id: 'UUID'
     name: 'String'
+    tags: 'Tag'
     updatedAt: 'DateTime'
   }
   Unit: { // field return type name
@@ -544,6 +584,7 @@ export interface NexusGenFieldTypeNames {
     createdAt: 'DateTime'
     description: 'String'
     id: 'UUID'
+    member: 'Person'
     name: 'String'
     updatedAt: 'DateTime'
   }
@@ -569,6 +610,9 @@ export interface NexusGenArgTypes {
     createTagCategory: { // args
       data: NexusGenInputs['TagCategoryCreateOneInput']; // TagCategoryCreateOneInput!
     }
+    createUnit: { // args
+      data: NexusGenInputs['UnitCreateOneInput']; // UnitCreateOneInput!
+    }
     removeAttachments: { // args
       where: NexusGenInputs['AttachmentFindManyInput']; // AttachmentFindManyInput!
     }
@@ -586,6 +630,9 @@ export interface NexusGenArgTypes {
     }
     removeTags: { // args
       where: NexusGenInputs['TagFindManyInput']; // TagFindManyInput!
+    }
+    removeUnits: { // args
+      where: NexusGenInputs['UnitFindManyInput']; // UnitFindManyInput!
     }
     updatePerson: { // args
       data: NexusGenInputs['PersonUpdateOneInput']; // PersonUpdateOneInput!
@@ -606,6 +653,10 @@ export interface NexusGenArgTypes {
     updateTagCategory: { // args
       data: NexusGenInputs['TagCategoryUpdateOneInput']; // TagCategoryUpdateOneInput!
       where: NexusGenInputs['TagCategoryFindOneInput']; // TagCategoryFindOneInput!
+    }
+    updateUnit: { // args
+      data: NexusGenInputs['UnitUpdateOneInput']; // UnitUpdateOneInput!
+      where: NexusGenInputs['UnitFindOneInput']; // UnitFindOneInput!
     }
   }
   Query: {
@@ -656,6 +707,14 @@ export interface NexusGenArgTypes {
       orderBy?: NexusGenInputs['TagOrderByInput'][] | null; // [TagOrderByInput!]
       pagination?: NexusGenInputs['Pagination'] | null; // Pagination
       where?: NexusGenInputs['TagFindManyInput'] | null; // TagFindManyInput
+    }
+    unit: { // args
+      where: NexusGenInputs['UnitFindOneInput']; // UnitFindOneInput!
+    }
+    units: { // args
+      orderBy?: NexusGenInputs['UnitOrderByInput'][] | null; // [UnitOrderByInput!]
+      pagination?: NexusGenInputs['Pagination'] | null; // Pagination
+      where?: NexusGenInputs['UnitFindManyInput'] | null; // UnitFindManyInput
     }
   }
 }

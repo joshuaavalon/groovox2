@@ -10,8 +10,8 @@ const type = inputObjectType({
     t.nullable.dateTime("gte");
     t.nullable.dateTime("lt");
     t.nullable.dateTime("lte");
-    t.nullable.list.nonNull.dateTime("in");
-    t.nullable.list.nonNull.dateTime("notIn");
+    t.nullable.list.dateTime("in");
+    t.nullable.list.dateTime("notIn");
     t.nullable.field("not", { type: "DateTimeFilter" });
   }
 });

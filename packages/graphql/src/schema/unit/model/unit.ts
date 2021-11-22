@@ -15,6 +15,15 @@ const type = objectType({
     t.string("description");
     t.dateTime("createdAt");
     t.dateTime("updatedAt");
+    t.list.field("member", {
+      type: "Person",
+      resolve: async (root, _args, ctx) => {
+        const { db } = ctx.fastify;
+        return db.person.findMany({
+          where: { unit: { some: { id: root.id } } }
+        });
+      }
+    });
   }
 });
 
