@@ -166,6 +166,10 @@ describe("plugin-graphql", () => {
       }
       const { tags } = result2.data;
       expect(tags.length).toBe(0);
+
+      await query.tagCategory.removeMany(server, {
+        where: { id: { equal: categoryId } }
+      });
     });
   });
 });
