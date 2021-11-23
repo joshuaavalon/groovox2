@@ -6,8 +6,11 @@ import type {
 } from "@groovox/graphql-type";
 
 const query = gql`
-  mutation updateStudio($data: StudioUpdateOneInput!) {
-    updateStudio(data: $data) {
+  mutation updateStudio(
+    $data: StudioUpdateOneInput!
+    $where: StudioFindOneInput!
+  ) {
+    updateStudio(data: $data, where: $where) {
       id
       name
       description
