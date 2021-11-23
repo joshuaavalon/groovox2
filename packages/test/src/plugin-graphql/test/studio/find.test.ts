@@ -6,7 +6,6 @@ import type { FastifyInstance } from "fastify";
 describe("plugin-graphql", () => {
   describe("studio", () => {
     let server: FastifyInstance;
-    let id: string;
     const createdIds: string[] = [];
 
     beforeAll(async () => {
@@ -43,7 +42,7 @@ describe("plugin-graphql", () => {
         return;
       }
       const { studio } = data;
-      expect(studio.id).toBe(id);
+      expect(studio.id).toBe(createdIds[0]);
       expect(studio.name).toBe("Find Studio Name 1");
       expect(studio.description).toBe("Find Studio Desc 1");
     });
@@ -61,7 +60,7 @@ describe("plugin-graphql", () => {
       expect(studios.length).toBe(1);
 
       const studio = studios[0];
-      expect(studio.id).toBe(id);
+      expect(studio.id).toBe(createdIds[0]);
       expect(studio.name).toBe("Find Studio Name 1");
       expect(studio.description).toBe("Find Studio Desc 1");
     });
@@ -92,7 +91,7 @@ describe("plugin-graphql", () => {
       expect(studios.length).toBe(1);
 
       const studio = studios[0];
-      expect(studio.id).toBe(id);
+      expect(studio.id).toBe(createdIds[2]);
       expect(studio.name).toBe("Find Studio Name 3");
       expect(studio.description).toBe("Find Studio Desc 3");
     });
