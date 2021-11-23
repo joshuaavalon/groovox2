@@ -13,13 +13,6 @@ const query = gql`
       description
       updatedAt
       createdAt
-      category {
-        id
-        name
-        description
-        updatedAt
-        createdAt
-      }
     }
   }
 `;
