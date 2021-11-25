@@ -2,8 +2,11 @@ import { createEnquiry, gql } from "../util";
 
 import type {
   NexusGenArgTypes,
-  NexusGenFieldTypes
+  NexusGenFieldTypes,
+  NexusGenRootTypes
 } from "@groovox/graphql-type";
+
+import type { ArrayElement } from "../util";
 
 const query = gql`
   query tagCategories($where: TagCategoryFindManyInput!) {
@@ -13,6 +16,13 @@ const query = gql`
       description
       updatedAt
       createdAt
+      tags {
+        id
+        name
+        description
+        updatedAt
+        createdAt
+      }
     }
   }
 `;
@@ -22,7 +32,9 @@ type Input = {
 };
 
 type Output = {
-  tagCategories: NexusGenFieldTypes["Query"]["tagCategories"];
+  tagCategories: (ArrayElement<NexusGenFieldTypes["Query"]["tagCategories"]> & {
+    tags: NexusGenRootTypes["Tag"][];
+  })[];
 };
 
 export const findMany = createEnquiry<Input, Output>(query);

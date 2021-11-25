@@ -1,5 +1,7 @@
 import { createApp } from "@groovox/app";
+
 import { query } from "../../query";
+import { cleanUp } from "./utils";
 
 import type { FastifyInstance } from "fastify";
 
@@ -14,7 +16,7 @@ describe("plugin-graphql", () => {
       server = await createApp();
     });
 
-    test("create studio", async () => {
+    test("create", async () => {
       const { data, errors } = await query.studio.create(server, {
         data: { name, description }
       });
@@ -30,7 +32,7 @@ describe("plugin-graphql", () => {
       createdIds.push(createStudio.id);
     });
 
-    test("create duplicate studio", async () => {
+    test("create duplicate", async () => {
       const { errors } = await query.studio.create(server, {
         data: { name, description }
       });
@@ -38,9 +40,7 @@ describe("plugin-graphql", () => {
     });
 
     afterAll(async () => {
-      await query.studio.removeMany(server, {
-        where: { id: { in: createdIds } }
-      });
+      await cleanUp(server, createdIds);
     });
   });
 });

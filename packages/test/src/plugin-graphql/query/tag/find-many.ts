@@ -32,10 +32,9 @@ type Input = {
 };
 
 type Output = {
-  tags: ArrayElement<NexusGenFieldTypes["Query"]["tags"]> &
-    {
-      category: NexusGenRootTypes["TagCategory"];
-    }[];
+  tags: (ArrayElement<NexusGenFieldTypes["Query"]["tags"]> & {
+    category: NexusGenRootTypes["TagCategory"];
+  })[];
 };
 
 export const findMany = createEnquiry<Input, Output>(query);

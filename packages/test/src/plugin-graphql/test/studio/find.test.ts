@@ -1,5 +1,7 @@
 import { createApp } from "@groovox/app";
+
 import { query } from "../../query";
+import { cleanUp, createStudio } from "./utils";
 
 import type { FastifyInstance } from "fastify";
 
@@ -10,29 +12,25 @@ describe("plugin-graphql", () => {
 
     beforeAll(async () => {
       server = await createApp();
-      const result1 = await query.studio.create(server, {
-        data: { name: "Find Studio Name 1", description: "Find Studio Desc 1" }
-      });
-      if (result1.data?.createStudio.id) {
-        createdIds.push(result1.data?.createStudio.id);
-      }
+      const create = createStudio(server, createdIds);
 
-      const result2 = await query.studio.create(server, {
-        data: { name: "Find Studio Name 2", description: "Find Studio Desc 2" }
+      await create({
+        name: "Find Studio Name 1",
+        description: "Find Studio Desc 1"
       });
-      if (result2.data?.createStudio.id) {
-        createdIds.push(result2.data?.createStudio.id);
-      }
 
-      const result3 = await query.studio.create(server, {
-        data: { name: "Find Studio Name 3", description: "Find Studio Desc 3" }
+      await create({
+        name: "Find Studio Name 2",
+        description: "Find Studio Desc 2"
       });
-      if (result3.data?.createStudio.id) {
-        createdIds.push(result3.data?.createStudio.id);
-      }
+
+      await create({
+        name: "Find Studio Name 3",
+        description: "Find Studio Desc 3"
+      });
     });
 
-    test("find studio by id", async () => {
+    test("find by id", async () => {
       const { data, errors } = await query.studio.find(server, {
         where: { id: createdIds[0] }
       });
@@ -47,7 +45,7 @@ describe("plugin-graphql", () => {
       expect(studio.description).toBe("Find Studio Desc 1");
     });
 
-    test("find studios by name equal", async () => {
+    test("find by name equal", async () => {
       const { data, errors } = await query.studio.findMany(server, {
         where: { name: { equal: "Find Studio Name 1" } }
       });
@@ -65,7 +63,7 @@ describe("plugin-graphql", () => {
       expect(studio.description).toBe("Find Studio Desc 1");
     });
 
-    test("find studios by name start with", async () => {
+    test("find by name start with", async () => {
       const { data, errors } = await query.studio.findMany(server, {
         where: { name: { startWith: "Find Studio" } }
       });
@@ -78,7 +76,7 @@ describe("plugin-graphql", () => {
       expect(studios.length).toBe(3);
     });
 
-    test("find studios by name end with", async () => {
+    test("find by name end with", async () => {
       const { data, errors } = await query.studio.findMany(server, {
         where: { name: { endWith: "3" } }
       });
@@ -97,9 +95,7 @@ describe("plugin-graphql", () => {
     });
 
     afterAll(async () => {
-      await query.studio.removeMany(server, {
-        where: { id: { in: createdIds } }
-      });
+      await cleanUp(server, createdIds);
     });
   });
 });

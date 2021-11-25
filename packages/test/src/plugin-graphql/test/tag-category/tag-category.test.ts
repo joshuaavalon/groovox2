@@ -1,5 +1,5 @@
 import { createApp } from "@groovox/app";
-import { query } from "../query";
+import { query } from "../../query";
 
 import type { FastifyInstance } from "fastify";
 
