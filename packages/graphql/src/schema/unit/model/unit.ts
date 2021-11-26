@@ -15,11 +15,29 @@ const type = objectType({
     t.string("description");
     t.dateTime("createdAt");
     t.dateTime("updatedAt");
-    t.list.field("member", {
+    t.list.field("members", {
       type: "Person",
       resolve: async (root, _args, ctx) => {
         const { db } = ctx.fastify;
         return db.person.findMany({
+          where: { unit: { some: { id: root.id } } }
+        });
+      }
+    });
+    t.list.field("tags", {
+      type: "Tag",
+      resolve: async (root, _args, ctx) => {
+        const { db } = ctx.fastify;
+        return db.tag.findMany({
+          where: { unit: { some: { id: root.id } } }
+        });
+      }
+    });
+    t.list.field("attachments", {
+      type: "Attachment",
+      resolve: async (root, _args, ctx) => {
+        const { db } = ctx.fastify;
+        return db.attachment.findMany({
           where: { unit: { some: { id: root.id } } }
         });
       }

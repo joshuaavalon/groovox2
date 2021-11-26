@@ -21,6 +21,33 @@ const type = objectType({
     t.string("sex");
     t.dateTime("createdAt");
     t.dateTime("updatedAt");
+    t.list.field("units", {
+      type: "Unit",
+      resolve: async (root, _args, ctx) => {
+        const { db } = ctx.fastify;
+        return db.unit.findMany({
+          where: { person: { some: { id: root.id } } }
+        });
+      }
+    });
+    t.list.field("tags", {
+      type: "Tag",
+      resolve: async (root, _args, ctx) => {
+        const { db } = ctx.fastify;
+        return db.tag.findMany({
+          where: { person: { some: { id: root.id } } }
+        });
+      }
+    });
+    t.list.field("attachments", {
+      type: "Attachment",
+      resolve: async (root, _args, ctx) => {
+        const { db } = ctx.fastify;
+        return db.attachment.findMany({
+          where: { person: { some: { id: root.id } } }
+        });
+      }
+    });
   }
 });
 

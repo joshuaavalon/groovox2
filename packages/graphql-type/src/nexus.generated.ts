@@ -406,6 +406,7 @@ export interface NexusGenFieldTypes {
   }
   Person: { // field return type
     _id: string; // ID!
+    attachments: NexusGenRootTypes['Attachment'][]; // [Attachment!]!
     birthDate: NexusGenScalars['Date'] | null; // Date
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     deathDate: NexusGenScalars['Date'] | null; // Date
@@ -416,6 +417,8 @@ export interface NexusGenFieldTypes {
     nameMiddle: string; // String!
     nameSort: string; // String!
     sex: string; // String!
+    tags: NexusGenRootTypes['Tag'][]; // [Tag!]!
+    units: NexusGenRootTypes['Unit'][]; // [Unit!]!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Query: { // field return type
@@ -472,11 +475,13 @@ export interface NexusGenFieldTypes {
   }
   Unit: { // field return type
     _id: string; // ID!
+    attachments: NexusGenRootTypes['Attachment'][]; // [Attachment!]!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     description: string; // String!
     id: NexusGenScalars['UUID']; // UUID!
-    member: NexusGenRootTypes['Person'][]; // [Person!]!
+    members: NexusGenRootTypes['Person'][]; // [Person!]!
     name: string; // String!
+    tags: NexusGenRootTypes['Tag'][]; // [Tag!]!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
 }
@@ -515,6 +520,7 @@ export interface NexusGenFieldTypeNames {
   }
   Person: { // field return type name
     _id: 'ID'
+    attachments: 'Attachment'
     birthDate: 'Date'
     createdAt: 'DateTime'
     deathDate: 'Date'
@@ -525,6 +531,8 @@ export interface NexusGenFieldTypeNames {
     nameMiddle: 'String'
     nameSort: 'String'
     sex: 'String'
+    tags: 'Tag'
+    units: 'Unit'
     updatedAt: 'DateTime'
   }
   Query: { // field return type name
@@ -581,11 +589,13 @@ export interface NexusGenFieldTypeNames {
   }
   Unit: { // field return type name
     _id: 'ID'
+    attachments: 'Attachment'
     createdAt: 'DateTime'
     description: 'String'
     id: 'UUID'
-    member: 'Person'
+    members: 'Person'
     name: 'String'
+    tags: 'Tag'
     updatedAt: 'DateTime'
   }
 }
