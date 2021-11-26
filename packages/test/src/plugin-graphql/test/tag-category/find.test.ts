@@ -74,7 +74,7 @@ describe("plugin-graphql", () => {
       const tagCategory = tagCategories[0];
       expect(tagCategory.id).toBe(createdIds[0]);
       expect(tagCategory.name).toBe("Find TagCategory Name 1");
-      expect(tagCategory.description).toBe("Find TagCategory Name 1");
+      expect(tagCategory.description).toBe("Find TagCategory Desc 1");
       expect(tagCategory.tags.length).toBe(3);
     });
 

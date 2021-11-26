@@ -52,7 +52,7 @@ describe("plugin-graphql", () => {
       if (!data) {
         return;
       }
-      expect(data.removeTagCategories.count).toBe(2);
+      expect(data.removeTagCategories.count).toBe(1);
     });
 
     test("remove by id", async () => {
