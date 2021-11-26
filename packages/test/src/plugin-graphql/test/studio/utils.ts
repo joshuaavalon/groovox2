@@ -9,12 +9,12 @@ type Studio = {
 export const createStudio =
   (server: FastifyInstance, createdIds: string[]) =>
   async (studio: Studio): Promise<void> => {
-    const { data } = await query.tagCategory.create(server, {
+    const { data } = await query.studio.create(server, {
       data: studio
     });
 
     if (data) {
-      createdIds.push(data.createTagCategory.id);
+      createdIds.push(data.createStudio.id);
     }
   };
 

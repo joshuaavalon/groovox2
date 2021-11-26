@@ -1,10 +1,12 @@
 import { createApp } from "@groovox/app";
+
 import { query } from "../../query";
+import { cleanUp } from "./utils";
 
 import type { FastifyInstance } from "fastify";
 
 describe("plugin-graphql", () => {
-  describe("tagCategory", () => {
+  describe("tag category", () => {
     let server: FastifyInstance;
     const name = "Create TagCategory Name 1";
     const description = "Create TagCategory Desc 1";
@@ -19,7 +21,7 @@ describe("plugin-graphql", () => {
         data: { name, description }
       });
       expect(errors).toBeUndefined();
-      expect(data?.createTagCategory).toBeDefined();
+      expect(data).toBeDefined();
       if (!data) {
         return;
       }
@@ -38,9 +40,7 @@ describe("plugin-graphql", () => {
     });
 
     afterAll(async () => {
-      await query.tagCategory.removeMany(server, {
-        where: { id: { in: createdIds } }
-      });
+      await cleanUp(server, createdIds);
     });
   });
 });

@@ -30,7 +30,7 @@ describe("plugin-graphql", () => {
         where: { name: { equal: "Remove Studio Name 1" } }
       });
       expect(errors).toBeUndefined();
-      expect(data?.removeStudios).toBeDefined();
+      expect(data).toBeDefined();
       if (!data) {
         return;
       }
@@ -42,7 +42,7 @@ describe("plugin-graphql", () => {
         where: { id: { equal: createdIds[1] } }
       });
       expect(errors).toBeUndefined();
-      expect(data?.removeStudios).toBeDefined();
+      expect(data).toBeDefined();
       if (!data) {
         return;
       }

@@ -35,7 +35,7 @@ describe("plugin-graphql", () => {
         where: { id: createdIds[0] }
       });
       expect(errors).toBeUndefined();
-      expect(data?.studio).toBeDefined();
+      expect(data).toBeDefined();
       if (!data || !data.studio) {
         return;
       }
@@ -50,7 +50,7 @@ describe("plugin-graphql", () => {
         where: { name: { equal: "Find Studio Name 1" } }
       });
       expect(errors).toBeUndefined();
-      expect(data?.studios).toBeDefined();
+      expect(data).toBeDefined();
       if (!data || !data.studios) {
         return;
       }
@@ -68,7 +68,7 @@ describe("plugin-graphql", () => {
         where: { name: { startWith: "Find Studio" } }
       });
       expect(errors).toBeUndefined();
-      expect(data?.studios).toBeDefined();
+      expect(data).toBeDefined();
       if (!data) {
         return;
       }
@@ -81,7 +81,7 @@ describe("plugin-graphql", () => {
         where: { name: { endWith: "3" } }
       });
       expect(errors).toBeUndefined();
-      expect(data?.studios).toBeDefined();
+      expect(data).toBeDefined();
       if (!data) {
         return;
       }

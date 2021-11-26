@@ -21,7 +21,7 @@ describe("plugin-graphql", () => {
         data: { name, description }
       });
       expect(errors).toBeUndefined();
-      expect(data?.createStudio).toBeDefined();
+      expect(data).toBeDefined();
       if (!data) {
         return;
       }
