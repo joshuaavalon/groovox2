@@ -15,7 +15,7 @@ describe("plugin-graphql", () => {
 
     beforeAll(async () => {
       server = await createApp();
-      const create = createTagCategory(server, createdCategoryIds);
+      const create = createTagCategory(server, createdIds, createdCategoryIds);
       create({
         name: "Create Tag TagCategory Name 1",
         description: "Create Tag TagCategory Desc 1"
