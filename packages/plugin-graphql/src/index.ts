@@ -19,7 +19,6 @@ const plugin = fastifyPlugin(
     });
     fastify.register(altairPlugin);
     fastify.addHook("onReady", async () => {
-      console.log("onReady");
       jsonSchemas.forEach(schema => fastify.validate.addSchema(schema));
     });
   },
