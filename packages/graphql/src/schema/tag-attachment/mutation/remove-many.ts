@@ -3,17 +3,15 @@ import { transform } from "@groovox/graphql-util";
 
 import type { SchemaModel } from "@groovox/graphql-type";
 
-const type = mutationField("createAttachment", {
-  type: "Attachment",
+const type = mutationField("removeTagAttachments", {
+  type: "AffectedRowsOutput",
   args: {
-    data: arg({ type: "AttachmentCreateOneInput" })
+    where: arg({ type: "TagAttachmentFindManyInput" })
   },
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
-    const data = transform.attachment.input.createOne(args.data);
-    // TODO: confirm upload
-    // TODO: check parent. E.g. tagId
-    return db.attachment.create({ data });
+    const where = transform.tagattachment.input.findMany(args.where);
+    return db.tagattachment.deleteMany({ where });
   }
 });
 

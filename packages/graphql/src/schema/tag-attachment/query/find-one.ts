@@ -3,15 +3,15 @@ import { transform } from "@groovox/graphql-util";
 
 import type { SchemaModel } from "@groovox/graphql-type";
 
-export const type = queryField("attachment", {
-  type: nullable("Attachment"),
+export const type = queryField("tagattachment", {
+  type: nullable("TagAttachment"),
   args: {
-    where: arg({ type: "AttachmentFindOneInput" })
+    where: arg({ type: "TagAttachmentFindOneInput" })
   },
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
-    const where = transform.attachment.input.findOne(args.where);
-    return await db.attachment.findUnique({ where });
+    const where = transform.tagattachment.input.findOne(args.where);
+    return await db.tagattachment.findUnique({ where });
   }
 });
 

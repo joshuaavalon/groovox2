@@ -3,10 +3,9 @@ import { inputObjectType } from "nexus";
 import type { SchemaModel } from "@groovox/graphql-type";
 
 const type = inputObjectType({
-  name: "AttachmentCreateOneInput",
+  name: "TagAttachmentCreateOneInput",
   definition(t) {
-    t.uuid("fileId");
-    t.nullable.uuid("tagId");
+    t.string("name");
     t.string("description", { default: "" });
   }
 });

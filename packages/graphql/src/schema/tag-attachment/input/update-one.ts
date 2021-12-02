@@ -3,10 +3,10 @@ import { inputObjectType } from "nexus";
 import type { SchemaModel } from "@groovox/graphql-type";
 
 const type = inputObjectType({
-  name: "AttachmentOrderByInput",
+  name: "TagAttachmentUpdateOneInput",
   definition(t) {
-    t.nullable.field("id", { type: "SortOrder" });
-    t.nullable.field("createdAt", { type: "SortOrder" });
+    t.nullable.string("name");
+    t.nullable.string("description");
   }
 });
 

@@ -12,13 +12,24 @@ model Album {
   releaseDate     DateTime?         @map("release_date") @db.Date
   createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt       DateTime          @default(now()) @map("updated_at") @db.Timestamp(6)
+  albumAttachment AlbumAttachment[]
   albumPersonRole AlbumPersonRole[]
   albumUnitRole   AlbumUnitRole[]
   track           Track[]
-  attachment      Attachment[]      @relation("album_attachment")
   tag             Tag[]             @relation("album_tag")
 
   @@map("album")
+}
+
+model AlbumAttachment {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  albumId     String   @map("album_id") @db.Uuid
+  type        String
+  description String
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  album       Album    @relation(fields: [albumId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("album_attachment")
 }
 
 model AlbumPersonRole {
@@ -47,41 +58,35 @@ model AlbumUnitRole {
   @@map("album_unit_role")
 }
 
-model Attachment {
-  id          String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  description String
-  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
-  album       Album[]      @relation("album_attachment")
-  episode     Episode[]    @relation("attachment_episode")
-  movie       Movie[]      @relation("attachment_movie")
-  person      Person[]     @relation("attachment_person")
-  show        Show[]       @relation("attachment_show")
-  showSeason  ShowSeason[] @relation("attachment_show_season")
-  tag         Tag[]        @relation("attachment_tag")
-  track       Track[]      @relation("attachment_track")
-  unit        Unit[]       @relation("attachment_unit")
-
-  @@map("attachment")
-}
-
 model Episode {
-  id            String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name          String
-  contentRating String        @map("content_rating")
-  airedDate     DateTime?     @map("aired_date") @db.Date
-  rating        Decimal?      @db.Decimal(3, 1)
-  description   String
-  seasonId      String        @map("season_id") @db.Uuid
-  episodeNo     Int           @map("episode_no")
-  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt     DateTime      @default(now()) @map("updated_at") @db.Timestamp(6)
-  showSeason    ShowSeason    @relation(fields: [seasonId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  episodeRole   EpisodeRole[]
-  attachment    Attachment[]  @relation("attachment_episode")
-  tag           Tag[]         @relation("episode_tag")
+  id                String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name              String
+  contentRating     String              @map("content_rating")
+  airedDate         DateTime?           @map("aired_date") @db.Date
+  rating            Decimal?            @db.Decimal(3, 1)
+  description       String
+  seasonId          String              @map("season_id") @db.Uuid
+  episodeNo         Int                 @map("episode_no")
+  createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt         DateTime            @default(now()) @map("updated_at") @db.Timestamp(6)
+  showSeason        ShowSeason          @relation(fields: [seasonId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  episodeAttachment EpisodeAttachment[]
+  episodeRole       EpisodeRole[]
+  tag               Tag[]               @relation("episode_tag")
 
   @@unique([seasonId, episodeNo])
   @@map("episode")
+}
+
+model EpisodeAttachment {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  episodeId   String   @map("episode_id") @db.Uuid
+  type        String
+  description String
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  episode     Episode  @relation(fields: [episodeId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("episode_attachment")
 }
 
 model EpisodeRole {
@@ -113,14 +118,6 @@ model FlywaySchemaHistory {
   @@map("flyway_schema_history")
 }
 
-model Language {
-  id   String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name String @unique
-  iso  String @unique
-
-  @@map("language")
-}
-
 model Movie {
   id              String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name            String            @unique
@@ -135,8 +132,8 @@ model Movie {
   updatedAt       DateTime          @default(now()) @map("updated_at") @db.Timestamp(6)
   studio          Studio            @relation(fields: [studioId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   movieAlias      MovieAlias[]
+  movieAttachment MovieAttachment[]
   moviePersonRole MoviePersonRole[]
-  attachment      Attachment[]      @relation("attachment_movie")
   tag             Tag[]             @relation("movie_tag")
 
   @@map("movie")
@@ -149,6 +146,17 @@ model MovieAlias {
   movie   Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("movie_alias")
+}
+
+model MovieAttachment {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  movieId     String   @map("movie_id") @db.Uuid
+  type        String
+  description String
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  movie       Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("movie_attachment")
 }
 
 model MoviePersonRole {
@@ -165,28 +173,39 @@ model MoviePersonRole {
 }
 
 model Person {
-  id              String            @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  nameFirst       String            @map("name_first")
-  nameMiddle      String            @map("name_middle")
-  nameLast        String            @map("name_last")
-  nameSort        String            @map("name_sort")
-  description     String
-  birthDate       DateTime?         @map("birth_date") @db.Date
-  deathDate       DateTime?         @map("death_date") @db.Date
-  sex             String
-  createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt       DateTime          @default(now()) @map("updated_at") @db.Timestamp(6)
-  albumPersonRole AlbumPersonRole[]
-  episodeRole     EpisodeRole[]
-  moviePersonRole MoviePersonRole[]
-  showPersonRole  ShowPersonRole[]
-  showSeasonRole  ShowSeasonRole[]
-  trackPersonRole TrackPersonRole[]
-  attachment      Attachment[]      @relation("attachment_person")
-  tag             Tag[]             @relation("person_tag")
-  unit            Unit[]            @relation("person_unit")
+  id               String             @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  nameFirst        String             @map("name_first")
+  nameMiddle       String             @map("name_middle")
+  nameLast         String             @map("name_last")
+  nameSort         String             @map("name_sort")
+  description      String
+  birthDate        DateTime?          @map("birth_date") @db.Date
+  deathDate        DateTime?          @map("death_date") @db.Date
+  sex              String
+  createdAt        DateTime           @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt        DateTime           @default(now()) @map("updated_at") @db.Timestamp(6)
+  albumPersonRole  AlbumPersonRole[]
+  episodeRole      EpisodeRole[]
+  moviePersonRole  MoviePersonRole[]
+  personAttachment PersonAttachment[]
+  showPersonRole   ShowPersonRole[]
+  showSeasonRole   ShowSeasonRole[]
+  trackPersonRole  TrackPersonRole[]
+  tag              Tag[]              @relation("person_tag")
+  unit             Unit[]             @relation("person_unit")
 
   @@map("person")
+}
+
+model PersonAttachment {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  personId    String   @map("person_id") @db.Uuid
+  type        String
+  description String
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  person      Person   @relation(fields: [personId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("person_attachment")
 }
 
 model Role {
@@ -221,9 +240,9 @@ model Show {
   updatedAt      DateTime         @default(now()) @map("updated_at") @db.Timestamp(6)
   studio         Studio           @relation(fields: [studioId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   showAlias      ShowAlias[]
+  showAttachment ShowAttachment[]
   showPersonRole ShowPersonRole[]
   showSeason     ShowSeason[]
-  attachment     Attachment[]     @relation("attachment_show")
   tag            Tag[]            @relation("show_tag")
 
   @@map("show")
@@ -236,6 +255,17 @@ model ShowAlias {
   show   Show   @relation(fields: [showId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("show_alias")
+}
+
+model ShowAttachment {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  showId      String   @map("show_id") @db.Uuid
+  type        String
+  description String
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  show        Show     @relation(fields: [showId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("show_attachment")
 }
 
 model ShowPersonRole {
@@ -252,20 +282,31 @@ model ShowPersonRole {
 }
 
 model ShowSeason {
-  id             String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  showId         String           @map("show_id") @db.Uuid
-  name           String
-  seasonNo       Int              @map("season_no")
-  description    String
-  createdAt      DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt      DateTime         @default(now()) @map("updated_at") @db.Timestamp(6)
-  show           Show             @relation(fields: [showId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  episode        Episode[]
-  showSeasonRole ShowSeasonRole[]
-  attachment     Attachment[]     @relation("attachment_show_season")
+  id                   String                 @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  showId               String                 @map("show_id") @db.Uuid
+  name                 String
+  seasonNo             Int                    @map("season_no")
+  description          String
+  createdAt            DateTime               @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt            DateTime               @default(now()) @map("updated_at") @db.Timestamp(6)
+  show                 Show                   @relation(fields: [showId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  episode              Episode[]
+  showSeasonAttachment ShowSeasonAttachment[]
+  showSeasonRole       ShowSeasonRole[]
 
   @@unique([showId, seasonNo])
   @@map("show_season")
+}
+
+model ShowSeasonAttachment {
+  id           String     @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  showSeasonId String     @map("show_season_id") @db.Uuid
+  type         String
+  description  String
+  createdAt    DateTime   @default(now()) @map("created_at") @db.Timestamp(6)
+  showSeason   ShowSeason @relation(fields: [showSeasonId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("show_season_attachment")
 }
 
 model ShowSeasonRole {
@@ -294,34 +335,57 @@ model Studio {
 }
 
 model Tag {
-  id          String       @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name        String       @unique
-  description String
-  categoryId  String       @map("category_id") @db.Uuid
-  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt   DateTime     @default(now()) @map("updated_at") @db.Timestamp(6)
-  tagCategory TagCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  album       Album[]      @relation("album_tag")
-  attachment  Attachment[] @relation("attachment_tag")
-  episode     Episode[]    @relation("episode_tag")
-  movie       Movie[]      @relation("movie_tag")
-  person      Person[]     @relation("person_tag")
-  show        Show[]       @relation("show_tag")
-  track       Track[]      @relation("tag_track")
-  unit        Unit[]       @relation("tag_unit")
+  id            String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name          String          @unique
+  description   String
+  categoryId    String          @map("category_id") @db.Uuid
+  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
+  tagCategory   TagCategory     @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  tagAttachment TagAttachment[]
+  album         Album[]         @relation("album_tag")
+  episode       Episode[]       @relation("episode_tag")
+  movie         Movie[]         @relation("movie_tag")
+  person        Person[]        @relation("person_tag")
+  show          Show[]          @relation("show_tag")
+  track         Track[]         @relation("tag_track")
+  unit          Unit[]          @relation("tag_unit")
 
   @@map("tag")
 }
 
-model TagCategory {
+model TagAttachment {
   id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name        String   @unique
+  tagId       String   @map("tag_id") @db.Uuid
+  type        String
   description String
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamp(6)
-  tag         Tag[]
+  tag         Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("tag_attachment")
+}
+
+model TagCategory {
+  id                    String                  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name                  String                  @unique
+  description           String
+  createdAt             DateTime                @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt             DateTime                @default(now()) @map("updated_at") @db.Timestamp(6)
+  tag                   Tag[]
+  tagCategoryAttachment TagCategoryAttachment[]
 
   @@map("tag_category")
+}
+
+model TagCategoryAttachment {
+  id            String      @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  tagCategoryId String      @map("tag_category_id") @db.Uuid
+  type          String
+  description   String
+  createdAt     DateTime    @default(now()) @map("created_at") @db.Timestamp(6)
+  tagCategory   TagCategory @relation(fields: [tagCategoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("tag_category_attachment")
 }
 
 model Track {
@@ -334,12 +398,23 @@ model Track {
   createdAt       DateTime          @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt       DateTime          @default(now()) @map("updated_at") @db.Timestamp(6)
   album           Album             @relation(fields: [albumId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  trackAttachment TrackAttachment[]
   trackPersonRole TrackPersonRole[]
   trackUnitRole   TrackUnitRole[]
-  attachment      Attachment[]      @relation("attachment_track")
   tag             Tag[]             @relation("tag_track")
 
   @@map("track")
+}
+
+model TrackAttachment {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  trackId     String   @map("track_id") @db.Uuid
+  type        String
+  description String
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  track       Track    @relation(fields: [trackId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("track_attachment")
 }
 
 model TrackPersonRole {
@@ -369,18 +444,29 @@ model TrackUnitRole {
 }
 
 model Unit {
-  id            String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name          String
-  description   String
-  createdAt     DateTime        @default(now()) @map("created_at") @db.Timestamp(6)
-  updatedAt     DateTime        @default(now()) @map("updated_at") @db.Timestamp(6)
-  albumUnitRole AlbumUnitRole[]
-  trackUnitRole TrackUnitRole[]
-  attachment    Attachment[]    @relation("attachment_unit")
-  person        Person[]        @relation("person_unit")
-  tag           Tag[]           @relation("tag_unit")
+  id             String           @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name           String
+  description    String
+  createdAt      DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt      DateTime         @default(now()) @map("updated_at") @db.Timestamp(6)
+  albumUnitRole  AlbumUnitRole[]
+  trackUnitRole  TrackUnitRole[]
+  unitAttachment UnitAttachment[]
+  person         Person[]         @relation("person_unit")
+  tag            Tag[]            @relation("tag_unit")
 
   @@map("unit")
+}
+
+model UnitAttachment {
+  id          String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  unitId      String   @map("unit_id") @db.Uuid
+  type        String
+  description String
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  unit        Unit     @relation(fields: [unitId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("unit_attachment")
 }
 
 model Version {

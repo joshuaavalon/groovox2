@@ -9,11 +9,12 @@ import type {} from "@groovox/graphql-type";
 
 export const createSchema = (
   typegen?: string,
+  schema?: string,
   contextType?: TypingImport
 ): ReturnType<typeof makeSchema> =>
   makeSchema({
     shouldGenerateArtifacts: Boolean(typegen),
-    outputs: { typegen },
+    outputs: { typegen, schema },
     nonNullDefaults: {
       output: true,
       input: true

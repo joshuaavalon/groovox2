@@ -33,15 +33,6 @@ const type = objectType({
         });
       }
     });
-    t.list.field("attachments", {
-      type: "Attachment",
-      resolve: async (root, _args, ctx) => {
-        const { db } = ctx.fastify;
-        return db.attachment.findMany({
-          where: { unit: { some: { id: root.id } } }
-        });
-      }
-    });
   }
 });
 

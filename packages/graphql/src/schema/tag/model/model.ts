@@ -1,4 +1,5 @@
-import { objectType } from "nexus";
+import { arg, list, nullable, objectType } from "nexus";
+import { transform } from "@groovox/graphql-util";
 
 import type { SchemaModel } from "@groovox/graphql-type";
 
@@ -27,11 +28,16 @@ const type = objectType({
       }
     });
     t.list.field("attachments", {
-      type: "Attachment",
-      resolve: (root, _args, ctx) => {
+      type: "TagAttachment",
+      args: {
+        orderBy: nullable(list(arg({ type: "TagAttachmentOrderByInput" })))
+      },
+      resolve: (root, args, ctx) => {
         const { db } = ctx.fastify;
-        return db.attachment.findMany({
-          where: { tag: { every: { id: root.id } } }
+        const orderBy = transform.tag.input.orderBy(args.orderBy);
+        return db.tagAttachment.findMany({
+          where: { tagId: root.id },
+          orderBy
         });
       }
     });

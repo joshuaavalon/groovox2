@@ -1,4 +1,3 @@
-import { attachment } from "./attachment";
 import { filter } from "./filter";
 import { input } from "./input";
 import { movie } from "./movie";
@@ -10,7 +9,6 @@ import { tagCategory } from "./tag-category";
 import { unit } from "./unit";
 
 export const transform = {
-  attachment,
   filter,
   input,
   movie,
