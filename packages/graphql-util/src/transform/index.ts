@@ -1,6 +1,7 @@
 import { attachment } from "./attachment";
 import { filter } from "./filter";
 import { input } from "./input";
+import { movie } from "./movie";
 import { person } from "./person";
 import { role } from "./role";
 import { studio } from "./studio";
@@ -12,6 +13,7 @@ export const transform = {
   attachment,
   filter,
   input,
+  movie,
   person,
   role,
   studio,

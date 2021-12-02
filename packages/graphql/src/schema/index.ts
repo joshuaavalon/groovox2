@@ -3,6 +3,7 @@ import { splitSchemaModels } from "@groovox/graphql-util";
 import attachment from "./attachment";
 import filter from "./filter";
 import input from "./input";
+import movie from "./movie";
 import output from "./output";
 import person from "./person";
 import role from "./role";
@@ -15,6 +16,7 @@ export const { schemaTypes, jsonSchemas } = splitSchemaModels(
   attachment,
   filter,
   input,
+  movie,
   output,
   person,
   role,
