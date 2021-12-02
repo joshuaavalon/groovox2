@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS _person_unit;
 DROP TABLE IF EXISTS _tag_unit;
-DROP TABLE IF EXISTS _attachment_unit;
+DROP TABLE IF EXISTS unit_attachment;
 DROP TABLE IF EXISTS unit;
 DROP TABLE IF EXISTS _person_tag;
-DROP TABLE IF EXISTS _attachment_person;
+DROP TABLE IF EXISTS person_attachment;
 DROP TABLE IF EXISTS person;

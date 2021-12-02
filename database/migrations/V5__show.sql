@@ -13,15 +13,14 @@ CREATE TABLE show (
   FOREIGN KEY (studio_id) REFERENCES studio (id) ON DELETE CASCADE
 );
 
-CREATE TABLE _attachment_show (
-  a UUID NOT NULL,
-  b UUID NOT NULL,
-  FOREIGN KEY (a) REFERENCES attachment (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES show (id) ON DELETE CASCADE
+CREATE TABLE show_attachment (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  show_id UUID NOT NULL,
+  type TEXT NOT NULL,
+  description TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (show_id) REFERENCES show (id) ON DELETE CASCADE
 );
-
-CREATE UNIQUE INDEX _attachment_show_ab_unique ON _attachment_show (a, b);
-CREATE INDEX _attachment_show_b_index ON _attachment_show (b);
 
 CREATE TABLE _show_tag (
   a UUID NOT NULL,

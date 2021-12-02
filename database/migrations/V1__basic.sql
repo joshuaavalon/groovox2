@@ -7,18 +7,6 @@ CREATE TABLE version (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  description TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE language (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  name TEXT UNIQUE NOT NULL,
-  iso TEXT UNIQUE NOT NULL
-);
-
 CREATE TABLE role (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name TEXT UNIQUE NOT NULL,
