@@ -10,8 +10,8 @@ const type = mutationField("removeTagAttachments", {
   },
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
-    const where = transform.tagattachment.input.findMany(args.where);
-    return db.tagattachment.deleteMany({ where });
+    const where = transform.tagAttachment.input.findMany(args.where);
+    return db.tagAttachment.deleteMany({ where });
   }
 });
 

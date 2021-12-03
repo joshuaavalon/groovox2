@@ -5,7 +5,8 @@ import type { SchemaModel } from "@groovox/graphql-type";
 const type = inputObjectType({
   name: "TagAttachmentCreateOneInput",
   definition(t) {
-    t.string("name");
+    t.uuid("tagId");
+    t.string("type");
     t.string("description", { default: "" });
   }
 });

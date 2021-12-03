@@ -110,12 +110,14 @@ type Mutation {
   createRole(data: RoleCreateOneInput!): Role!
   createStudio(data: StudioCreateOneInput!): Studio!
   createTag(data: TagCreateOneInput!): Tag!
+  createTagAttachment(data: TagAttachmentCreateOneInput!): TagAttachment!
   createTagCategory(data: TagCategoryCreateOneInput!): TagCategory!
   createUnit(data: UnitCreateOneInput!): Unit!
   removeMovies(where: MovieFindManyInput!): AffectedRowsOutput!
   removePeople(where: PersonFindManyInput!): AffectedRowsOutput!
   removeRoles(where: RoleFindManyInput!): AffectedRowsOutput!
   removeStudios(where: StudioFindManyInput!): AffectedRowsOutput!
+  removeTagAttachments(where: TagAttachmentFindManyInput!): AffectedRowsOutput!
   removeTagCategories(where: TagCategoryFindManyInput!): AffectedRowsOutput!
   removeTags(where: TagFindManyInput!): AffectedRowsOutput!
   removeUnits(where: UnitFindManyInput!): AffectedRowsOutput!
@@ -124,6 +126,7 @@ type Mutation {
   updateRole(data: RoleUpdateOneInput!, where: RoleFindOneInput!): Role!
   updateStudio(data: StudioUpdateOneInput!, where: StudioFindOneInput!): Studio!
   updateTag(data: TagUpdateOneInput!, where: TagFindOneInput!): Tag!
+  updateTagAttachment(data: TagAttachmentUpdateOneInput!, where: TagAttachmentFindOneInput!): TagAttachment!
   updateTagCategory(data: TagCategoryUpdateOneInput!, where: TagCategoryFindOneInput!): TagCategory!
   updateUnit(data: UnitUpdateOneInput!, where: UnitFindOneInput!): Unit!
 }
@@ -220,6 +223,8 @@ type Query {
   studio(where: StudioFindOneInput!): Studio
   studios(orderBy: [StudioOrderByInput!], pagination: Pagination, where: StudioFindManyInput): [Studio!]!
   tag(where: TagFindOneInput!): Tag
+  tagAttachment(where: TagAttachmentFindOneInput!): TagAttachment
+  tagAttachments(orderBy: [TagAttachmentOrderByInput!], pagination: Pagination, where: TagAttachmentFindManyInput): [TagAttachment!]!
   tagCategories(orderBy: [TagCategoryOrderByInput!], pagination: Pagination, where: TagCategoryFindManyInput): [TagCategory!]!
   tagCategory(where: TagCategoryFindOneInput!): TagCategory
   tags(orderBy: [TagOrderByInput!], pagination: Pagination, where: TagFindManyInput): [Tag!]!
@@ -346,10 +351,36 @@ type TagAttachment {
   type: String!
 }
 
+input TagAttachmentCreateOneInput {
+  description: String! = ""
+  tagId: UUID!
+  type: String!
+}
+
+input TagAttachmentFindManyInput {
+  and: [TagAttachmentFindManyInput]
+  createdAt: DateTimeFilter
+  description: StringFilter
+  id: UUIDFilter
+  not: [TagAttachmentFindManyInput]
+  or: [TagAttachmentFindManyInput]
+  tag: TagFindManyInput
+  type: StringFilter
+}
+
+input TagAttachmentFindOneInput {
+  id: UUID!
+}
+
 input TagAttachmentOrderByInput {
   createdAt: SortOrder
   id: SortOrder
   type: SortOrder
+}
+
+input TagAttachmentUpdateOneInput {
+  description: String
+  type: String
 }
 
 type TagCategory {

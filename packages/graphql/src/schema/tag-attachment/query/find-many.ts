@@ -3,7 +3,7 @@ import { transform } from "@groovox/graphql-util";
 
 import type { SchemaModel } from "@groovox/graphql-type";
 
-const type = queryField("tagattachments", {
+const type = queryField("tagAttachments", {
   type: list("TagAttachment"),
   args: {
     where: nullable(arg({ type: "TagAttachmentFindManyInput" })),
@@ -13,9 +13,9 @@ const type = queryField("tagattachments", {
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
     const pagination = transform.input.pagination(args.pagination);
-    const orderBy = transform.tagattachment.input.orderBy(args.orderBy);
-    const where = transform.tagattachment.input.findMany(args.where);
-    return db.tagattachment.findMany({ where, orderBy, ...pagination });
+    const orderBy = transform.tagAttachment.input.orderBy(args.orderBy);
+    const where = transform.tagAttachment.input.findMany(args.where);
+    return db.tagAttachment.findMany({ where, orderBy, ...pagination });
   }
 });
 

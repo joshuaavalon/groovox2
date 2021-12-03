@@ -15,13 +15,15 @@ const mapValue = (
   }
   const result = {
     id: input.id ?? undefined,
-    type: input.type ?? undefined,
-    createdAt: input.createdAt ?? undefined
+    name: input.name ?? undefined,
+    categoryId: input.categoryId ?? undefined,
+    createdAt: input.createdAt ?? undefined,
+    updatedAt: input.updatedAt ?? undefined
   };
   return _.omitBy(result, _.isUndefined);
 };
 
-export const attachmentOrderBy = (input?: Input | null): Output | undefined => {
+export const orderBy = (input?: Input | null): Output | undefined => {
   if (_.isNil(input)) {
     return undefined;
   }

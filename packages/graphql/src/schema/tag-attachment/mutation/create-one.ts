@@ -10,8 +10,8 @@ const type = mutationField("createTagAttachment", {
   },
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
-    const data = transform.tagattachment.input.createOne(args.data);
-    return db.tagattachment.create({ data });
+    const data = transform.tagAttachment.input.createOne(args.data);
+    return db.tagAttachment.create({ data });
   }
 });
 

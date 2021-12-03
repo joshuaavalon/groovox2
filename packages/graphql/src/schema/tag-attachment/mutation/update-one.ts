@@ -11,9 +11,9 @@ const type = mutationField("updateTagAttachment", {
   },
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
-    const where = transform.tagattachment.input.findOne(args.where);
-    const data = transform.tagattachment.input.updateOne(args.data);
-    return db.tagattachment.update({ data, where });
+    const where = transform.tagAttachment.input.findOne(args.where);
+    const data = transform.tagAttachment.input.updateOne(args.data);
+    return db.tagAttachment.update({ data, where });
   }
 });
 

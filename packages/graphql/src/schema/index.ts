@@ -8,6 +8,7 @@ import person from "./person";
 import role from "./role";
 import studio from "./studio";
 import tag from "./tag";
+import tagAttachment from "./tag-attachment";
 import tagCategory from "./tag-category";
 import unit from "./unit";
 
@@ -20,6 +21,7 @@ export const { schemaTypes, jsonSchemas } = splitSchemaModels(
   role,
   studio,
   tag,
+  tagAttachment,
   tagCategory,
   unit
 );

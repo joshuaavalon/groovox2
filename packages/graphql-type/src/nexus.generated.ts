@@ -5,7 +5,7 @@
 
 
 import type { GraphqlContext } from "./context"
-import type { Movie, Person, Role, Studio, TagAttachment, Tag, TagCategory, Unit } from "@prisma/client"
+import type { Movie, Person, Role, Studio, Tag, TagAttachment, TagCategory, Unit } from "@prisma/client"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { QueryComplexity } from "nexus/dist/plugins/queryComplexityPlugin"
 import type { FieldSchemaResolver } from "@groovox/nexus-ajv"
@@ -244,10 +244,32 @@ export interface NexusGenInputs {
     description?: string | null; // String
     name?: string | null; // String
   }
+  TagAttachmentCreateOneInput: { // input type
+    description: string; // String!
+    tagId: NexusGenScalars['UUID']; // UUID!
+    type: string; // String!
+  }
+  TagAttachmentFindManyInput: { // input type
+    and?: Array<NexusGenInputs['TagAttachmentFindManyInput'] | null> | null; // [TagAttachmentFindManyInput]
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    description?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    id?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
+    not?: Array<NexusGenInputs['TagAttachmentFindManyInput'] | null> | null; // [TagAttachmentFindManyInput]
+    or?: Array<NexusGenInputs['TagAttachmentFindManyInput'] | null> | null; // [TagAttachmentFindManyInput]
+    tag?: NexusGenInputs['TagFindManyInput'] | null; // TagFindManyInput
+    type?: NexusGenInputs['StringFilter'] | null; // StringFilter
+  }
+  TagAttachmentFindOneInput: { // input type
+    id: NexusGenScalars['UUID']; // UUID!
+  }
   TagAttachmentOrderByInput: { // input type
     createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
     type?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
+  TagAttachmentUpdateOneInput: { // input type
+    description?: string | null; // String
+    type?: string | null; // String
   }
   TagCategoryCreateOneInput: { // input type
     description: string; // String!
@@ -409,12 +431,14 @@ export interface NexusGenFieldTypes {
     createRole: NexusGenRootTypes['Role']; // Role!
     createStudio: NexusGenRootTypes['Studio']; // Studio!
     createTag: NexusGenRootTypes['Tag']; // Tag!
+    createTagAttachment: NexusGenRootTypes['TagAttachment']; // TagAttachment!
     createTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
     createUnit: NexusGenRootTypes['Unit']; // Unit!
     removeMovies: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removePeople: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeRoles: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeStudios: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
+    removeTagAttachments: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeTagCategories: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeTags: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeUnits: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
@@ -423,6 +447,7 @@ export interface NexusGenFieldTypes {
     updateRole: NexusGenRootTypes['Role']; // Role!
     updateStudio: NexusGenRootTypes['Studio']; // Studio!
     updateTag: NexusGenRootTypes['Tag']; // Tag!
+    updateTagAttachment: NexusGenRootTypes['TagAttachment']; // TagAttachment!
     updateTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
     updateUnit: NexusGenRootTypes['Unit']; // Unit!
   }
@@ -452,6 +477,8 @@ export interface NexusGenFieldTypes {
     studio: NexusGenRootTypes['Studio'] | null; // Studio
     studios: NexusGenRootTypes['Studio'][]; // [Studio!]!
     tag: NexusGenRootTypes['Tag'] | null; // Tag
+    tagAttachment: NexusGenRootTypes['TagAttachment'] | null; // TagAttachment
+    tagAttachments: NexusGenRootTypes['TagAttachment'][]; // [TagAttachment!]!
     tagCategories: NexusGenRootTypes['TagCategory'][]; // [TagCategory!]!
     tagCategory: NexusGenRootTypes['TagCategory'] | null; // TagCategory
     tags: NexusGenRootTypes['Tag'][]; // [Tag!]!
@@ -539,12 +566,14 @@ export interface NexusGenFieldTypeNames {
     createRole: 'Role'
     createStudio: 'Studio'
     createTag: 'Tag'
+    createTagAttachment: 'TagAttachment'
     createTagCategory: 'TagCategory'
     createUnit: 'Unit'
     removeMovies: 'AffectedRowsOutput'
     removePeople: 'AffectedRowsOutput'
     removeRoles: 'AffectedRowsOutput'
     removeStudios: 'AffectedRowsOutput'
+    removeTagAttachments: 'AffectedRowsOutput'
     removeTagCategories: 'AffectedRowsOutput'
     removeTags: 'AffectedRowsOutput'
     removeUnits: 'AffectedRowsOutput'
@@ -553,6 +582,7 @@ export interface NexusGenFieldTypeNames {
     updateRole: 'Role'
     updateStudio: 'Studio'
     updateTag: 'Tag'
+    updateTagAttachment: 'TagAttachment'
     updateTagCategory: 'TagCategory'
     updateUnit: 'Unit'
   }
@@ -582,6 +612,8 @@ export interface NexusGenFieldTypeNames {
     studio: 'Studio'
     studios: 'Studio'
     tag: 'Tag'
+    tagAttachment: 'TagAttachment'
+    tagAttachments: 'TagAttachment'
     tagCategories: 'TagCategory'
     tagCategory: 'TagCategory'
     tags: 'Tag'
@@ -662,6 +694,9 @@ export interface NexusGenArgTypes {
     createTag: { // args
       data: NexusGenInputs['TagCreateOneInput']; // TagCreateOneInput!
     }
+    createTagAttachment: { // args
+      data: NexusGenInputs['TagAttachmentCreateOneInput']; // TagAttachmentCreateOneInput!
+    }
     createTagCategory: { // args
       data: NexusGenInputs['TagCategoryCreateOneInput']; // TagCategoryCreateOneInput!
     }
@@ -679,6 +714,9 @@ export interface NexusGenArgTypes {
     }
     removeStudios: { // args
       where: NexusGenInputs['StudioFindManyInput']; // StudioFindManyInput!
+    }
+    removeTagAttachments: { // args
+      where: NexusGenInputs['TagAttachmentFindManyInput']; // TagAttachmentFindManyInput!
     }
     removeTagCategories: { // args
       where: NexusGenInputs['TagCategoryFindManyInput']; // TagCategoryFindManyInput!
@@ -708,6 +746,10 @@ export interface NexusGenArgTypes {
     updateTag: { // args
       data: NexusGenInputs['TagUpdateOneInput']; // TagUpdateOneInput!
       where: NexusGenInputs['TagFindOneInput']; // TagFindOneInput!
+    }
+    updateTagAttachment: { // args
+      data: NexusGenInputs['TagAttachmentUpdateOneInput']; // TagAttachmentUpdateOneInput!
+      where: NexusGenInputs['TagAttachmentFindOneInput']; // TagAttachmentFindOneInput!
     }
     updateTagCategory: { // args
       data: NexusGenInputs['TagCategoryUpdateOneInput']; // TagCategoryUpdateOneInput!
@@ -753,6 +795,14 @@ export interface NexusGenArgTypes {
     }
     tag: { // args
       where: NexusGenInputs['TagFindOneInput']; // TagFindOneInput!
+    }
+    tagAttachment: { // args
+      where: NexusGenInputs['TagAttachmentFindOneInput']; // TagAttachmentFindOneInput!
+    }
+    tagAttachments: { // args
+      orderBy?: NexusGenInputs['TagAttachmentOrderByInput'][] | null; // [TagAttachmentOrderByInput!]
+      pagination?: NexusGenInputs['Pagination'] | null; // Pagination
+      where?: NexusGenInputs['TagAttachmentFindManyInput'] | null; // TagAttachmentFindManyInput
     }
     tagCategories: { // args
       orderBy?: NexusGenInputs['TagCategoryOrderByInput'][] | null; // [TagCategoryOrderByInput!]
