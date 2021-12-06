@@ -886,7 +886,7 @@ declare global {
     /**
      * Schema validation with ajv
      */
-    schema?: FieldSchemaResolver<TypeName, FieldName>
+    schema?: FieldSchemaResolver
     /**
      * Schema validation
      */

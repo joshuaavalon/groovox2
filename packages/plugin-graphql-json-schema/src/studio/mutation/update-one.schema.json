@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "/schema/graphql/studio/mutation/update-one.schema.json",
   "type": "object",
+  "title": "updateStudio",
   "properties": {
     "data": {
       "$ref": "../input/update-one.schema.json"

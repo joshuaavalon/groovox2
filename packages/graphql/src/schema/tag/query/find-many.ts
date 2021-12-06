@@ -1,6 +1,5 @@
 import { arg, list, nullable, queryField } from "nexus";
 import { transform } from "@groovox/graphql-util";
-import schema from "./find-many.schema.json";
 
 import type { SchemaModel } from "@groovox/graphql-type";
 
@@ -11,7 +10,6 @@ const type = queryField("tags", {
     pagination: nullable(arg({ type: "Pagination" })),
     orderBy: nullable(list(arg({ type: "TagOrderByInput" })))
   },
-  schema: () => schema.$id,
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
     const pagination = transform.input.pagination(args.pagination);
@@ -22,8 +20,7 @@ const type = queryField("tags", {
 });
 
 const model: SchemaModel = {
-  type,
-  schema
+  type
 };
 
 export default model;

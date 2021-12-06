@@ -1,5 +1,4 @@
 import { inputObjectType } from "nexus";
-import schema from "./pagination.schema.json";
 
 import type { SchemaModel } from "@groovox/graphql-type";
 
@@ -18,8 +17,7 @@ const type = inputObjectType({
 });
 
 const model: SchemaModel = {
-  type,
-  schema
+  type
 };
 
 export default model;

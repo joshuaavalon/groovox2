@@ -9,7 +9,7 @@ const type = mutationField("updateStudio", {
     where: arg({ type: "StudioFindOneInput" }),
     data: arg({ type: "StudioUpdateOneInput" })
   },
-  schema: true,
+  schema: "/schema/graphql/studio/mutation/update-one.schema.json",
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
     const where = transform.studio.input.findOne(args.where);
