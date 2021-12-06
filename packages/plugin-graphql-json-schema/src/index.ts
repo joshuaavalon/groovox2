@@ -5,10 +5,11 @@ import { schemaIds, schemas } from "./schema";
 
 const plugin = fastifyPlugin(
   async (fastify, _opts) => {
-    fastify.register(fastifyStatic, {
+    await fastify.register(fastifyStatic, {
       root: __dirname,
       prefix: "/schema/graphql/",
-      allowedPath: pathname => pathname.endsWith(".schema.json")
+      allowedPath: pathname => pathname.endsWith(".schema.json"),
+      decorateReply: false
     });
     fastify.decorate("graphqlJsonSchemas", schemas);
     fastify.decorate("graphqlJsonSchemaIds", schemaIds);

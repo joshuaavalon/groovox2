@@ -11,9 +11,9 @@ import type {} from "@groovox/plugin-api";
 const plugin = fastifyPlugin(
   async (fastify, _opts) => {
     const graphqlSchema = createGraphqlSchema();
-    fastify.register(graphqlJsonSchemaPlugin);
-    fastify.register(mercuriusUpload);
-    fastify.register(mercurius, {
+    await fastify.register(graphqlJsonSchemaPlugin);
+    await fastify.register(mercuriusUpload);
+    await fastify.register(mercurius, {
       schema: graphqlSchema,
       path: "/graphql",
       graphiql: false,
@@ -23,7 +23,7 @@ const plugin = fastifyPlugin(
         reply
       })
     });
-    fastify.register(altairPlugin);
+    await fastify.register(altairPlugin);
     fastify.addHook("onReady", async () => {
       schemas.forEach(schema => fastify.validate.addSchema(schema));
     });

@@ -32,7 +32,7 @@ const plugin = fastifyPlugin<Options>(
       ...renderOptions
     } = opts;
 
-    fastify.register(fastifyStatic, {
+    await fastify.register(fastifyStatic, {
       root: getDistDirectory(),
       prefix: baseURL
     });
