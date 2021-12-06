@@ -100,6 +100,17 @@ input DecimalFilter {
   notIn: [Decimal!]
 }
 
+input DecimalNullableFilter {
+  equal: Decimal
+  gt: Decimal
+  gte: Decimal
+  in: [Decimal!]
+  lt: Decimal
+  lte: Decimal
+  not: DecimalFilter
+  notIn: [Decimal!]
+}
+
 type Movie {
   _id: ID!
   airedDate: Date
@@ -110,24 +121,35 @@ type Movie {
   name: String!
   nameSort: String!
   rating: Decimal
-  studio: Studio!
+  studio: [Studio!]!
   tagline: String!
   updatedAt: DateTime!
 }
 
 input MovieCreateOneInput {
+  airedDate: Date
+  contentRating: String!
   description: String! = ""
   name: String!
+  nameSort: String!
+  rating: Decimal
+  studioIds: [UUID!]! = []
+  tagline: String! = ""
 }
 
 input MovieFindManyInput {
+  airedDate: DateNullableFilter
   and: [MovieFindManyInput]
+  contentRating: StringFilter
   createdAt: DateTimeFilter
   description: StringFilter
   id: UUIDFilter
   name: StringFilter
+  nameSort: StringFilter
   not: [MovieFindManyInput]
   or: [MovieFindManyInput]
+  rating: DecimalNullableFilter
+  tagline: StringFilter
   updatedAt: DateTimeFilter
 }
 
@@ -136,22 +158,31 @@ input MovieFindOneInput {
 }
 
 input MovieOrderByInput {
+  airedDate: SortOrder
+  contentRating: SortOrder
   createdAt: SortOrder
   id: SortOrder
   name: SortOrder
+  nameSort: SortOrder
+  rating: SortOrder
   updatedAt: SortOrder
 }
 
 input MovieUpdateOneInput {
+  airedDate: Date
+  contentRating: String
   description: String
   name: String
+  nameSort: String
+  rating: Decimal
+  studioIds: [UUID!]
+  tagline: String
 }
 
 type Mutation {
   createAttachment(data: AttachmentCreateOneInput!): Attachment!
   createMovie(data: MovieCreateOneInput!): Movie!
   createPerson(data: PersonCreateOneInput!): Person!
-  createRole(data: RoleCreateOneInput!): Role!
   createStudio(data: StudioCreateOneInput!): Studio!
   createTag(data: TagCreateOneInput!): Tag!
   createTagCategory(data: TagCategoryCreateOneInput!): TagCategory!
@@ -159,7 +190,6 @@ type Mutation {
   removeAttachments(where: AttachmentFindManyInput!): AffectedRowsOutput!
   removeMovies(where: MovieFindManyInput!): AffectedRowsOutput!
   removePeople(where: PersonFindManyInput!): AffectedRowsOutput!
-  removeRoles(where: RoleFindManyInput!): AffectedRowsOutput!
   removeStudios(where: StudioFindManyInput!): AffectedRowsOutput!
   removeTagCategories(where: TagCategoryFindManyInput!): AffectedRowsOutput!
   removeTags(where: TagFindManyInput!): AffectedRowsOutput!
@@ -167,7 +197,6 @@ type Mutation {
   updateAttachment(data: AttachmentUpdateOneInput!, where: AttachmentFindOneInput!): Attachment!
   updateMovie(data: MovieUpdateOneInput!, where: MovieFindOneInput!): Movie!
   updatePerson(data: PersonUpdateOneInput!, where: PersonFindOneInput!): Person!
-  updateRole(data: RoleUpdateOneInput!, where: RoleFindOneInput!): Role!
   updateStudio(data: StudioUpdateOneInput!, where: StudioFindOneInput!): Studio!
   updateTag(data: TagUpdateOneInput!, where: TagFindOneInput!): Tag!
   updateTagCategory(data: TagCategoryUpdateOneInput!, where: TagCategoryFindOneInput!): TagCategory!
@@ -263,8 +292,6 @@ type Query {
   movies(orderBy: [MovieOrderByInput!], pagination: Pagination, where: MovieFindManyInput): [Movie!]!
   people(orderBy: [PersonOrderByInput!], pagination: Pagination, where: PersonFindManyInput): [Person!]!
   person(where: PersonFindOneInput!): Person
-  role(where: RoleFindOneInput!): Role
-  roles(orderBy: [RoleOrderByInput!], pagination: Pagination, where: RoleFindManyInput): [Role!]!
   studio(where: StudioFindOneInput!): Studio
   studios(orderBy: [StudioOrderByInput!], pagination: Pagination, where: StudioFindManyInput): [Studio!]!
   tag(where: TagFindOneInput!): Tag
@@ -273,47 +300,6 @@ type Query {
   tags(orderBy: [TagOrderByInput!], pagination: Pagination, where: TagFindManyInput): [Tag!]!
   unit(where: UnitFindOneInput!): Unit
   units(orderBy: [UnitOrderByInput!], pagination: Pagination, where: UnitFindManyInput): [Unit!]!
-}
-
-type Role {
-  _id: ID!
-  createdAt: DateTime!
-  description: String!
-  id: UUID!
-  name: String!
-  updatedAt: DateTime!
-}
-
-input RoleCreateOneInput {
-  description: String! = ""
-  name: String!
-}
-
-input RoleFindManyInput {
-  and: [RoleFindManyInput]
-  createdAt: DateTimeFilter
-  description: StringFilter
-  id: UUIDFilter
-  name: StringFilter
-  not: [RoleFindManyInput]
-  or: [RoleFindManyInput]
-  updatedAt: DateTimeFilter
-}
-
-input RoleFindOneInput {
-  id: UUID!
-}
-
-input RoleOrderByInput {
-  createdAt: SortOrder
-  id: SortOrder
-  name: SortOrder
-  updatedAt: SortOrder
-}
-
-input RoleUpdateOneInput {
-  description: String
-  name: String
 }
 
 enum SortOrder {

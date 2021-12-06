@@ -20,12 +20,12 @@ const type = objectType({
     t.string("description");
     t.dateTime("createdAt");
     t.dateTime("updatedAt");
-    t.field("studio", {
+    t.list.field("studio", {
       type: "Studio",
       resolve: async (root, _args, ctx) => {
         const { db } = ctx.fastify;
         return db.studio.findMany({
-          where: { id: root.studioId }
+          where: { movie: { some: { id: { equals: root.id } } } }
         });
       }
     });

@@ -1,3 +1,3 @@
-import person from "./person";
+import model from "./model";
 
-export const models = [person];
+export const models = [model];

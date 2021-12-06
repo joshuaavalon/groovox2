@@ -6,7 +6,7 @@
 
 import type { GraphqlContext } from "./context"
 import type { FileUpload } from "graphql-upload"
-import type { Attachment, Movie, Person, Role, Studio, Tag, TagCategory, Unit } from "@prisma/client"
+import type { Attachment, Movie, Person, Studio, Tag, TagCategory, Unit } from "@prisma/client"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { QueryComplexity } from "nexus/dist/plugins/queryComplexityPlugin"
 import type { FieldSchemaResolver } from "@groovox/nexus-ajv"
@@ -135,32 +135,63 @@ export interface NexusGenInputs {
     not?: NexusGenInputs['DecimalFilter'] | null; // DecimalFilter
     notIn?: NexusGenScalars['Decimal'][] | null; // [Decimal!]
   }
+  DecimalNullableFilter: { // input type
+    equal?: NexusGenScalars['Decimal'] | null; // Decimal
+    gt?: NexusGenScalars['Decimal'] | null; // Decimal
+    gte?: NexusGenScalars['Decimal'] | null; // Decimal
+    in?: NexusGenScalars['Decimal'][] | null; // [Decimal!]
+    lt?: NexusGenScalars['Decimal'] | null; // Decimal
+    lte?: NexusGenScalars['Decimal'] | null; // Decimal
+    not?: NexusGenInputs['DecimalFilter'] | null; // DecimalFilter
+    notIn?: NexusGenScalars['Decimal'][] | null; // [Decimal!]
+  }
   MovieCreateOneInput: { // input type
+    airedDate?: NexusGenScalars['Date'] | null; // Date
+    contentRating: string; // String!
     description: string; // String!
     name: string; // String!
+    nameSort: string; // String!
+    rating?: NexusGenScalars['Decimal'] | null; // Decimal
+    studioIds: NexusGenScalars['UUID'][]; // [UUID!]!
+    tagline: string; // String!
   }
   MovieFindManyInput: { // input type
+    airedDate?: NexusGenInputs['DateNullableFilter'] | null; // DateNullableFilter
     and?: Array<NexusGenInputs['MovieFindManyInput'] | null> | null; // [MovieFindManyInput]
+    contentRating?: NexusGenInputs['StringFilter'] | null; // StringFilter
     createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     description?: NexusGenInputs['StringFilter'] | null; // StringFilter
     id?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
     name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    nameSort?: NexusGenInputs['StringFilter'] | null; // StringFilter
     not?: Array<NexusGenInputs['MovieFindManyInput'] | null> | null; // [MovieFindManyInput]
     or?: Array<NexusGenInputs['MovieFindManyInput'] | null> | null; // [MovieFindManyInput]
+    rating?: NexusGenInputs['DecimalNullableFilter'] | null; // DecimalNullableFilter
+    tagline?: NexusGenInputs['StringFilter'] | null; // StringFilter
     updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
   }
   MovieFindOneInput: { // input type
     id: NexusGenScalars['UUID']; // UUID!
   }
   MovieOrderByInput: { // input type
+    airedDate?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    contentRating?: NexusGenEnums['SortOrder'] | null; // SortOrder
     createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
     name?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    nameSort?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    rating?: NexusGenEnums['SortOrder'] | null; // SortOrder
     updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   MovieUpdateOneInput: { // input type
+    airedDate?: NexusGenScalars['Date'] | null; // Date
+    contentRating?: string | null; // String
     description?: string | null; // String
     name?: string | null; // String
+    nameSort?: string | null; // String
+    rating?: NexusGenScalars['Decimal'] | null; // Decimal
+    studioIds?: NexusGenScalars['UUID'][] | null; // [UUID!]
+    tagline?: string | null; // String
   }
   Pagination: { // input type
     skip?: number | null; // Int
@@ -216,33 +247,6 @@ export interface NexusGenInputs {
     nameMiddle?: string | null; // String
     nameSort?: string | null; // String
     sex?: string | null; // String
-  }
-  RoleCreateOneInput: { // input type
-    description: string; // String!
-    name: string; // String!
-  }
-  RoleFindManyInput: { // input type
-    and?: Array<NexusGenInputs['RoleFindManyInput'] | null> | null; // [RoleFindManyInput]
-    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
-    description?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    id?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
-    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    not?: Array<NexusGenInputs['RoleFindManyInput'] | null> | null; // [RoleFindManyInput]
-    or?: Array<NexusGenInputs['RoleFindManyInput'] | null> | null; // [RoleFindManyInput]
-    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
-  }
-  RoleFindOneInput: { // input type
-    id: NexusGenScalars['UUID']; // UUID!
-  }
-  RoleOrderByInput: { // input type
-    createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
-    id?: NexusGenEnums['SortOrder'] | null; // SortOrder
-    name?: NexusGenEnums['SortOrder'] | null; // SortOrder
-    updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
-  }
-  RoleUpdateOneInput: { // input type
-    description?: string | null; // String
-    name?: string | null; // String
   }
   StringFilter: { // input type
     contain?: string | null; // String
@@ -400,7 +404,6 @@ export interface NexusGenObjects {
   Mutation: {};
   Person: Person;
   Query: {};
-  Role: Role;
   Studio: Studio;
   Tag: Tag;
   TagCategory: TagCategory;
@@ -441,7 +444,7 @@ export interface NexusGenFieldTypes {
     name: string; // String!
     nameSort: string; // String!
     rating: NexusGenScalars['Decimal'] | null; // Decimal
-    studio: NexusGenRootTypes['Studio']; // Studio!
+    studio: NexusGenRootTypes['Studio'][]; // [Studio!]!
     tagline: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
@@ -449,7 +452,6 @@ export interface NexusGenFieldTypes {
     createAttachment: NexusGenRootTypes['Attachment']; // Attachment!
     createMovie: NexusGenRootTypes['Movie']; // Movie!
     createPerson: NexusGenRootTypes['Person']; // Person!
-    createRole: NexusGenRootTypes['Role']; // Role!
     createStudio: NexusGenRootTypes['Studio']; // Studio!
     createTag: NexusGenRootTypes['Tag']; // Tag!
     createTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
@@ -457,7 +459,6 @@ export interface NexusGenFieldTypes {
     removeAttachments: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeMovies: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removePeople: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
-    removeRoles: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeStudios: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeTagCategories: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeTags: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
@@ -465,7 +466,6 @@ export interface NexusGenFieldTypes {
     updateAttachment: NexusGenRootTypes['Attachment']; // Attachment!
     updateMovie: NexusGenRootTypes['Movie']; // Movie!
     updatePerson: NexusGenRootTypes['Person']; // Person!
-    updateRole: NexusGenRootTypes['Role']; // Role!
     updateStudio: NexusGenRootTypes['Studio']; // Studio!
     updateTag: NexusGenRootTypes['Tag']; // Tag!
     updateTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
@@ -494,8 +494,6 @@ export interface NexusGenFieldTypes {
     movies: NexusGenRootTypes['Movie'][]; // [Movie!]!
     people: NexusGenRootTypes['Person'][]; // [Person!]!
     person: NexusGenRootTypes['Person'] | null; // Person
-    role: NexusGenRootTypes['Role'] | null; // Role
-    roles: NexusGenRootTypes['Role'][]; // [Role!]!
     studio: NexusGenRootTypes['Studio'] | null; // Studio
     studios: NexusGenRootTypes['Studio'][]; // [Studio!]!
     tag: NexusGenRootTypes['Tag'] | null; // Tag
@@ -504,14 +502,6 @@ export interface NexusGenFieldTypes {
     tags: NexusGenRootTypes['Tag'][]; // [Tag!]!
     unit: NexusGenRootTypes['Unit'] | null; // Unit
     units: NexusGenRootTypes['Unit'][]; // [Unit!]!
-  }
-  Role: { // field return type
-    _id: string; // ID!
-    createdAt: NexusGenScalars['DateTime']; // DateTime!
-    description: string; // String!
-    id: NexusGenScalars['UUID']; // UUID!
-    name: string; // String!
-    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Studio: { // field return type
     _id: string; // ID!
@@ -585,7 +575,6 @@ export interface NexusGenFieldTypeNames {
     createAttachment: 'Attachment'
     createMovie: 'Movie'
     createPerson: 'Person'
-    createRole: 'Role'
     createStudio: 'Studio'
     createTag: 'Tag'
     createTagCategory: 'TagCategory'
@@ -593,7 +582,6 @@ export interface NexusGenFieldTypeNames {
     removeAttachments: 'AffectedRowsOutput'
     removeMovies: 'AffectedRowsOutput'
     removePeople: 'AffectedRowsOutput'
-    removeRoles: 'AffectedRowsOutput'
     removeStudios: 'AffectedRowsOutput'
     removeTagCategories: 'AffectedRowsOutput'
     removeTags: 'AffectedRowsOutput'
@@ -601,7 +589,6 @@ export interface NexusGenFieldTypeNames {
     updateAttachment: 'Attachment'
     updateMovie: 'Movie'
     updatePerson: 'Person'
-    updateRole: 'Role'
     updateStudio: 'Studio'
     updateTag: 'Tag'
     updateTagCategory: 'TagCategory'
@@ -630,8 +617,6 @@ export interface NexusGenFieldTypeNames {
     movies: 'Movie'
     people: 'Person'
     person: 'Person'
-    role: 'Role'
-    roles: 'Role'
     studio: 'Studio'
     studios: 'Studio'
     tag: 'Tag'
@@ -640,14 +625,6 @@ export interface NexusGenFieldTypeNames {
     tags: 'Tag'
     unit: 'Unit'
     units: 'Unit'
-  }
-  Role: { // field return type name
-    _id: 'ID'
-    createdAt: 'DateTime'
-    description: 'String'
-    id: 'UUID'
-    name: 'String'
-    updatedAt: 'DateTime'
   }
   Studio: { // field return type name
     _id: 'ID'
@@ -700,9 +677,6 @@ export interface NexusGenArgTypes {
     createPerson: { // args
       data: NexusGenInputs['PersonCreateOneInput']; // PersonCreateOneInput!
     }
-    createRole: { // args
-      data: NexusGenInputs['RoleCreateOneInput']; // RoleCreateOneInput!
-    }
     createStudio: { // args
       data: NexusGenInputs['StudioCreateOneInput']; // StudioCreateOneInput!
     }
@@ -723,9 +697,6 @@ export interface NexusGenArgTypes {
     }
     removePeople: { // args
       where: NexusGenInputs['PersonFindManyInput']; // PersonFindManyInput!
-    }
-    removeRoles: { // args
-      where: NexusGenInputs['RoleFindManyInput']; // RoleFindManyInput!
     }
     removeStudios: { // args
       where: NexusGenInputs['StudioFindManyInput']; // StudioFindManyInput!
@@ -750,10 +721,6 @@ export interface NexusGenArgTypes {
     updatePerson: { // args
       data: NexusGenInputs['PersonUpdateOneInput']; // PersonUpdateOneInput!
       where: NexusGenInputs['PersonFindOneInput']; // PersonFindOneInput!
-    }
-    updateRole: { // args
-      data: NexusGenInputs['RoleUpdateOneInput']; // RoleUpdateOneInput!
-      where: NexusGenInputs['RoleFindOneInput']; // RoleFindOneInput!
     }
     updateStudio: { // args
       data: NexusGenInputs['StudioUpdateOneInput']; // StudioUpdateOneInput!
@@ -796,14 +763,6 @@ export interface NexusGenArgTypes {
     }
     person: { // args
       where: NexusGenInputs['PersonFindOneInput']; // PersonFindOneInput!
-    }
-    role: { // args
-      where: NexusGenInputs['RoleFindOneInput']; // RoleFindOneInput!
-    }
-    roles: { // args
-      orderBy?: NexusGenInputs['RoleOrderByInput'][] | null; // [RoleOrderByInput!]
-      pagination?: NexusGenInputs['Pagination'] | null; // Pagination
-      where?: NexusGenInputs['RoleFindManyInput'] | null; // RoleFindManyInput
     }
     studio: { // args
       where: NexusGenInputs['StudioFindOneInput']; // StudioFindOneInput!

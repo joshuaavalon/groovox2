@@ -2,7 +2,6 @@ import { filter } from "./filter";
 import { input } from "./input";
 import { movie } from "./movie";
 import { person } from "./person";
-import { role } from "./role";
 import { studio } from "./studio";
 import { tag } from "./tag";
 import { attachment } from "./attachment";
@@ -15,7 +14,6 @@ export const transform = {
   input,
   movie,
   person,
-  role,
   studio,
   tag,
   tagCategory,

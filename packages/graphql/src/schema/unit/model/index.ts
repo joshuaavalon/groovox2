@@ -1,3 +1,3 @@
-import unit from "./unit";
+import model from "./model";
 
-export const models = [unit];
+export const models = [model];

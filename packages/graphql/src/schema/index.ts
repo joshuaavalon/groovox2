@@ -6,7 +6,6 @@ import input from "./input";
 import movie from "./movie";
 import output from "./output";
 import person from "./person";
-import role from "./role";
 import studio from "./studio";
 import tag from "./tag";
 import tagCategory from "./tag-category";
@@ -19,7 +18,6 @@ export const { schemaTypes, jsonSchemas } = splitSchemaModels(
   movie,
   output,
   person,
-  role,
   studio,
   tag,
   tagCategory,

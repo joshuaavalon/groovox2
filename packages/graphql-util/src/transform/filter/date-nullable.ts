@@ -11,5 +11,11 @@ export const dateNullable = (input?: Input | null): Output | undefined => {
   if (_.isNil(input)) {
     return undefined;
   }
-  return _.omitBy(input, _.isUndefined);
+  const { not, equal, ...others } = input;
+  const result = {
+    ...others,
+    not: dateNullable(not),
+    equals: equal
+  };
+  return _.omitBy(result, _.isUndefined);
 };
