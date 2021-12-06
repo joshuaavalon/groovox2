@@ -12,7 +12,7 @@
           "type": "null"
         },
         {
-          "$ref": "../../input/pagination"
+          "$ref": "../../input/pagination.schema.json"
         }
       ]
     },
