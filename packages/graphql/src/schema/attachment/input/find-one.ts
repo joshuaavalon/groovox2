@@ -3,7 +3,7 @@ import { inputObjectType } from "nexus";
 import type { SchemaModel } from "@groovox/graphql-type";
 
 const type = inputObjectType({
-  name: "TagAttachmentFindOneInput",
+  name: "AttachmentFindOneInput",
   definition(t) {
     t.uuid("id");
   }

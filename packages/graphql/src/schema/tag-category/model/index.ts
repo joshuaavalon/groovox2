@@ -1,3 +1,3 @@
-import tagCategory from "./tag-category";
+import model from "./model";
 
-export const models = [tagCategory];
+export const models = [model];

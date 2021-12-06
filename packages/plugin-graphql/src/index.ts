@@ -1,5 +1,6 @@
 import fastifyPlugin from "fastify-plugin";
 import mercurius from "mercurius";
+import mercuriusUpload from "mercurius-upload";
 import altairPlugin from "@groovox/plugin-altair";
 import { createGraphqlSchema, jsonSchemas } from "@groovox/graphql";
 import type {} from "@groovox/plugin-api";
@@ -7,6 +8,7 @@ import type {} from "@groovox/plugin-api";
 const plugin = fastifyPlugin(
   async (fastify, _opts) => {
     const graphqlSchema = createGraphqlSchema();
+    fastify.register(mercuriusUpload);
     fastify.register(mercurius, {
       schema: graphqlSchema,
       path: "/graphql",

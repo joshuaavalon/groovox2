@@ -9,15 +9,6 @@ CREATE TABLE album (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE album_attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  album_id UUID NOT NULL,
-  type TEXT NOT NULL,
-  description TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (album_id) REFERENCES album (id) ON DELETE CASCADE
-);
-
 CREATE TABLE _album_tag (
   a UUID NOT NULL,
   b UUID NOT NULL,
@@ -60,15 +51,6 @@ CREATE TABLE track (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (album_id) REFERENCES album (id) ON DELETE CASCADE
-);
-
-CREATE TABLE track_attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  track_id UUID NOT NULL,
-  type TEXT NOT NULL,
-  description TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (track_id) REFERENCES track (id) ON DELETE CASCADE
 );
 
 CREATE TABLE _tag_track (

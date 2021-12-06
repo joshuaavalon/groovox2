@@ -5,16 +5,6 @@ CREATE TABLE tag_category (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-
-CREATE TABLE tag_category_attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  tag_category_id UUID NOT NULL,
-  type TEXT NOT NULL,
-  description TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (tag_category_id) REFERENCES tag_category (id) ON DELETE CASCADE
-);
-
 CREATE TABLE tag (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name TEXT UNIQUE NOT NULL,
@@ -23,13 +13,4 @@ CREATE TABLE tag (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (category_id) REFERENCES tag_category (id) ON DELETE CASCADE
-);
-
-CREATE TABLE tag_attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  tag_id UUID NOT NULL,
-  type TEXT NOT NULL,
-  description TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE CASCADE
 );

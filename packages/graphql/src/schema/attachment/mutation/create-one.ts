@@ -3,15 +3,15 @@ import { transform } from "@groovox/graphql-util";
 
 import type { SchemaModel } from "@groovox/graphql-type";
 
-const type = mutationField("createTagAttachment", {
-  type: "TagAttachment",
+const type = mutationField("createAttachment", {
+  type: "Attachment",
   args: {
-    data: arg({ type: "TagAttachmentCreateOneInput" })
+    data: arg({ type: "AttachmentCreateOneInput" })
   },
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
-    const data = transform.tagAttachment.input.createOne(args.data);
-    return db.tagAttachment.create({ data });
+    const data = transform.attachment.input.createOne(args.data);
+    return db.attachment.create({ data });
   }
 });
 

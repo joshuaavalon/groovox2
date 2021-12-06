@@ -3,13 +3,13 @@ import { objectType } from "nexus";
 import type { SchemaModel } from "@groovox/graphql-type";
 
 const type = objectType({
-  name: "TagAttachment",
+  name: "Attachment",
   sourceType: {
     module: "@prisma/client",
-    export: "TagAttachment"
+    export: "Attachment"
   },
   definition(t) {
-    t.id("_id", { resolve: root => `tag-attachment:${root.id}` });
+    t.id("_id", { resolve: root => `attachment:${root.id}` });
     t.uuid("id");
     t.uuid("tagId");
     t.string("type");

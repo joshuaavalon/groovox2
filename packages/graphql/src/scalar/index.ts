@@ -5,6 +5,7 @@ import {
   TimeResolver,
   UUIDResolver
 } from "graphql-scalars";
+import { GraphQLUpload } from "graphql-upload";
 
 import { GraphQLDecimal } from "./decimal";
 
@@ -13,5 +14,9 @@ export const scalarTypes = [
   asNexusMethod(DateResolver, "date", "Date"),
   asNexusMethod(TimeResolver, "time", "Date"),
   asNexusMethod(DateTimeResolver, "dateTime", "Date"),
-  asNexusMethod(GraphQLDecimal, "decimal", "number")
+  asNexusMethod(GraphQLDecimal, "decimal", "number"),
+  asNexusMethod(GraphQLUpload, "file", {
+    module: "graphql-upload",
+    export: "FileUpload"
+  })
 ];

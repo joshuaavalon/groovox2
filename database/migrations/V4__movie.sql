@@ -13,15 +13,6 @@ CREATE TABLE movie (
   FOREIGN KEY (studio_id) REFERENCES studio (id) ON DELETE CASCADE
 );
 
-CREATE TABLE movie_attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  movie_id UUID NOT NULL,
-  type TEXT NOT NULL,
-  description TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (movie_id) REFERENCES movie (id) ON DELETE CASCADE
-);
-
 CREATE TABLE _movie_tag (
   a UUID NOT NULL,
   b UUID NOT NULL,

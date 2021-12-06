@@ -1,3 +1,3 @@
-import studio from "./studio";
+import model from "./model";
 
-export const models = [studio];
+export const models = [model];

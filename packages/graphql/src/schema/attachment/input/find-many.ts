@@ -3,7 +3,7 @@ import { inputObjectType } from "nexus";
 import type { SchemaModel } from "@groovox/graphql-type";
 
 const type = inputObjectType({
-  name: "TagAttachmentFindManyInput",
+  name: "AttachmentFindManyInput",
   definition(t) {
     t.nullable.field("id", { type: "UUIDFilter" });
     t.nullable.field("tag", { type: "TagFindManyInput" });
@@ -11,13 +11,13 @@ const type = inputObjectType({
     t.nullable.field("description", { type: "StringFilter" });
     t.nullable.field("createdAt", { type: "DateTimeFilter" });
     t.nullable.list.nullable.field("and", {
-      type: "TagAttachmentFindManyInput"
+      type: "AttachmentFindManyInput"
     });
     t.nullable.list.nullable.field("or", {
-      type: "TagAttachmentFindManyInput"
+      type: "AttachmentFindManyInput"
     });
     t.nullable.list.nullable.field("not", {
-      type: "TagAttachmentFindManyInput"
+      type: "AttachmentFindManyInput"
     });
   }
 });

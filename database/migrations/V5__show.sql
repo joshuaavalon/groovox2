@@ -13,15 +13,6 @@ CREATE TABLE show (
   FOREIGN KEY (studio_id) REFERENCES studio (id) ON DELETE CASCADE
 );
 
-CREATE TABLE show_attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  show_id UUID NOT NULL,
-  type TEXT NOT NULL,
-  description TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (show_id) REFERENCES show (id) ON DELETE CASCADE
-);
-
 CREATE TABLE _show_tag (
   a UUID NOT NULL,
   b UUID NOT NULL,
@@ -73,15 +64,6 @@ CREATE TABLE show_season_role (
   PRIMARY KEY(show_season_id, person_id, role_id)
 );
 
-CREATE TABLE show_season_attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  show_season_id UUID NOT NULL,
-  type TEXT NOT NULL,
-  description TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (show_season_id) REFERENCES show_season (id) ON DELETE CASCADE
-);
-
 CREATE TABLE episode (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   name TEXT NOT NULL,
@@ -117,12 +99,3 @@ CREATE TABLE _episode_tag (
 
 CREATE UNIQUE INDEX _episode_tag_ab_unique ON _episode_tag (a, b);
 CREATE INDEX _episode_tag_b_index ON _episode_tag (b);
-
-CREATE TABLE episode_attachment (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  episode_id UUID NOT NULL,
-  type TEXT NOT NULL,
-  description TEXT NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (episode_id) REFERENCES episode (id) ON DELETE CASCADE
-);
