@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://joshuaavalon.github.io/groovox/plugin-graphql/schema/input/pagination",
+  "$id": "/schema/graphql/input/pagination.schema.json",
   "type": "object",
   "title": "Pagination",
   "description": "Control the range of the records to return.",

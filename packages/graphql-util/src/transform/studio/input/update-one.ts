@@ -13,7 +13,8 @@ export const updateOne = (input: Input): Output => {
   }
   const result = {
     name: input.name ?? undefined,
-    description: input.description ?? undefined
+    description: input.description ?? undefined,
+    updatedAt: new Date()
   };
   return _.omitBy(result, _.isUndefined);
 };

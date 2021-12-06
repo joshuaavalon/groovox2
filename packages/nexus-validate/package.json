@@ -1,5 +1,5 @@
 {
-  "name": "@groovox/graphql",
+  "name": "@groovox/nexus-validate",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -7,32 +7,26 @@
   "typings": "./src/index.ts",
   "scripts": {
     "prebuild": "rimraf lib",
-    "build": "tsc",
-    "generate": "ts-node-transpile-only script/generate.ts"
+    "build": "tsc"
   },
   "keywords": [],
   "homepage": "https://github.com/groovox/groovox#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/groovox/groovox.git",
-    "directory": "packages/graphql"
+    "directory": "packages/nexus-validate"
   },
   "bugs": {
     "url": "https://github.com/groovox/groovox/issues"
   },
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
-  "dependencies": {
-    "@groovox/graphql-type": "^1.0.0",
-    "@groovox/graphql-util": "^1.0.0",
-    "@groovox/nexus-ajv": "^1.0.0",
-    "@groovox/nexus-validate": "^1.0.0",
-    "graphql-scalars": "^1.13.1",
-    "graphql-upload": "^12.0.0",
-    "lodash": "^4.17.21",
-    "nexus": "^1.1.0"
-  },
   "devDependencies": {
     "@types/lodash": "^4.14.176"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "mercurius": "^8.9.1",
+    "nexus": "^1.1.0"
   }
 }

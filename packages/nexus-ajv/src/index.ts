@@ -63,7 +63,7 @@ export const nexusAjvPlugin = (): NexusPlugin =>
 
       return async function (root, args, ctx, info, next) {
         const fastify: FastifyInstance = ctx.fastify;
-        const schemaId = schemaFn(root, args, ctx, info);
+        const schemaId = await schemaFn(root, args, ctx, info);
         if (!schemaId) {
           return next(root, args, ctx, info);
         }

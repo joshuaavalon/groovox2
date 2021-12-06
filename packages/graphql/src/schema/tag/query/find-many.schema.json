@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://joshuaavalon.github.io/groovox/plugin-graphql/schema/tag/query/find-many",
+  "$id": "/schema/graphql/tag/query/find-many.schema.json",
   "type": "object",
   "properties": {
     "where": {

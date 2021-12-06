@@ -1,4 +1,5 @@
 import { inputObjectType } from "nexus";
+import schema from "./boolean.schema.json";
 
 import type { SchemaModel } from "@groovox/graphql-type";
 
@@ -11,7 +12,8 @@ const type = inputObjectType({
 });
 
 const model: SchemaModel = {
-  type
+  type,
+  schema
 };
 
 export default model;

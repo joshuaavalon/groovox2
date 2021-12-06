@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/schema/graphql/studio/mutation/update-one.schema.json",
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "../input/update-one.schema.json"
+    },
+    "where": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,5 +1,6 @@
 import { arg, mutationField } from "nexus";
 import { transform } from "@groovox/graphql-util";
+import schema from "./create-one.schema.json";
 
 import type { SchemaModel } from "@groovox/graphql-type";
 
@@ -8,6 +9,7 @@ const type = mutationField("createStudio", {
   args: {
     data: arg({ type: "StudioCreateOneInput" })
   },
+  schema: () => schema.$id,
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
     const data = transform.studio.input.createOne(args.data);
@@ -16,7 +18,8 @@ const type = mutationField("createStudio", {
 });
 
 const model: SchemaModel = {
-  type
+  type,
+  schema
 };
 
 export default model;

@@ -1,5 +1,6 @@
 import { fieldAuthorizePlugin, makeSchema, queryComplexityPlugin } from "nexus";
 import { nexusAjvPlugin } from "@groovox/nexus-ajv";
+import { nexusValidationPlugin } from "@groovox/nexus-validate";
 
 import { schemaTypes } from "./schema";
 import { scalarTypes } from "./scalar";
@@ -23,7 +24,8 @@ export const createSchema = (
     plugins: [
       fieldAuthorizePlugin(),
       queryComplexityPlugin(),
-      nexusAjvPlugin()
+      nexusAjvPlugin(),
+      nexusValidationPlugin()
     ],
     contextType
   });

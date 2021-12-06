@@ -11,8 +11,7 @@ const type = queryField("tags", {
     pagination: nullable(arg({ type: "Pagination" })),
     orderBy: nullable(list(arg({ type: "TagOrderByInput" })))
   },
-  schema: () =>
-    "https://joshuaavalon.github.io/groovox/plugin-graphql/schema/tag/query/find-many",
+  schema: () => schema.$id,
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.fastify;
     const pagination = transform.input.pagination(args.pagination);

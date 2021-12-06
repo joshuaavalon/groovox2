@@ -10,6 +10,7 @@ import type { Attachment, Movie, Person, Studio, Tag, TagCategory, Unit } from "
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { QueryComplexity } from "nexus/dist/plugins/queryComplexityPlugin"
 import type { FieldSchemaResolver } from "@groovox/nexus-ajv"
+import type { FieldValidationResolver } from "@groovox/nexus-validate"
 import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -886,6 +887,10 @@ declare global {
      * Schema validation with ajv
      */
     schema?: FieldSchemaResolver<TypeName, FieldName>
+    /**
+     * Schema validation
+     */
+    validate?: FieldValidationResolver<TypeName, FieldName>
   }
   interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
   }
