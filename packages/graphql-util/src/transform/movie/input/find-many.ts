@@ -15,12 +15,17 @@ export const findMany = (input?: Input | null): Output | undefined => {
   const result = {
     id: filter.uuid(input.id),
     name: filter.string(input.name),
+    nameSort: filter.string(input.nameSort),
+    contentRating: filter.string(input.contentRating),
+    airedDate: filter.dateNullable(input.airedDate),
+    tagline: filter.string(input.tagline),
+    rating: filter.decimalNullable(input.rating),
     description: filter.string(input.description),
     createdAt: filter.dataTime(input.createdAt),
     updatedAt: filter.dataTime(input.updatedAt),
-    AND: input.and?.map(i => findMany(i)),
-    OR: input.or?.map(i => findMany(i)),
-    NOT: input.not?.map(i => findMany(i))
+    AND: input.and?.map(i => findMany(i)) ?? undefined,
+    OR: input.or?.map(i => findMany(i)) ?? undefined,
+    NOT: input.not?.map(i => findMany(i)) ?? undefined
   };
   return _.omitBy(result, _.isUndefined);
 };

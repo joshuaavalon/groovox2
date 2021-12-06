@@ -13,7 +13,13 @@ export const updateOne = (input: Input): Output => {
   }
   const result = {
     name: input.name ?? undefined,
-    description: input.description ?? undefined
+    nameSort: input.nameSort ?? undefined,
+    contentRating: input.contentRating ?? undefined,
+    airedDate: input.airedDate,
+    tagline: input.tagline ?? undefined,
+    rating: input.rating,
+    description: input.description ?? undefined,
+    updatedAt: new Date()
   };
   return _.omitBy(result, _.isUndefined);
 };

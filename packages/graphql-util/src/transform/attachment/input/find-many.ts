@@ -19,9 +19,9 @@ export const findMany = (input?: Input | null): Output | undefined => {
     type: filter.string(input.type),
     description: filter.string(input.description),
     createdAt: filter.dataTime(input.createdAt),
-    AND: input.and?.map(i => findMany(i)),
-    OR: input.or?.map(i => findMany(i)),
-    NOT: input.not?.map(i => findMany(i))
+    AND: input.and?.map(i => findMany(i)) ?? undefined,
+    OR: input.or?.map(i => findMany(i)) ?? undefined,
+    NOT: input.not?.map(i => findMany(i)) ?? undefined
   };
   return _.omitBy(result, _.isUndefined);
 };

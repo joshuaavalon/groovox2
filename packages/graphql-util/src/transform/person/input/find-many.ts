@@ -23,9 +23,9 @@ export const findMany = (input?: Input | null): Output | undefined => {
     deathDate: filter.dateNullable(input.deathDate),
     createdAt: filter.dataTime(input.createdAt),
     updatedAt: filter.dataTime(input.updatedAt),
-    AND: input.and?.map(i => findMany(i)),
-    OR: input.or?.map(i => findMany(i)),
-    NOT: input.not?.map(i => findMany(i))
+    AND: input.and?.map(i => findMany(i)) ?? undefined,
+    OR: input.or?.map(i => findMany(i)) ?? undefined,
+    NOT: input.not?.map(i => findMany(i)) ?? undefined
   };
   return _.omitBy(result, _.isUndefined);
 };
