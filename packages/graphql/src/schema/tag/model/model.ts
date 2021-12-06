@@ -28,14 +28,14 @@ const type = objectType({
       }
     });
     t.list.field("attachments", {
-      type: "TagAttachment",
+      type: "Attachment",
       args: {
-        orderBy: nullable(list(arg({ type: "TagAttachmentOrderByInput" })))
+        orderBy: nullable(list(arg({ type: "AttachmentOrderByInput" })))
       },
       resolve: (root, args, ctx) => {
         const { db } = ctx.fastify;
         const orderBy = transform.tag.input.orderBy(args.orderBy);
-        return db.tagAttachment.findMany({
+        return db.attachment.findMany({
           where: { tagId: root.id },
           orderBy
         });

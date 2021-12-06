@@ -1,5 +1,5 @@
 import { input } from "./input";
 
-export const tagAttachment = {
+export const attachment = {
   input
 };

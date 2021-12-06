@@ -1,3 +1,3 @@
-import movie from "./movie";
+import model from "./model";
 
-export const models = [movie];
+export const models = [model];

@@ -3,16 +3,17 @@ import _ from "lodash";
 import type { Prisma } from "@prisma/client";
 import type { NexusGenInputs } from "@groovox/graphql-type";
 
-type Input = NexusGenInputs["TagAttachmentFindOneInput"];
+type Input = NexusGenInputs["AttachmentUpdateOneInput"];
 
-type Output = Prisma.TagAttachmentWhereUniqueInput;
+type Output = Prisma.AttachmentUpdateInput;
 
-export const findOne = (input?: Input | null): Output => {
+export const updateOne = (input: Input): Output => {
   if (_.isNil(input)) {
     return {};
   }
   const result = {
-    id: input.id ?? undefined
+    type: input.type ?? undefined,
+    description: input.description ?? undefined
   };
   return _.omitBy(result, _.isUndefined);
 };

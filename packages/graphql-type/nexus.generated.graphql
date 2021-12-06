@@ -6,6 +6,49 @@ type AffectedRowsOutput {
   count: Int!
 }
 
+type Attachment {
+  _id: ID!
+  createdAt: DateTime!
+  description: String!
+  id: UUID!
+  tag: Tag
+  tagCategoryId: UUID
+  tagId: UUID
+  type: String!
+}
+
+input AttachmentCreateOneInput {
+  description: String! = ""
+  file: Upload!
+  type: String!
+}
+
+input AttachmentFindManyInput {
+  and: [AttachmentFindManyInput]
+  createdAt: DateTimeFilter
+  description: StringFilter
+  id: UUIDFilter
+  not: [AttachmentFindManyInput]
+  or: [AttachmentFindManyInput]
+  tag: TagFindManyInput
+  type: StringFilter
+}
+
+input AttachmentFindOneInput {
+  id: UUID!
+}
+
+input AttachmentOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  type: SortOrder
+}
+
+input AttachmentUpdateOneInput {
+  description: String
+  type: String
+}
+
 input BooleanFilter {
   equal: Boolean
   not: BooleanFilter
@@ -105,32 +148,29 @@ input MovieUpdateOneInput {
 }
 
 type Mutation {
+  createAttachment(data: AttachmentCreateOneInput!): Attachment!
   createMovie(data: MovieCreateOneInput!): Movie!
   createPerson(data: PersonCreateOneInput!): Person!
   createRole(data: RoleCreateOneInput!): Role!
   createStudio(data: StudioCreateOneInput!): Studio!
   createTag(data: TagCreateOneInput!): Tag!
-  createTagAttachment(data: TagAttachmentCreateOneInput!): TagAttachment!
   createTagCategory(data: TagCategoryCreateOneInput!): TagCategory!
-  createTagCategoryAttachment(data: TagCategoryAttachmentCreateOneInput!): TagCategoryAttachment!
   createUnit(data: UnitCreateOneInput!): Unit!
+  removeAttachments(where: AttachmentFindManyInput!): AffectedRowsOutput!
   removeMovies(where: MovieFindManyInput!): AffectedRowsOutput!
   removePeople(where: PersonFindManyInput!): AffectedRowsOutput!
   removeRoles(where: RoleFindManyInput!): AffectedRowsOutput!
   removeStudios(where: StudioFindManyInput!): AffectedRowsOutput!
-  removeTagAttachments(where: TagAttachmentFindManyInput!): AffectedRowsOutput!
   removeTagCategories(where: TagCategoryFindManyInput!): AffectedRowsOutput!
-  removeTagCategoryAttachments(where: TagCategoryAttachmentFindManyInput!): AffectedRowsOutput!
   removeTags(where: TagFindManyInput!): AffectedRowsOutput!
   removeUnits(where: UnitFindManyInput!): AffectedRowsOutput!
+  updateAttachment(data: AttachmentUpdateOneInput!, where: AttachmentFindOneInput!): Attachment!
   updateMovie(data: MovieUpdateOneInput!, where: MovieFindOneInput!): Movie!
   updatePerson(data: PersonUpdateOneInput!, where: PersonFindOneInput!): Person!
   updateRole(data: RoleUpdateOneInput!, where: RoleFindOneInput!): Role!
   updateStudio(data: StudioUpdateOneInput!, where: StudioFindOneInput!): Studio!
   updateTag(data: TagUpdateOneInput!, where: TagFindOneInput!): Tag!
-  updateTagAttachment(data: TagAttachmentUpdateOneInput!, where: TagAttachmentFindOneInput!): TagAttachment!
   updateTagCategory(data: TagCategoryUpdateOneInput!, where: TagCategoryFindOneInput!): TagCategory!
-  updateTagCategoryAttachment(data: TagCategoryAttachmentUpdateOneInput!, where: TagCategoryAttachmentFindOneInput!): TagCategoryAttachment!
   updateUnit(data: UnitUpdateOneInput!, where: UnitFindOneInput!): Unit!
 }
 
@@ -217,6 +257,8 @@ input PersonUpdateOneInput {
 }
 
 type Query {
+  attachment(where: AttachmentFindOneInput!): Attachment
+  attachments(orderBy: [AttachmentOrderByInput!], pagination: Pagination, where: AttachmentFindManyInput): [Attachment!]!
   movie(where: MovieFindOneInput!): Movie
   movies(orderBy: [MovieOrderByInput!], pagination: Pagination, where: MovieFindManyInput): [Movie!]!
   people(orderBy: [PersonOrderByInput!], pagination: Pagination, where: PersonFindManyInput): [Person!]!
@@ -226,12 +268,8 @@ type Query {
   studio(where: StudioFindOneInput!): Studio
   studios(orderBy: [StudioOrderByInput!], pagination: Pagination, where: StudioFindManyInput): [Studio!]!
   tag(where: TagFindOneInput!): Tag
-  tagAttachment(where: TagAttachmentFindOneInput!): TagAttachment
-  tagAttachments(orderBy: [TagAttachmentOrderByInput!], pagination: Pagination, where: TagAttachmentFindManyInput): [TagAttachment!]!
   tagCategories(orderBy: [TagCategoryOrderByInput!], pagination: Pagination, where: TagCategoryFindManyInput): [TagCategory!]!
   tagCategory(where: TagCategoryFindOneInput!): TagCategory
-  tagCategoryAttachment(where: TagCategoryAttachmentFindOneInput!): TagCategoryAttachment
-  tagCategoryAttachments(orderBy: [TagCategoryAttachmentOrderByInput!], pagination: Pagination, where: TagCategoryAttachmentFindManyInput): [TagCategoryAttachment!]!
   tags(orderBy: [TagOrderByInput!], pagination: Pagination, where: TagFindManyInput): [Tag!]!
   unit(where: UnitFindOneInput!): Unit
   units(orderBy: [UnitOrderByInput!], pagination: Pagination, where: UnitFindManyInput): [Unit!]!
@@ -336,7 +374,7 @@ input StudioUpdateOneInput {
 
 type Tag {
   _id: ID!
-  attachments(orderBy: [TagAttachmentOrderByInput!]): [TagAttachment!]!
+  attachments(orderBy: [AttachmentOrderByInput!]): [Attachment!]!
   category: TagCategory!
   categoryId: UUID!
   createdAt: DateTime!
@@ -344,49 +382,6 @@ type Tag {
   id: UUID!
   name: String!
   updatedAt: DateTime!
-}
-
-type TagAttachment {
-  _id: ID!
-  createdAt: DateTime!
-  description: String!
-  id: UUID!
-  tag: Tag!
-  tagId: UUID!
-  type: String!
-}
-
-input TagAttachmentCreateOneInput {
-  description: String! = ""
-  file: Upload!
-  tagId: UUID!
-  type: String!
-}
-
-input TagAttachmentFindManyInput {
-  and: [TagAttachmentFindManyInput]
-  createdAt: DateTimeFilter
-  description: StringFilter
-  id: UUIDFilter
-  not: [TagAttachmentFindManyInput]
-  or: [TagAttachmentFindManyInput]
-  tag: TagFindManyInput
-  type: StringFilter
-}
-
-input TagAttachmentFindOneInput {
-  id: UUID!
-}
-
-input TagAttachmentOrderByInput {
-  createdAt: SortOrder
-  id: SortOrder
-  type: SortOrder
-}
-
-input TagAttachmentUpdateOneInput {
-  description: String
-  type: String
 }
 
 type TagCategory {
@@ -397,49 +392,6 @@ type TagCategory {
   name: String!
   tags: [Tag!]!
   updatedAt: DateTime!
-}
-
-type TagCategoryAttachment {
-  _id: ID!
-  createdAt: DateTime!
-  description: String!
-  id: UUID!
-  tagCategory: TagCategory!
-  tagCategoryId: UUID!
-  type: String!
-}
-
-input TagCategoryAttachmentCreateOneInput {
-  description: String! = ""
-  file: Upload!
-  tagCategoryId: UUID!
-  type: String!
-}
-
-input TagCategoryAttachmentFindManyInput {
-  and: [TagCategoryAttachmentFindManyInput]
-  createdAt: DateTimeFilter
-  description: StringFilter
-  id: UUIDFilter
-  not: [TagCategoryAttachmentFindManyInput]
-  or: [TagCategoryAttachmentFindManyInput]
-  tagCategory: TagCategoryFindManyInput
-  type: StringFilter
-}
-
-input TagCategoryAttachmentFindOneInput {
-  id: UUID!
-}
-
-input TagCategoryAttachmentOrderByInput {
-  createdAt: SortOrder
-  id: SortOrder
-  type: SortOrder
-}
-
-input TagCategoryAttachmentUpdateOneInput {
-  description: String
-  type: String
 }
 
 input TagCategoryCreateOneInput {

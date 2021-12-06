@@ -3,22 +3,20 @@ import _ from "lodash";
 import type { Prisma } from "@prisma/client";
 import type { NexusGenInputs } from "@groovox/graphql-type";
 
-type Input = NexusGenInputs["TagAttachmentOrderByInput"][];
+type Input = NexusGenInputs["AttachmentOrderByInput"][];
 
-type Output = Prisma.TagAttachmentOrderByWithRelationInput[];
+type Output = Prisma.AttachmentOrderByWithRelationInput[];
 
 const mapValue = (
-  input?: NexusGenInputs["TagAttachmentOrderByInput"] | null
-): Prisma.TagAttachmentOrderByWithRelationInput | undefined => {
+  input?: NexusGenInputs["AttachmentOrderByInput"] | null
+): Prisma.AttachmentOrderByWithRelationInput | undefined => {
   if (_.isNil(input)) {
     return undefined;
   }
   const result = {
     id: input.id ?? undefined,
-    name: input.name ?? undefined,
-    categoryId: input.categoryId ?? undefined,
-    createdAt: input.createdAt ?? undefined,
-    updatedAt: input.updatedAt ?? undefined
+    type: input.type ?? undefined,
+    createdAt: input.createdAt ?? undefined
   };
   return _.omitBy(result, _.isUndefined);
 };

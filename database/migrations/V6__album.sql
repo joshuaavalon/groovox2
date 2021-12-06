@@ -20,25 +20,31 @@ CREATE UNIQUE INDEX _album_tag_ab_unique ON _album_tag (a, b);
 CREATE INDEX _album_tag_b_index ON _album_tag (b);
 
 CREATE TABLE album_person_role (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   album_id UUID NOT NULL,
   person_id UUID NOT NULL,
-  role_id UUID NOT NULL,
+  type TEXT NOT NULL,
+  role TEXT NOT NULL,
+  order INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (album_id) REFERENCES album (id) ON DELETE CASCADE,
   FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
-  FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
-  PRIMARY KEY(album_id, person_id, role_id)
+  UNIQUE(album_id, type, order)
 );
 
 CREATE TABLE album_unit_role (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   album_id UUID NOT NULL,
   unit_id UUID NOT NULL,
-  role_id UUID NOT NULL,
+  type TEXT NOT NULL,
+  role TEXT NOT NULL,
+  order INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (album_id) REFERENCES album (id) ON DELETE CASCADE,
   FOREIGN KEY (unit_id) REFERENCES unit (id) ON DELETE CASCADE,
-  FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
-  PRIMARY KEY(album_id, unit_id, role_id)
+  UNIQUE(album_id, type, order)
 );
 
 CREATE TABLE track (
@@ -64,23 +70,29 @@ CREATE UNIQUE INDEX _tag_track_ab_unique ON _tag_track (a, b);
 CREATE INDEX _tag_track_b_index ON _tag_track (b);
 
 CREATE TABLE track_person_role (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   track_id UUID NOT NULL,
   person_id UUID NOT NULL,
-  role_id UUID NOT NULL,
+  type TEXT NOT NULL,
+  role TEXT NOT NULL,
+  order INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (track_id) REFERENCES track (id) ON DELETE CASCADE,
   FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
-  FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
-  PRIMARY KEY(track_id, person_id, role_id)
+  UNIQUE(track_id, type, order)
 );
 
 CREATE TABLE track_unit_role (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   track_id UUID NOT NULL,
   unit_id UUID NOT NULL,
-  role_id UUID NOT NULL,
+  type TEXT NOT NULL,
+  role TEXT NOT NULL,
+  order INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (track_id) REFERENCES track (id) ON DELETE CASCADE,
   FOREIGN KEY (unit_id) REFERENCES unit (id) ON DELETE CASCADE,
-  FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
-  PRIMARY KEY(track_id, unit_id, role_id)
+  UNIQUE(track_id, type, order)
 );

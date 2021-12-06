@@ -11,13 +11,17 @@ const type = objectType({
   definition(t) {
     t.id("_id", { resolve: root => `attachment:${root.id}` });
     t.uuid("id");
-    t.uuid("tagId");
+    t.nullable.uuid("tagId");
+    t.nullable.uuid("tagCategoryId");
     t.string("type");
     t.string("description");
     t.dateTime("createdAt");
-    t.field("tag", {
+    t.nullable.field("tag", {
       type: "Tag",
       resolve: (root, _args, ctx) => {
+        if (!root.tagId) {
+          return null;
+        }
         const { db } = ctx.fastify;
         return db.tag.findUnique({
           where: { id: root.tagId },

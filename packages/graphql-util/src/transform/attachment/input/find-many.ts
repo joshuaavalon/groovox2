@@ -5,9 +5,9 @@ import { tag } from "../../tag";
 import type { Prisma } from "@prisma/client";
 import type { NexusGenInputs } from "@groovox/graphql-type";
 
-type Input = NexusGenInputs["TagAttachmentFindManyInput"];
+type Input = NexusGenInputs["AttachmentFindManyInput"];
 
-type Output = Prisma.TagAttachmentWhereInput;
+type Output = Prisma.AttachmentWhereInput;
 
 export const findMany = (input?: Input | null): Output | undefined => {
   if (_.isNil(input)) {
