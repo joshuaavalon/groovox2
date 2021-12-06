@@ -58,7 +58,8 @@ export const nexusAjvPlugin = (): NexusPlugin =>
             code: "AJV_SCHEMA_NOT_FOUND",
             fieldConfig: {
               name: fieldConfig.name,
-              type: fieldConfig.type
+              type: fieldConfig.type,
+              schemaId
             }
           });
         }
