@@ -25,12 +25,12 @@ CREATE TABLE album_person_role (
   person_id UUID NOT NULL,
   type TEXT NOT NULL,
   role TEXT NOT NULL,
-  order INTEGER NOT NULL,
+  sequence INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (album_id) REFERENCES album (id) ON DELETE CASCADE,
   FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
-  UNIQUE(album_id, type, order)
+  UNIQUE(album_id, type, sequence)
 );
 
 CREATE TABLE album_unit_role (
@@ -39,12 +39,12 @@ CREATE TABLE album_unit_role (
   unit_id UUID NOT NULL,
   type TEXT NOT NULL,
   role TEXT NOT NULL,
-  order INTEGER NOT NULL,
+  sequence INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (album_id) REFERENCES album (id) ON DELETE CASCADE,
   FOREIGN KEY (unit_id) REFERENCES unit (id) ON DELETE CASCADE,
-  UNIQUE(album_id, type, order)
+  UNIQUE(album_id, type, sequence)
 );
 
 CREATE TABLE track (
@@ -75,12 +75,12 @@ CREATE TABLE track_person_role (
   person_id UUID NOT NULL,
   type TEXT NOT NULL,
   role TEXT NOT NULL,
-  order INTEGER NOT NULL,
+  sequence INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (track_id) REFERENCES track (id) ON DELETE CASCADE,
   FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
-  UNIQUE(track_id, type, order)
+  UNIQUE(track_id, type, sequence)
 );
 
 CREATE TABLE track_unit_role (
@@ -89,10 +89,10 @@ CREATE TABLE track_unit_role (
   unit_id UUID NOT NULL,
   type TEXT NOT NULL,
   role TEXT NOT NULL,
-  order INTEGER NOT NULL,
+  sequence INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (track_id) REFERENCES track (id) ON DELETE CASCADE,
   FOREIGN KEY (unit_id) REFERENCES unit (id) ON DELETE CASCADE,
-  UNIQUE(track_id, type, order)
+  UNIQUE(track_id, type, sequence)
 );

@@ -37,19 +37,19 @@ CREATE TABLE movie_role (
   person_id UUID NOT NULL,
   type TEXT NOT NULL,
   role TEXT NOT NULL,
-  order INTEGER NOT NULL,
+  sequence INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (movie_id) REFERENCES movie (id) ON DELETE CASCADE,
   FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
-  UNIQUE(movie_id, type, order)
+  UNIQUE(movie_id, type, sequence)
 );
 
 CREATE TABLE movie_alias (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   alias TEXT NOT NULL,
   movie_id UUID NOT NULL,
-  order INTEGER NOT NULL,
+  sequence INTEGER NOT NULL,
   FOREIGN KEY (movie_id) REFERENCES movie (id) ON DELETE CASCADE,
-  UNIQUE(movie_id, order)
+  UNIQUE(movie_id, sequence)
 );

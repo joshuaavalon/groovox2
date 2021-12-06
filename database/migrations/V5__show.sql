@@ -37,21 +37,21 @@ CREATE TABLE show_role (
   person_id UUID NOT NULL,
   type TEXT NOT NULL,
   role TEXT NOT NULL,
-  order INTEGER NOT NULL,
+  sequence INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (show_id) REFERENCES show (id) ON DELETE CASCADE,
   FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
-  UNIQUE(show_id, type, order)
+  UNIQUE(show_id, type, sequence)
 );
 
 CREATE TABLE show_alias (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   alias TEXT NOT NULL,
   show_id UUID NOT NULL,
-  order INTEGER NOT NULL,
+  sequence INTEGER NOT NULL,
   FOREIGN KEY (show_id) REFERENCES show (id) ON DELETE CASCADE,
-  UNIQUE(show_id, order)
+  UNIQUE(show_id, sequence)
 );
 
 CREATE TABLE show_season (
@@ -72,12 +72,12 @@ CREATE TABLE show_season_role (
   person_id UUID NOT NULL,
   type TEXT NOT NULL,
   role TEXT NOT NULL,
-  order INTEGER NOT NULL,
+  sequence INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (show_season_id) REFERENCES show_season (id) ON DELETE CASCADE,
   FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
-  UNIQUE(show_season_id, type, order)
+  UNIQUE(show_season_id, type, sequence)
 );
 
 CREATE TABLE episode (
@@ -101,12 +101,12 @@ CREATE TABLE episode_role (
   person_id UUID NOT NULL,
   type TEXT NOT NULL,
   role TEXT NOT NULL,
-  order INTEGER NOT NULL,
+  sequence INTEGER NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (episode_id) REFERENCES episode (id) ON DELETE CASCADE,
   FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE,
-  UNIQUE(episode_id, type, order)
+  UNIQUE(episode_id, type, sequence)
 );
 
 CREATE TABLE _episode_tag (
