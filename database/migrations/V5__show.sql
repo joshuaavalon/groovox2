@@ -4,7 +4,7 @@ CREATE TABLE show (
   name_sort TEXT UNIQUE NOT NULL,
   content_rating TEXT NOT NULL,
   aired_date DATE,
-  tagline TEXT UNIQUE NOT NULL,
+  tagline TEXT NOT NULL,
   rating NUMERIC(3, 1),
   description TEXT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
