@@ -1,0 +1,9 @@
+mutation createStudio($data: StudioCreateOneInput!) {
+  createStudio(data: $data) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+  }
+}

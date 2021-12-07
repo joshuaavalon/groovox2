@@ -1,0 +1,20 @@
+schema: ../graphql-type/nexus.generated.graphql
+config:
+  rawRequest: true
+  skipTypename: true
+  scalars:
+    UUID: string
+    Date: string
+    DateTime: string
+    Decimal: string
+    Time: string
+generates:
+  src/types.generated.ts:
+    documents:
+      - ./graphql/**/*.gql
+    plugins:
+      - add:
+          content: "// @ts-nocheck"
+      - "@graphql-codegen/typescript"
+      - "@graphql-codegen/typescript-operations"
+      - "@graphql-codegen/typescript-generic-sdk"

@@ -1,18 +1,19 @@
 import { createApp } from "@groovox/app";
+import { createSdk } from "@groovox/test-graphql-client";
 
-import { query } from "../../query";
 import { createStudio } from "./utils";
 
-import type { FastifyInstance } from "fastify";
+import type { Sdk } from "@groovox/test-graphql-client";
 
 describe("plugin-graphql", () => {
   describe("studio", () => {
-    let server: FastifyInstance;
+    let sdk: Sdk;
     const createdIds: string[] = [];
 
     beforeAll(async () => {
-      server = await createApp();
-      const create = createStudio(server, createdIds);
+      const server = await createApp();
+      sdk = createSdk(server);
+      const create = createStudio(sdk, createdIds);
 
       await create({
         name: "Remove Studio Name 1",
@@ -26,7 +27,7 @@ describe("plugin-graphql", () => {
     });
 
     test("remove by name", async () => {
-      const { data, errors } = await query.studio.removeMany(server, {
+      const { data, errors } = await sdk.removeStudios({
         where: { name: { equal: "Remove Studio Name 1" } }
       });
       expect(errors).toBeUndefined();
@@ -38,7 +39,7 @@ describe("plugin-graphql", () => {
     });
 
     test("remove by id", async () => {
-      const { data, errors } = await query.studio.removeMany(server, {
+      const { data, errors } = await sdk.removeStudios({
         where: { id: { equal: createdIds[1] } }
       });
       expect(errors).toBeUndefined();

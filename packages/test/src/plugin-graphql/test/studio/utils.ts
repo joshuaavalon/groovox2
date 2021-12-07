@@ -1,5 +1,4 @@
-import type { FastifyInstance } from "fastify";
-import { query } from "../../query";
+import type { Sdk } from "@groovox/test-graphql-client";
 
 type Studio = {
   name: string;
@@ -7,9 +6,9 @@ type Studio = {
 };
 
 export const createStudio =
-  (server: FastifyInstance, createdIds: string[]) =>
+  (sdk: Sdk, createdIds: string[]) =>
   async (studio: Studio): Promise<void> => {
-    const { data } = await query.studio.create(server, {
+    const { data } = await sdk.createStudio({
       data: studio
     });
 
@@ -19,10 +18,10 @@ export const createStudio =
   };
 
 export const cleanUp = async (
-  server: FastifyInstance,
+  sdk: Sdk,
   createdIds: string[]
 ): Promise<void> => {
-  await query.studio.removeMany(server, {
+  await sdk.removeStudios({
     where: { id: { in: createdIds } }
   });
 };

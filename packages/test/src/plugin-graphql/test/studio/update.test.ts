@@ -1,27 +1,28 @@
 import { createApp } from "@groovox/app";
+import { createSdk } from "@groovox/test-graphql-client";
 
-import { query } from "../../query";
 import { cleanUp, createStudio } from "./utils";
 
-import type { FastifyInstance } from "fastify";
+import type { Sdk } from "@groovox/test-graphql-client";
 
 describe("plugin-graphql", () => {
   describe("studio", () => {
-    let server: FastifyInstance;
+    let sdk: Sdk;
     const name = "Update Studio Name 1";
     const description = "Update Studio Desc 1";
 
     const createdIds: string[] = [];
 
     beforeAll(async () => {
-      server = await createApp();
-      const create = createStudio(server, createdIds);
+      const server = await createApp();
+      sdk = createSdk(server);
+      const create = createStudio(sdk, createdIds);
 
       await create({ name, description });
     });
 
     test("update", async () => {
-      const { data, errors } = await query.studio.update(server, {
+      const { data, errors } = await sdk.updateStudio({
         where: { id: createdIds[0] },
         data: {
           name: "Update Studio Name 2",
@@ -40,7 +41,7 @@ describe("plugin-graphql", () => {
     });
 
     afterAll(async () => {
-      await cleanUp(server, createdIds);
+      await cleanUp(sdk, createdIds);
     });
   });
 });

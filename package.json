@@ -10,7 +10,8 @@
     "test": "jest --ci --coverage",
     "introspect": "npm run --workspace @groovox/plugin-database introspect",
     "generate:database": "npm run --workspace @groovox/plugin-database generate",
-    "generate:graphql": "npm run --workspace @groovox/graphql-type generate"
+    "generate:graphql": "npm run --workspace @groovox/graphql-type generate",
+    "generate:client": "npm run --workspace @groovox/test-graphql-client generate"
   },
   "keywords": [],
   "workspaces": [

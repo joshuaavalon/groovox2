@@ -1,5 +1,5 @@
 {
-  "name": "@groovox/test",
+  "name": "@groovox/test-graphql-client",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -7,14 +7,15 @@
   "typings": "./src/index.ts",
   "scripts": {
     "prebuild": "rimraf lib",
-    "build": "tsc"
+    "build": "tsc",
+    "generate": "graphql-codegen"
   },
   "keywords": [],
   "homepage": "https://github.com/groovox/groovox#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/groovox/groovox.git",
-    "directory": "packages/test"
+    "directory": "packages/test-graphql-client"
   },
   "bugs": {
     "url": "https://github.com/groovox/groovox/issues"
@@ -22,11 +23,12 @@
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "dependencies": {
-    "@groovox/app": "^1.0.0",
-    "@groovox/test-graphql-client": "^1.0.0",
-    "lodash": "^4.17.21"
+    "@graphql-codegen/add": "^3.1.0",
+    "@graphql-codegen/cli": "^2.3.0",
+    "@graphql-codegen/typescript": "^2.4.1",
+    "@graphql-codegen/typescript-generic-sdk": "^2.3.0",
+    "@graphql-codegen/typescript-operations": "^2.2.1",
+    "graphql": "^15.7.2"
   },
-  "devDependencies": {
-    "@types/lodash": "^4.14.177"
-  }
+  "devDependencies": {}
 }

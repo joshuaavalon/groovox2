@@ -1,0 +1,5 @@
+mutation removeStudios($where: StudioFindManyInput!) {
+  removeStudios(where: $where) {
+    count
+  }
+}

@@ -1,0 +1,12 @@
+mutation updateStudio(
+  $data: StudioUpdateOneInput!
+  $where: StudioFindOneInput!
+) {
+  updateStudio(data: $data, where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+  }
+}

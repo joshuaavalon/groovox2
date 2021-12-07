@@ -1,18 +1,19 @@
 import { createApp } from "@groovox/app";
+import { createSdk } from "@groovox/test-graphql-client";
 
-import { query } from "../../query";
 import { cleanUp, createStudio } from "./utils";
 
-import type { FastifyInstance } from "fastify";
+import type { Sdk } from "@groovox/test-graphql-client";
 
 describe("plugin-graphql", () => {
   describe("studio", () => {
-    let server: FastifyInstance;
+    let sdk: Sdk;
     const createdIds: string[] = [];
 
     beforeAll(async () => {
-      server = await createApp();
-      const create = createStudio(server, createdIds);
+      const server = await createApp();
+      sdk = createSdk(server);
+      const create = createStudio(sdk, createdIds);
 
       await create({
         name: "Find Studio Name 1",
@@ -31,7 +32,7 @@ describe("plugin-graphql", () => {
     });
 
     test("find by id", async () => {
-      const { data, errors } = await query.studio.find(server, {
+      const { data, errors } = await sdk.studio({
         where: { id: createdIds[0] }
       });
       expect(errors).toBeUndefined();
@@ -46,7 +47,7 @@ describe("plugin-graphql", () => {
     });
 
     test("find by name equal", async () => {
-      const { data, errors } = await query.studio.findMany(server, {
+      const { data, errors } = await sdk.studios({
         where: { name: { equal: "Find Studio Name 1" } }
       });
       expect(errors).toBeUndefined();
@@ -64,7 +65,7 @@ describe("plugin-graphql", () => {
     });
 
     test("find by name start with", async () => {
-      const { data, errors } = await query.studio.findMany(server, {
+      const { data, errors } = await sdk.studios({
         where: { name: { startWith: "Find Studio" } }
       });
       expect(errors).toBeUndefined();
@@ -77,7 +78,7 @@ describe("plugin-graphql", () => {
     });
 
     test("find by name end with", async () => {
-      const { data, errors } = await query.studio.findMany(server, {
+      const { data, errors } = await sdk.studios({
         where: { name: { endWith: "3" } }
       });
       expect(errors).toBeUndefined();
@@ -95,7 +96,7 @@ describe("plugin-graphql", () => {
     });
 
     afterAll(async () => {
-      await cleanUp(server, createdIds);
+      await cleanUp(sdk, createdIds);
     });
   });
 });
