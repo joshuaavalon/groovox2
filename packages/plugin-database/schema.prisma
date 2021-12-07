@@ -122,7 +122,7 @@ model Movie {
   nameSort      String       @unique @map("name_sort")
   contentRating String       @map("content_rating")
   airedDate     DateTime?    @map("aired_date") @db.Date
-  tagline       String       @unique
+  tagline       String
   rating        Decimal?     @db.Decimal(3, 1)
   description   String
   createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamp(6)
@@ -192,7 +192,7 @@ model Show {
   nameSort      String       @unique @map("name_sort")
   contentRating String       @map("content_rating")
   airedDate     DateTime?    @map("aired_date") @db.Date
-  tagline       String       @unique
+  tagline       String
   rating        Decimal?     @db.Decimal(3, 1)
   description   String
   createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamp(6)

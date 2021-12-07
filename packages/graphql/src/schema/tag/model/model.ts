@@ -41,6 +41,48 @@ const type = objectType({
         });
       }
     });
+    t.list.field("people", {
+      type: "Person",
+      args: {
+        orderBy: nullable(list(arg({ type: "PersonOrderByInput" })))
+      },
+      resolve: (root, args, ctx) => {
+        const { db } = ctx.fastify;
+        const orderBy = transform.person.input.orderBy(args.orderBy);
+        return db.person.findMany({
+          where: { tag: { some: { id: root.id } } },
+          orderBy
+        });
+      }
+    });
+    t.list.field("units", {
+      type: "Unit",
+      args: {
+        orderBy: nullable(list(arg({ type: "UnitOrderByInput" })))
+      },
+      resolve: (root, args, ctx) => {
+        const { db } = ctx.fastify;
+        const orderBy = transform.unit.input.orderBy(args.orderBy);
+        return db.unit.findMany({
+          where: { tag: { some: { id: root.id } } },
+          orderBy
+        });
+      }
+    });
+    t.list.field("movies", {
+      type: "Movie",
+      args: {
+        orderBy: nullable(list(arg({ type: "MovieOrderByInput" })))
+      },
+      resolve: (root, args, ctx) => {
+        const { db } = ctx.fastify;
+        const orderBy = transform.movie.input.orderBy(args.orderBy);
+        return db.movie.findMany({
+          where: { tag: { some: { id: root.id } } },
+          orderBy
+        });
+      }
+    });
   }
 });
 

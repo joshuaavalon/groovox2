@@ -114,6 +114,7 @@ input DecimalNullableFilter {
 type Movie {
   _id: ID!
   airedDate: Date
+  alias: [String!]!
   contentRating: String!
   createdAt: DateTime!
   description: String!
@@ -121,8 +122,9 @@ type Movie {
   name: String!
   nameSort: String!
   rating: Decimal
-  studio: [Studio!]!
+  studios(orderBy: [StudioOrderByInput!]): [Studio!]!
   tagline: String!
+  tags(orderBy: [TagOrderByInput!]): [Tag!]!
   updatedAt: DateTime!
 }
 
@@ -168,6 +170,49 @@ input MovieOrderByInput {
   updatedAt: SortOrder
 }
 
+type MovieRole {
+  _id: ID!
+  id: UUID!
+  movie: Movie!
+  person: Person!
+  role: String!
+  type: String!
+}
+
+input MovieRoleCreateOneInput {
+  movieId: UUID!
+  personId: UUID!
+  role: String!
+  type: String!
+}
+
+input MovieRoleFindManyInput {
+  and: [MovieRoleFindManyInput]
+  id: UUIDFilter
+  not: [MovieRoleFindManyInput]
+  or: [MovieRoleFindManyInput]
+  role: StringFilter
+  type: StringFilter
+}
+
+input MovieRoleFindOneInput {
+  id: UUID!
+}
+
+input MovieRoleOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  role: SortOrder
+  sequence: SortOrder
+  type: SortOrder
+  updatedAt: SortOrder
+}
+
+input MovieRoleUpdateOneInput {
+  role: String
+  type: String
+}
+
 input MovieUpdateOneInput {
   airedDate: Date
   contentRating: String
@@ -183,6 +228,7 @@ type Mutation {
   createAttachment(data: AttachmentCreateOneInput!): Attachment!
   createMovie(data: MovieCreateOneInput!): Movie!
   createPerson(data: PersonCreateOneInput!): Person!
+  createShow(data: ShowCreateOneInput!): Show!
   createStudio(data: StudioCreateOneInput!): Studio!
   createTag(data: TagCreateOneInput!): Tag!
   createTagCategory(data: TagCategoryCreateOneInput!): TagCategory!
@@ -190,13 +236,16 @@ type Mutation {
   removeAttachments(where: AttachmentFindManyInput!): AffectedRowsOutput!
   removeMovies(where: MovieFindManyInput!): AffectedRowsOutput!
   removePeople(where: PersonFindManyInput!): AffectedRowsOutput!
+  removeShows(where: ShowFindManyInput!): AffectedRowsOutput!
   removeStudios(where: StudioFindManyInput!): AffectedRowsOutput!
   removeTagCategories(where: TagCategoryFindManyInput!): AffectedRowsOutput!
   removeTags(where: TagFindManyInput!): AffectedRowsOutput!
   removeUnits(where: UnitFindManyInput!): AffectedRowsOutput!
   updateAttachment(data: AttachmentUpdateOneInput!, where: AttachmentFindOneInput!): Attachment!
   updateMovie(data: MovieUpdateOneInput!, where: MovieFindOneInput!): Movie!
+  updateMovieRole(data: MovieRoleUpdateOneInput!, where: MovieRoleFindOneInput!): MovieRole!
   updatePerson(data: PersonUpdateOneInput!, where: PersonFindOneInput!): Person!
+  updateShow(data: ShowUpdateOneInput!, where: ShowFindOneInput!): Show!
   updateStudio(data: StudioUpdateOneInput!, where: StudioFindOneInput!): Studio!
   updateTag(data: TagUpdateOneInput!, where: TagFindOneInput!): Tag!
   updateTagCategory(data: TagCategoryUpdateOneInput!, where: TagCategoryFindOneInput!): TagCategory!
@@ -289,9 +338,13 @@ type Query {
   attachment(where: AttachmentFindOneInput!): Attachment
   attachments(orderBy: [AttachmentOrderByInput!], pagination: Pagination, where: AttachmentFindManyInput): [Attachment!]!
   movie(where: MovieFindOneInput!): Movie
+  movieRole(where: MovieRoleFindOneInput!): MovieRole
+  movieRoles(orderBy: [MovieRoleOrderByInput!], pagination: Pagination, where: MovieRoleFindManyInput): [MovieRole!]!
   movies(orderBy: [MovieOrderByInput!], pagination: Pagination, where: MovieFindManyInput): [Movie!]!
   people(orderBy: [PersonOrderByInput!], pagination: Pagination, where: PersonFindManyInput): [Person!]!
   person(where: PersonFindOneInput!): Person
+  show(where: ShowFindOneInput!): Show
+  shows(orderBy: [ShowOrderByInput!], pagination: Pagination, where: ShowFindManyInput): [Show!]!
   studio(where: StudioFindOneInput!): Studio
   studios(orderBy: [StudioOrderByInput!], pagination: Pagination, where: StudioFindManyInput): [Studio!]!
   tag(where: TagFindOneInput!): Tag
@@ -300,6 +353,74 @@ type Query {
   tags(orderBy: [TagOrderByInput!], pagination: Pagination, where: TagFindManyInput): [Tag!]!
   unit(where: UnitFindOneInput!): Unit
   units(orderBy: [UnitOrderByInput!], pagination: Pagination, where: UnitFindManyInput): [Unit!]!
+}
+
+type Show {
+  _id: ID!
+  airedDate: Date
+  contentRating: String!
+  createdAt: DateTime!
+  description: String!
+  id: UUID!
+  name: String!
+  nameSort: String!
+  rating: Decimal
+  studio: [Studio!]!
+  tagline: String!
+  updatedAt: DateTime!
+}
+
+input ShowCreateOneInput {
+  airedDate: Date
+  contentRating: String!
+  description: String! = ""
+  name: String!
+  nameSort: String!
+  rating: Decimal
+  studioIds: [UUID!]! = []
+  tagline: String! = ""
+}
+
+input ShowFindManyInput {
+  airedDate: DateNullableFilter
+  and: [ShowFindManyInput]
+  contentRating: StringFilter
+  createdAt: DateTimeFilter
+  description: StringFilter
+  id: UUIDFilter
+  name: StringFilter
+  nameSort: StringFilter
+  not: [ShowFindManyInput]
+  or: [ShowFindManyInput]
+  rating: DecimalNullableFilter
+  tagline: StringFilter
+  updatedAt: DateTimeFilter
+}
+
+input ShowFindOneInput {
+  id: UUID!
+}
+
+input ShowOrderByInput {
+  airedDate: SortOrder
+  contentRating: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  name: SortOrder
+  nameSort: SortOrder
+  rating: SortOrder
+  updatedAt: SortOrder
+}
+
+input ShowUpdateOneInput {
+  airedDate: Date
+  contentRating: String
+  description: String
+  name: String
+  nameSort: String
+  rating: Decimal
+  studioIds: [UUID!]
+  tagline: String
 }
 
 enum SortOrder {
@@ -322,7 +443,9 @@ type Studio {
   createdAt: DateTime!
   description: String!
   id: UUID!
+  movies(orderBy: [MovieOrderByInput!]): [Movie!]!
   name: String!
+  shows(orderBy: [ShowOrderByInput!]): [Show!]!
   updatedAt: DateTime!
 }
 
@@ -366,7 +489,10 @@ type Tag {
   createdAt: DateTime!
   description: String!
   id: UUID!
+  movies(orderBy: [MovieOrderByInput!]): [Movie!]!
   name: String!
+  people(orderBy: [PersonOrderByInput!]): [Person!]!
+  units(orderBy: [UnitOrderByInput!]): [Unit!]!
   updatedAt: DateTime!
 }
 
