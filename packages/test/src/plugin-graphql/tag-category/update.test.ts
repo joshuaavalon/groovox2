@@ -1,27 +1,28 @@
 import { createApp } from "@groovox/app";
+import { createSdk } from "@groovox/test-graphql-client";
 
-import { query } from "../../query";
 import { cleanUp, createTagCategory } from "./utils";
 
-import type { FastifyInstance } from "fastify";
+import type { Sdk } from "@groovox/test-graphql-client";
 
 describe("plugin-graphql", () => {
   describe("tag category", () => {
-    let server: FastifyInstance;
+    let sdk: Sdk;
     const name = "Update TagCategory Name 1";
     const description = "Update TagCategory Desc 1";
 
     const createdIds: string[] = [];
 
     beforeAll(async () => {
-      server = await createApp();
-      const create = createTagCategory(server, createdIds);
+      const server = await createApp();
+      sdk = createSdk(server);
+      const create = createTagCategory(sdk, createdIds);
 
       await create({ name, description });
     });
 
     test("update", async () => {
-      const { data, errors } = await query.tagCategory.update(server, {
+      const { data, errors } = await sdk.updateTagCategory({
         where: { id: createdIds[0] },
         data: {
           name: "Update TagCategory Name 2",
@@ -40,7 +41,7 @@ describe("plugin-graphql", () => {
     });
 
     afterAll(async () => {
-      await cleanUp(server, createdIds);
+      await cleanUp(sdk, createdIds);
     });
   });
 });

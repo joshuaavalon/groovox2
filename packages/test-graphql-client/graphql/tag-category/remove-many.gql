@@ -1,0 +1,5 @@
+mutation removeTagCategories($where: TagCategoryFindManyInput!) {
+  removeTagCategories(where: $where) {
+    count
+  }
+}

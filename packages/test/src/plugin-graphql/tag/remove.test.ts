@@ -1,19 +1,20 @@
 import { createApp } from "@groovox/app";
+import { createSdk } from "@groovox/test-graphql-client";
 
-import { query } from "../../query";
 import { cleanUp, createTagCategory } from "./utils";
 
-import type { FastifyInstance } from "fastify";
+import type { Sdk } from "@groovox/test-graphql-client";
 
 describe("plugin-graphql", () => {
   describe("tag", () => {
-    let server: FastifyInstance;
+    let sdk: Sdk;
     const createdIds: string[] = [];
     const createdCategoryIds: string[] = [];
 
     beforeAll(async () => {
-      server = await createApp();
-      const create = createTagCategory(server, createdIds, createdCategoryIds);
+      const server = await createApp();
+      sdk = createSdk(server);
+      const create = createTagCategory(sdk, createdIds, createdCategoryIds);
       await create(
         {
           name: "Remove Tag TagCategory Name 1",
@@ -37,7 +38,7 @@ describe("plugin-graphql", () => {
     });
 
     test("remove by name", async () => {
-      const { data, errors } = await query.tag.removeMany(server, {
+      const { data, errors } = await sdk.removeTags({
         where: { name: { equal: "Remove Tag Name 1" } }
       });
       expect(errors).toBeUndefined();
@@ -49,7 +50,7 @@ describe("plugin-graphql", () => {
     });
 
     test("remove by id", async () => {
-      const { data, errors } = await query.tag.removeMany(server, {
+      const { data, errors } = await sdk.removeTags({
         where: { id: { equal: createdIds[1] } }
       });
       expect(errors).toBeUndefined();
@@ -61,7 +62,7 @@ describe("plugin-graphql", () => {
     });
 
     afterAll(async () => {
-      await cleanUp(server, createdCategoryIds);
+      await cleanUp(sdk, createdCategoryIds);
     });
   });
 });

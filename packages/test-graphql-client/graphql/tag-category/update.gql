@@ -1,0 +1,12 @@
+mutation updateTagCategory(
+  $data: TagCategoryUpdateOneInput!
+  $where: TagCategoryFindOneInput!
+) {
+  updateTagCategory(data: $data, where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+  }
+}

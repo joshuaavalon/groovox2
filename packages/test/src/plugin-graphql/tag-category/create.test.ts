@@ -1,23 +1,24 @@
 import { createApp } from "@groovox/app";
+import { createSdk } from "@groovox/test-graphql-client";
 
-import { query } from "../../query";
 import { cleanUp } from "./utils";
 
-import type { FastifyInstance } from "fastify";
+import type { Sdk } from "@groovox/test-graphql-client";
 
 describe("plugin-graphql", () => {
   describe("tag category", () => {
-    let server: FastifyInstance;
+    let sdk: Sdk;
     const name = "Create TagCategory Name 1";
     const description = "Create TagCategory Desc 1";
     const createdIds: string[] = [];
 
     beforeAll(async () => {
-      server = await createApp();
+      const server = await createApp();
+      sdk = createSdk(server);
     });
 
     test("create", async () => {
-      const { data, errors } = await query.tagCategory.create(server, {
+      const { data, errors } = await sdk.createTagCategory({
         data: { name, description }
       });
       expect(errors).toBeUndefined();
@@ -33,14 +34,14 @@ describe("plugin-graphql", () => {
     });
 
     test("create duplicate", async () => {
-      const { errors } = await query.tagCategory.create(server, {
+      const { errors } = await sdk.createTagCategory({
         data: { name, description }
       });
       expect(errors).toBeDefined();
     });
 
     afterAll(async () => {
-      await cleanUp(server, createdIds);
+      await cleanUp(sdk, createdIds);
     });
   });
 });

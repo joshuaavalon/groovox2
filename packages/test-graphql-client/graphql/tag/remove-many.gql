@@ -1,0 +1,5 @@
+mutation removeTags($where: TagFindManyInput!) {
+  removeTags(where: $where) {
+    count
+  }
+}

@@ -1,18 +1,19 @@
 import { createApp } from "@groovox/app";
+import { createSdk } from "@groovox/test-graphql-client";
 
-import { query } from "../../query";
 import { createTagCategory } from "./utils";
 
-import type { FastifyInstance } from "fastify";
+import type { Sdk } from "@groovox/test-graphql-client";
 
 describe("plugin-graphql", () => {
   describe("tag category", () => {
-    let server: FastifyInstance;
+    let sdk: Sdk;
     const createdIds: string[] = [];
 
     beforeAll(async () => {
-      server = await createApp();
-      const create = createTagCategory(server, createdIds);
+      const server = await createApp();
+      sdk = createSdk(server);
+      const create = createTagCategory(sdk, createdIds);
       await create(
         {
           name: "Remove TagCategory Name 1",
@@ -44,7 +45,7 @@ describe("plugin-graphql", () => {
     });
 
     test("remove by name", async () => {
-      const { data, errors } = await query.tagCategory.removeMany(server, {
+      const { data, errors } = await sdk.removeTagCategories({
         where: { name: { equal: "Remove TagCategory Name 1" } }
       });
       expect(errors).toBeUndefined();
@@ -56,7 +57,7 @@ describe("plugin-graphql", () => {
     });
 
     test("remove by id", async () => {
-      const { data, errors } = await query.tagCategory.removeMany(server, {
+      const { data, errors } = await sdk.removeTagCategories({
         where: { id: { in: createdIds } }
       });
       expect(errors).toBeUndefined();
@@ -65,7 +66,7 @@ describe("plugin-graphql", () => {
         return;
       }
       expect(data.removeTagCategories.count).toBe(2);
-      const tagResult = await query.tag.findMany(server, {
+      const tagResult = await sdk.tagCategories({
         where: { name: { startWith: "Remove TagCategory" } }
       });
       expect(tagResult.errors).toBeUndefined();
@@ -73,7 +74,7 @@ describe("plugin-graphql", () => {
       if (!tagResult.data) {
         return;
       }
-      expect(tagResult.data.tags.length).toBe(0);
+      expect(tagResult.data.tagCategories.length).toBe(0);
     });
   });
 });

@@ -1,0 +1,16 @@
+query tag($where: TagFindOneInput!) {
+  tag(where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+    category {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+  }
+}

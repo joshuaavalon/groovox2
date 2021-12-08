@@ -1,5 +1,4 @@
-import type { FastifyInstance } from "fastify";
-import { query } from "../../query";
+import type { Sdk } from "@groovox/test-graphql-client";
 
 type TagCategory = {
   name: string;
@@ -12,9 +11,9 @@ type Tag = {
 };
 
 export const createTagCategory =
-  (server: FastifyInstance, createdIds: string[]) =>
+  (sdk: Sdk, createdIds: string[]) =>
   async (tagCategory: TagCategory, tags: Tag[] = []): Promise<void> => {
-    const { data } = await query.tagCategory.create(server, {
+    const { data } = await sdk.createTagCategory({
       data: tagCategory
     });
 
@@ -23,7 +22,7 @@ export const createTagCategory =
       createdIds.push(categoryId);
 
       for (const tag of tags) {
-        await query.tag.create(server, {
+        await sdk.createTag({
           data: { ...tag, categoryId }
         });
       }
@@ -31,10 +30,10 @@ export const createTagCategory =
   };
 
 export const cleanUp = async (
-  server: FastifyInstance,
+  sdk: Sdk,
   createdIds: string[]
 ): Promise<void> => {
-  await query.tagCategory.removeMany(server, {
+  await sdk.removeTagCategories({
     where: { id: { in: createdIds } }
   });
 };

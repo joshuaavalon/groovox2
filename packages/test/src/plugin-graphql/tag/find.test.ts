@@ -1,19 +1,20 @@
 import { createApp } from "@groovox/app";
+import { createSdk } from "@groovox/test-graphql-client";
 
-import { query } from "../../query";
 import { cleanUp, createTagCategory } from "./utils";
 
-import type { FastifyInstance } from "fastify";
+import type { Sdk } from "@groovox/test-graphql-client";
 
 describe("plugin-graphql", () => {
   describe("tag", () => {
-    let server: FastifyInstance;
+    let sdk: Sdk;
     const createdIds: string[] = [];
     const createdCategoryIds: string[] = [];
 
     beforeAll(async () => {
-      server = await createApp();
-      const create = createTagCategory(server, createdIds, createdCategoryIds);
+      const server = await createApp();
+      sdk = createSdk(server);
+      const create = createTagCategory(sdk, createdIds, createdCategoryIds);
       await create(
         {
           name: "Find Tag TagCategory Name 1",
@@ -45,7 +46,7 @@ describe("plugin-graphql", () => {
     });
 
     test("find by id", async () => {
-      const { data, errors } = await query.tag.find(server, {
+      const { data, errors } = await sdk.tag({
         where: { id: createdIds[0] }
       });
       expect(errors).toBeUndefined();
@@ -60,7 +61,7 @@ describe("plugin-graphql", () => {
     });
 
     test("find by name equal", async () => {
-      const { data, errors } = await query.tag.findMany(server, {
+      const { data, errors } = await sdk.tags({
         where: { name: { equal: "Find Tag Name 1" } }
       });
       expect(errors).toBeUndefined();
@@ -78,7 +79,7 @@ describe("plugin-graphql", () => {
     });
 
     test("find by name start with", async () => {
-      const { data, errors } = await query.tag.findMany(server, {
+      const { data, errors } = await sdk.tags({
         where: { name: { startWith: "Find Tag" } }
       });
       expect(errors).toBeUndefined();
@@ -91,7 +92,7 @@ describe("plugin-graphql", () => {
     });
 
     test("find by name end with", async () => {
-      const { data, errors } = await query.tag.findMany(server, {
+      const { data, errors } = await sdk.tags({
         where: { name: { endWith: "3" } }
       });
       expect(errors).toBeUndefined();
@@ -109,7 +110,7 @@ describe("plugin-graphql", () => {
     });
 
     afterAll(async () => {
-      await cleanUp(server, createdCategoryIds);
+      await cleanUp(sdk, createdCategoryIds);
     });
   });
 });
