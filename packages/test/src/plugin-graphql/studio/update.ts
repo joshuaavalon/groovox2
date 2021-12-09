@@ -39,7 +39,10 @@ export const testUpdate = async (sdk: Sdk): Promise<void> => {
 
   const oldUpdateAt = DateTime.fromISO(createStudio.updatedAt);
   const newUpdateAt = DateTime.fromISO(updateStudio.updatedAt);
-  console.log({ oldUpdateAt, newUpdateAt });
+  console.log({
+    oldUpdateAt: oldUpdateAt.toISO(),
+    newUpdateAt: newUpdateAt.toISO()
+  });
   expect(newUpdateAt > oldUpdateAt).toBeTruthy();
 
   const removeResult = await sdk.removeStudios({

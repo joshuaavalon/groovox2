@@ -11,10 +11,13 @@ export const updateOne = (input: Input): Output => {
   if (_.isNil(input)) {
     return {};
   }
-  const result = {
+  const result: Output = {
     name: input.name ?? undefined,
     description: input.description ?? undefined,
-    categoryId: input.categoryId ?? undefined
+    tagCategory: {
+      connect: { id: input.categoryId ?? undefined }
+    },
+    updatedAt: new Date()
   };
   return _.omitBy(result, _.isUndefined);
 };
