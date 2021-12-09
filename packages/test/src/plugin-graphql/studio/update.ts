@@ -39,7 +39,8 @@ export const testUpdate = async (sdk: Sdk): Promise<void> => {
 
   const oldUpdateAt = DateTime.fromISO(createStudio.updatedAt);
   const newUpdateAt = DateTime.fromISO(updateStudio.updatedAt);
-  expect(newUpdateAt).toBeGreaterThan(oldUpdateAt as any);
+  console.log({ oldUpdateAt, newUpdateAt });
+  expect(newUpdateAt > oldUpdateAt).toBeTruthy();
 
   const removeResult = await sdk.removeStudios({
     where: { id: { equal: createStudio.id } }

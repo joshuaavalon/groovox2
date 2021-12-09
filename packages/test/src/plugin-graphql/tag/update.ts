@@ -50,7 +50,8 @@ export const testUpdate = async (sdk: Sdk): Promise<void> => {
 
   const oldUpdateAt = DateTime.fromISO(createTag.updatedAt);
   const newUpdateAt = DateTime.fromISO(updateTag.updatedAt);
-  expect(newUpdateAt).toBeGreaterThan(oldUpdateAt as any);
+  console.log({ oldUpdateAt, newUpdateAt });
+  expect(newUpdateAt > oldUpdateAt).toBeTruthy();
 
   const removeResult = await sdk.removeTags({
     where: { id: { equal: createTag.id } }

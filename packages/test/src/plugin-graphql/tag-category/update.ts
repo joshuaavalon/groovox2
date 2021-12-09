@@ -35,11 +35,12 @@ export const testUpdate = async (sdk: Sdk): Promise<void> => {
   const { updateTagCategory } = updateResult.data;
   expect(updateTagCategory.id).toBe(createTagCategory.id);
   expect(updateTagCategory.name).toBe(name2);
-  expect(updateTagCategory.description).toBe(description);
+  expect(updateTagCategory.description).toBe(description2);
 
   const oldUpdateAt = DateTime.fromISO(createTagCategory.updatedAt);
   const newUpdateAt = DateTime.fromISO(updateTagCategory.updatedAt);
-  expect(newUpdateAt).toBeGreaterThan(oldUpdateAt as any);
+  console.log({ oldUpdateAt, newUpdateAt });
+  expect(newUpdateAt > oldUpdateAt).toBeTruthy();
 
   const removeResult = await sdk.removeTagCategories({
     where: { id: { equal: createTagCategory.id } }
