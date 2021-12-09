@@ -138,7 +138,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     expect(createPerson.nameMiddle).toBe(nameMiddle + suffix);
     expect(createPerson.nameLast).toBe(nameLast + suffix);
     expect(createPerson.nameSort).toBe(nameSort + suffix);
-    expect(createPerson.sex).toBe(sex + suffix);
+    expect(createPerson.sex).toBe(sex);
     expect(createPerson.description).toBe(description + suffix);
   }
 

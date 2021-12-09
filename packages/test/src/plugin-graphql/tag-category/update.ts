@@ -39,10 +39,6 @@ export const testUpdate = async (sdk: Sdk): Promise<void> => {
 
   const oldUpdateAt = DateTime.fromISO(createTagCategory.updatedAt);
   const newUpdateAt = DateTime.fromISO(updateTagCategory.updatedAt);
-  console.log({
-    oldUpdateAt: oldUpdateAt.toISO(),
-    newUpdateAt: newUpdateAt.toISO()
-  });
   expect(newUpdateAt > oldUpdateAt).toBeTruthy();
 
   const removeResult = await sdk.removeTagCategories({

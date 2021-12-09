@@ -11,7 +11,7 @@ export const updateOne = (input: Input): Output => {
   if (_.isNil(input)) {
     return {};
   }
-  const result = {
+  const result: Output = {
     nameFirst: input.nameFirst ?? undefined,
     nameMiddle: input.nameMiddle ?? undefined,
     nameLast: input.nameLast ?? undefined,
@@ -19,7 +19,8 @@ export const updateOne = (input: Input): Output => {
     description: input.description ?? undefined,
     birthDate: input.birthDate,
     deathDate: input.deathDate,
-    sex: input.sex ?? undefined
+    sex: input.sex ?? undefined,
+    updatedAt: new Date()
   };
   return _.omitBy(result, _.isUndefined);
 };
