@@ -4,7 +4,7 @@ import type { Sdk } from "@groovox/test-graphql-client";
 
 export const testUpdate = async (sdk: Sdk): Promise<void> => {
   const name = "Update Studio Name";
-  const description = "Find Studio Desc";
+  const description = "Update Studio Desc";
   const createResult = await sdk.createStudio({
     data: { name, description }
   });
@@ -18,11 +18,13 @@ export const testUpdate = async (sdk: Sdk): Promise<void> => {
   expect(createStudio.name).toBe(name);
   expect(createStudio.description).toBe(description);
 
+  const name2 = "Update Studio Name 2";
+  const description2 = "Update Studio Desc 2";
   const updateResult = await sdk.updateStudio({
     where: { id: createStudio.id },
     data: {
-      name: "Update Studio Name 2",
-      description: "Update Studio Desc 2"
+      name: name2,
+      description: description2
     }
   });
   expect(updateResult.errors).toBeUndefined();
@@ -32,8 +34,8 @@ export const testUpdate = async (sdk: Sdk): Promise<void> => {
   }
   const { updateStudio } = updateResult.data;
   expect(updateStudio.id).toBe(createStudio.id);
-  expect(updateStudio.name).toBe(name);
-  expect(updateStudio.description).toBe(description);
+  expect(updateStudio.name).toBe(name2);
+  expect(updateStudio.description).toBe(description2);
 
   const oldUpdateAt = DateTime.fromISO(createStudio.updatedAt);
   const newUpdateAt = DateTime.fromISO(updateStudio.updatedAt);
