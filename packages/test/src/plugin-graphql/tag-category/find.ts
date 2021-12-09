@@ -116,7 +116,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
 
   for (let i = 0; i < 3; i++) {
     const tagCategory = tagCategories[i];
-    const suffix = " " + i + 1;
+    const suffix = " " + (i + 1);
     expect(tagCategory.name).toBe(name + suffix);
     expect(tagCategory.description).toBe(description + suffix);
   }

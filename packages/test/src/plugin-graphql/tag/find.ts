@@ -162,7 +162,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
 
   for (let i = 0; i < 3; i++) {
     const tag = tags[i];
-    const suffix = " " + i + 1;
+    const suffix = " " + (i + 1);
     expect(tag.name).toBe(name + suffix);
     expect(tag.description).toBe(description + suffix);
   }
