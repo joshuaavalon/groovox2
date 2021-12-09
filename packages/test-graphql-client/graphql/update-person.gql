@@ -1,0 +1,18 @@
+mutation updatePerson(
+  $data: PersonUpdateOneInput!
+  $where: PersonFindOneInput!
+) {
+  updatePerson(data: $data, where: $where) {
+    id
+    birthDate
+    createdAt
+    deathDate
+    description
+    nameFirst
+    nameLast
+    nameMiddle
+    nameSort
+    sex
+    updatedAt
+  }
+}

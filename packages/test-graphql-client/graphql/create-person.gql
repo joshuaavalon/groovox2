@@ -1,0 +1,15 @@
+mutation createPerson($data: PersonCreateOneInput!) {
+  createPerson(data: $data) {
+    id
+    birthDate
+    createdAt
+    deathDate
+    description
+    nameFirst
+    nameLast
+    nameMiddle
+    nameSort
+    sex
+    updatedAt
+  }
+}

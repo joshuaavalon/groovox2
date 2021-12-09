@@ -917,6 +917,13 @@ export type UnitUpdateOneInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type CreatePersonMutationVariables = Exact<{
+  data: PersonCreateOneInput;
+}>;
+
+
+export type CreatePersonMutation = { createPerson: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string } };
+
 export type CreateStudioMutationVariables = Exact<{
   data: StudioCreateOneInput;
 }>;
@@ -924,19 +931,40 @@ export type CreateStudioMutationVariables = Exact<{
 
 export type CreateStudioMutation = { createStudio: { id: string, name: string, description: string, updatedAt: string, createdAt: string } };
 
-export type StudiosQueryVariables = Exact<{
-  where: StudioFindManyInput;
+export type CreateTagCategoryMutationVariables = Exact<{
+  data: TagCategoryCreateOneInput;
 }>;
 
 
-export type StudiosQuery = { studios: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> };
+export type CreateTagCategoryMutation = { createTagCategory: { id: string, name: string, description: string, updatedAt: string, createdAt: string } };
 
-export type StudioQueryVariables = Exact<{
-  where: StudioFindOneInput;
+export type CreateTagMutationVariables = Exact<{
+  data: TagCreateOneInput;
 }>;
 
 
-export type StudioQuery = { studio?: { id: string, name: string, description: string, updatedAt: string, createdAt: string } | null | undefined };
+export type CreateTagMutation = { createTag: { id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } } };
+
+export type PeopleQueryVariables = Exact<{
+  where: PersonFindManyInput;
+}>;
+
+
+export type PeopleQuery = { people: Array<{ id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string }> };
+
+export type PersonQueryVariables = Exact<{
+  where: PersonFindOneInput;
+}>;
+
+
+export type PersonQuery = { person?: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string } | null | undefined };
+
+export type RemovePeopleMutationVariables = Exact<{
+  where: PersonFindManyInput;
+}>;
+
+
+export type RemovePeopleMutation = { removePeople: { count: number } };
 
 export type RemoveStudiosMutationVariables = Exact<{
   where: StudioFindManyInput;
@@ -945,20 +973,33 @@ export type RemoveStudiosMutationVariables = Exact<{
 
 export type RemoveStudiosMutation = { removeStudios: { count: number } };
 
-export type UpdateStudioMutationVariables = Exact<{
-  data: StudioUpdateOneInput;
+export type RemoveTagCategoriesMutationVariables = Exact<{
+  where: TagCategoryFindManyInput;
+}>;
+
+
+export type RemoveTagCategoriesMutation = { removeTagCategories: { count: number } };
+
+export type RemoveTagsMutationVariables = Exact<{
+  where: TagFindManyInput;
+}>;
+
+
+export type RemoveTagsMutation = { removeTags: { count: number } };
+
+export type StudioQueryVariables = Exact<{
   where: StudioFindOneInput;
 }>;
 
 
-export type UpdateStudioMutation = { updateStudio: { id: string, name: string, description: string, updatedAt: string, createdAt: string } };
+export type StudioQuery = { studio?: { id: string, name: string, description: string, updatedAt: string, createdAt: string } | null | undefined };
 
-export type CreateTagCategoryMutationVariables = Exact<{
-  data: TagCategoryCreateOneInput;
+export type StudiosQueryVariables = Exact<{
+  where: StudioFindManyInput;
 }>;
 
 
-export type CreateTagCategoryMutation = { createTagCategory: { id: string, name: string, description: string, updatedAt: string, createdAt: string } };
+export type StudiosQuery = { studios: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> };
 
 export type TagCategoriesQueryVariables = Exact<{
   where: TagCategoryFindManyInput;
@@ -974,27 +1015,12 @@ export type TagCategoryQueryVariables = Exact<{
 
 export type TagCategoryQuery = { tagCategory?: { id: string, name: string, description: string, updatedAt: string, createdAt: string, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> } | null | undefined };
 
-export type RemoveTagCategoriesMutationVariables = Exact<{
-  where: TagCategoryFindManyInput;
+export type TagQueryVariables = Exact<{
+  where: TagFindOneInput;
 }>;
 
 
-export type RemoveTagCategoriesMutation = { removeTagCategories: { count: number } };
-
-export type UpdateTagCategoryMutationVariables = Exact<{
-  data: TagCategoryUpdateOneInput;
-  where: TagCategoryFindOneInput;
-}>;
-
-
-export type UpdateTagCategoryMutation = { updateTagCategory: { id: string, name: string, description: string, updatedAt: string, createdAt: string } };
-
-export type CreateTagMutationVariables = Exact<{
-  data: TagCreateOneInput;
-}>;
-
-
-export type CreateTagMutation = { createTag: { id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } } };
+export type TagQuery = { tag?: { id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } } | null | undefined };
 
 export type TagsQueryVariables = Exact<{
   where: TagFindManyInput;
@@ -1003,19 +1029,29 @@ export type TagsQueryVariables = Exact<{
 
 export type TagsQuery = { tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> };
 
-export type TagQueryVariables = Exact<{
-  where: TagFindOneInput;
+export type UpdatePersonMutationVariables = Exact<{
+  data: PersonUpdateOneInput;
+  where: PersonFindOneInput;
 }>;
 
 
-export type TagQuery = { tag?: { id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } } | null | undefined };
+export type UpdatePersonMutation = { updatePerson: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string } };
 
-export type RemoveTagsMutationVariables = Exact<{
-  where: TagFindManyInput;
+export type UpdateStudioMutationVariables = Exact<{
+  data: StudioUpdateOneInput;
+  where: StudioFindOneInput;
 }>;
 
 
-export type RemoveTagsMutation = { removeTags: { count: number } };
+export type UpdateStudioMutation = { updateStudio: { id: string, name: string, description: string, updatedAt: string, createdAt: string } };
+
+export type UpdateTagCategoryMutationVariables = Exact<{
+  data: TagCategoryUpdateOneInput;
+  where: TagCategoryFindOneInput;
+}>;
+
+
+export type UpdateTagCategoryMutation = { updateTagCategory: { id: string, name: string, description: string, updatedAt: string, createdAt: string } };
 
 export type UpdateTagMutationVariables = Exact<{
   data: TagUpdateOneInput;
@@ -1026,6 +1062,23 @@ export type UpdateTagMutationVariables = Exact<{
 export type UpdateTagMutation = { updateTag: { id: string, name: string, description: string, updatedAt: string, createdAt: string } };
 
 
+export const CreatePersonDocument = gql`
+    mutation createPerson($data: PersonCreateOneInput!) {
+  createPerson(data: $data) {
+    id
+    birthDate
+    createdAt
+    deathDate
+    description
+    nameFirst
+    nameLast
+    nameMiddle
+    nameSort
+    sex
+    updatedAt
+  }
+}
+    `;
 export const CreateStudioDocument = gql`
     mutation createStudio($data: StudioCreateOneInput!) {
   createStudio(data: $data) {
@@ -1037,14 +1090,94 @@ export const CreateStudioDocument = gql`
   }
 }
     `;
-export const StudiosDocument = gql`
-    query studios($where: StudioFindManyInput!) {
-  studios(where: $where) {
+export const CreateTagCategoryDocument = gql`
+    mutation createTagCategory($data: TagCategoryCreateOneInput!) {
+  createTagCategory(data: $data) {
     id
     name
     description
     updatedAt
     createdAt
+  }
+}
+    `;
+export const CreateTagDocument = gql`
+    mutation createTag($data: TagCreateOneInput!) {
+  createTag(data: $data) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+    category {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+  }
+}
+    `;
+export const PeopleDocument = gql`
+    query people($where: PersonFindManyInput!) {
+  people(where: $where) {
+    id
+    birthDate
+    createdAt
+    deathDate
+    description
+    nameFirst
+    nameLast
+    nameMiddle
+    nameSort
+    sex
+    updatedAt
+  }
+}
+    `;
+export const PersonDocument = gql`
+    query person($where: PersonFindOneInput!) {
+  person(where: $where) {
+    id
+    birthDate
+    createdAt
+    deathDate
+    description
+    nameFirst
+    nameLast
+    nameMiddle
+    nameSort
+    sex
+    updatedAt
+  }
+}
+    `;
+export const RemovePeopleDocument = gql`
+    mutation removePeople($where: PersonFindManyInput!) {
+  removePeople(where: $where) {
+    count
+  }
+}
+    `;
+export const RemoveStudiosDocument = gql`
+    mutation removeStudios($where: StudioFindManyInput!) {
+  removeStudios(where: $where) {
+    count
+  }
+}
+    `;
+export const RemoveTagCategoriesDocument = gql`
+    mutation removeTagCategories($where: TagCategoryFindManyInput!) {
+  removeTagCategories(where: $where) {
+    count
+  }
+}
+    `;
+export const RemoveTagsDocument = gql`
+    mutation removeTags($where: TagFindManyInput!) {
+  removeTags(where: $where) {
+    count
   }
 }
     `;
@@ -1059,27 +1192,9 @@ export const StudioDocument = gql`
   }
 }
     `;
-export const RemoveStudiosDocument = gql`
-    mutation removeStudios($where: StudioFindManyInput!) {
-  removeStudios(where: $where) {
-    count
-  }
-}
-    `;
-export const UpdateStudioDocument = gql`
-    mutation updateStudio($data: StudioUpdateOneInput!, $where: StudioFindOneInput!) {
-  updateStudio(data: $data, where: $where) {
-    id
-    name
-    description
-    updatedAt
-    createdAt
-  }
-}
-    `;
-export const CreateTagCategoryDocument = gql`
-    mutation createTagCategory($data: TagCategoryCreateOneInput!) {
-  createTagCategory(data: $data) {
+export const StudiosDocument = gql`
+    query studios($where: StudioFindManyInput!) {
+  studios(where: $where) {
     id
     name
     description
@@ -1124,27 +1239,9 @@ export const TagCategoryDocument = gql`
   }
 }
     `;
-export const RemoveTagCategoriesDocument = gql`
-    mutation removeTagCategories($where: TagCategoryFindManyInput!) {
-  removeTagCategories(where: $where) {
-    count
-  }
-}
-    `;
-export const UpdateTagCategoryDocument = gql`
-    mutation updateTagCategory($data: TagCategoryUpdateOneInput!, $where: TagCategoryFindOneInput!) {
-  updateTagCategory(data: $data, where: $where) {
-    id
-    name
-    description
-    updatedAt
-    createdAt
-  }
-}
-    `;
-export const CreateTagDocument = gql`
-    mutation createTag($data: TagCreateOneInput!) {
-  createTag(data: $data) {
+export const TagDocument = gql`
+    query tag($where: TagFindOneInput!) {
+  tag(where: $where) {
     id
     name
     description
@@ -1178,28 +1275,42 @@ export const TagsDocument = gql`
   }
 }
     `;
-export const TagDocument = gql`
-    query tag($where: TagFindOneInput!) {
-  tag(where: $where) {
+export const UpdatePersonDocument = gql`
+    mutation updatePerson($data: PersonUpdateOneInput!, $where: PersonFindOneInput!) {
+  updatePerson(data: $data, where: $where) {
+    id
+    birthDate
+    createdAt
+    deathDate
+    description
+    nameFirst
+    nameLast
+    nameMiddle
+    nameSort
+    sex
+    updatedAt
+  }
+}
+    `;
+export const UpdateStudioDocument = gql`
+    mutation updateStudio($data: StudioUpdateOneInput!, $where: StudioFindOneInput!) {
+  updateStudio(data: $data, where: $where) {
     id
     name
     description
     updatedAt
     createdAt
-    category {
-      id
-      name
-      description
-      updatedAt
-      createdAt
-    }
   }
 }
     `;
-export const RemoveTagsDocument = gql`
-    mutation removeTags($where: TagFindManyInput!) {
-  removeTags(where: $where) {
-    count
+export const UpdateTagCategoryDocument = gql`
+    mutation updateTagCategory($data: TagCategoryUpdateOneInput!, $where: TagCategoryFindOneInput!) {
+  updateTagCategory(data: $data, where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
   }
 }
     `;
@@ -1217,23 +1328,41 @@ export const UpdateTagDocument = gql`
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
+    createPerson(variables: CreatePersonMutationVariables, options?: C): Promise<{ data?: CreatePersonMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<CreatePersonMutation, CreatePersonMutationVariables>(CreatePersonDocument, variables, options);
+    },
     createStudio(variables: CreateStudioMutationVariables, options?: C): Promise<{ data?: CreateStudioMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<CreateStudioMutation, CreateStudioMutationVariables>(CreateStudioDocument, variables, options);
     },
-    studios(variables: StudiosQueryVariables, options?: C): Promise<{ data?: StudiosQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<StudiosQuery, StudiosQueryVariables>(StudiosDocument, variables, options);
+    createTagCategory(variables: CreateTagCategoryMutationVariables, options?: C): Promise<{ data?: CreateTagCategoryMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<CreateTagCategoryMutation, CreateTagCategoryMutationVariables>(CreateTagCategoryDocument, variables, options);
     },
-    studio(variables: StudioQueryVariables, options?: C): Promise<{ data?: StudioQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<StudioQuery, StudioQueryVariables>(StudioDocument, variables, options);
+    createTag(variables: CreateTagMutationVariables, options?: C): Promise<{ data?: CreateTagMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<CreateTagMutation, CreateTagMutationVariables>(CreateTagDocument, variables, options);
+    },
+    people(variables: PeopleQueryVariables, options?: C): Promise<{ data?: PeopleQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<PeopleQuery, PeopleQueryVariables>(PeopleDocument, variables, options);
+    },
+    person(variables: PersonQueryVariables, options?: C): Promise<{ data?: PersonQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<PersonQuery, PersonQueryVariables>(PersonDocument, variables, options);
+    },
+    removePeople(variables: RemovePeopleMutationVariables, options?: C): Promise<{ data?: RemovePeopleMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<RemovePeopleMutation, RemovePeopleMutationVariables>(RemovePeopleDocument, variables, options);
     },
     removeStudios(variables: RemoveStudiosMutationVariables, options?: C): Promise<{ data?: RemoveStudiosMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<RemoveStudiosMutation, RemoveStudiosMutationVariables>(RemoveStudiosDocument, variables, options);
     },
-    updateStudio(variables: UpdateStudioMutationVariables, options?: C): Promise<{ data?: UpdateStudioMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<UpdateStudioMutation, UpdateStudioMutationVariables>(UpdateStudioDocument, variables, options);
+    removeTagCategories(variables: RemoveTagCategoriesMutationVariables, options?: C): Promise<{ data?: RemoveTagCategoriesMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<RemoveTagCategoriesMutation, RemoveTagCategoriesMutationVariables>(RemoveTagCategoriesDocument, variables, options);
     },
-    createTagCategory(variables: CreateTagCategoryMutationVariables, options?: C): Promise<{ data?: CreateTagCategoryMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<CreateTagCategoryMutation, CreateTagCategoryMutationVariables>(CreateTagCategoryDocument, variables, options);
+    removeTags(variables: RemoveTagsMutationVariables, options?: C): Promise<{ data?: RemoveTagsMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<RemoveTagsMutation, RemoveTagsMutationVariables>(RemoveTagsDocument, variables, options);
+    },
+    studio(variables: StudioQueryVariables, options?: C): Promise<{ data?: StudioQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<StudioQuery, StudioQueryVariables>(StudioDocument, variables, options);
+    },
+    studios(variables: StudiosQueryVariables, options?: C): Promise<{ data?: StudiosQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<StudiosQuery, StudiosQueryVariables>(StudiosDocument, variables, options);
     },
     tagCategories(variables: TagCategoriesQueryVariables, options?: C): Promise<{ data?: TagCategoriesQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<TagCategoriesQuery, TagCategoriesQueryVariables>(TagCategoriesDocument, variables, options);
@@ -1241,23 +1370,20 @@ export function getSdk<C>(requester: Requester<C>) {
     tagCategory(variables: TagCategoryQueryVariables, options?: C): Promise<{ data?: TagCategoryQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<TagCategoryQuery, TagCategoryQueryVariables>(TagCategoryDocument, variables, options);
     },
-    removeTagCategories(variables: RemoveTagCategoriesMutationVariables, options?: C): Promise<{ data?: RemoveTagCategoriesMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<RemoveTagCategoriesMutation, RemoveTagCategoriesMutationVariables>(RemoveTagCategoriesDocument, variables, options);
-    },
-    updateTagCategory(variables: UpdateTagCategoryMutationVariables, options?: C): Promise<{ data?: UpdateTagCategoryMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<UpdateTagCategoryMutation, UpdateTagCategoryMutationVariables>(UpdateTagCategoryDocument, variables, options);
-    },
-    createTag(variables: CreateTagMutationVariables, options?: C): Promise<{ data?: CreateTagMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<CreateTagMutation, CreateTagMutationVariables>(CreateTagDocument, variables, options);
+    tag(variables: TagQueryVariables, options?: C): Promise<{ data?: TagQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<TagQuery, TagQueryVariables>(TagDocument, variables, options);
     },
     tags(variables: TagsQueryVariables, options?: C): Promise<{ data?: TagsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<TagsQuery, TagsQueryVariables>(TagsDocument, variables, options);
     },
-    tag(variables: TagQueryVariables, options?: C): Promise<{ data?: TagQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<TagQuery, TagQueryVariables>(TagDocument, variables, options);
+    updatePerson(variables: UpdatePersonMutationVariables, options?: C): Promise<{ data?: UpdatePersonMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<UpdatePersonMutation, UpdatePersonMutationVariables>(UpdatePersonDocument, variables, options);
     },
-    removeTags(variables: RemoveTagsMutationVariables, options?: C): Promise<{ data?: RemoveTagsMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<RemoveTagsMutation, RemoveTagsMutationVariables>(RemoveTagsDocument, variables, options);
+    updateStudio(variables: UpdateStudioMutationVariables, options?: C): Promise<{ data?: UpdateStudioMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<UpdateStudioMutation, UpdateStudioMutationVariables>(UpdateStudioDocument, variables, options);
+    },
+    updateTagCategory(variables: UpdateTagCategoryMutationVariables, options?: C): Promise<{ data?: UpdateTagCategoryMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<UpdateTagCategoryMutation, UpdateTagCategoryMutationVariables>(UpdateTagCategoryDocument, variables, options);
     },
     updateTag(variables: UpdateTagMutationVariables, options?: C): Promise<{ data?: UpdateTagMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<UpdateTagMutation, UpdateTagMutationVariables>(UpdateTagDocument, variables, options);

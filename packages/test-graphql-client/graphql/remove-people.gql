@@ -1,0 +1,5 @@
+mutation removePeople($where: PersonFindManyInput!) {
+  removePeople(where: $where) {
+    count
+  }
+}
