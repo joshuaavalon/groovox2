@@ -130,10 +130,11 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
   const { createTagCategory } = tagCategoryResult.data;
 
   for (let i = 1; i < 4; i++) {
+    const suffix = " " + i;
     const createResult = await sdk.createTag({
       data: {
-        name: name + " " + i,
-        description: description + " " + i,
+        name: name + suffix,
+        description: description + suffix,
         categoryId: createTagCategory.id
       }
     });
@@ -144,8 +145,8 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     }
     const { createTag } = createResult.data;
     expect(createTag.id).toBeDefined();
-    expect(createTag.name).toBe(name);
-    expect(createTag.description).toBe(description);
+    expect(createTag.name).toBe(name + suffix);
+    expect(createTag.description).toBe(description + suffix);
   }
 
   const findResult = await sdk.tags({
@@ -161,9 +162,9 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
 
   for (let i = 0; i < 3; i++) {
     const tag = tags[i];
-    const suffix = i + 1;
-    expect(tag.name).toBe(name + " " + suffix);
-    expect(tag.description).toBe(description + " " + suffix);
+    const suffix = " " + i + 1;
+    expect(tag.name).toBe(name + suffix);
+    expect(tag.description).toBe(description + suffix);
   }
 
   const removeResult = await sdk.removeTags({

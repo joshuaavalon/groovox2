@@ -88,8 +88,9 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
   const description = "Find Studio By Start With Desc";
 
   for (let i = 1; i < 4; i++) {
+    const suffix = " " + i;
     const createResult = await sdk.createStudio({
-      data: { name: name + " " + i, description: description + " " + i }
+      data: { name: name + suffix, description: description + suffix }
     });
     expect(createResult.errors).toBeUndefined();
     expect(createResult.data).toBeDefined();
@@ -98,8 +99,8 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     }
     const { createStudio } = createResult.data;
     expect(createStudio.id).toBeDefined();
-    expect(createStudio.name).toBe(name);
-    expect(createStudio.description).toBe(description);
+    expect(createStudio.name).toBe(name + suffix);
+    expect(createStudio.description).toBe(description + suffix);
   }
 
   const findResult = await sdk.studios({
@@ -115,9 +116,9 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
 
   for (let i = 0; i < 3; i++) {
     const studio = studios[i];
-    const suffix = i + 1;
-    expect(studio.name).toBe(name + " " + suffix);
-    expect(studio.description).toBe(description + " " + suffix);
+    const suffix = " " + i + 1;
+    expect(studio.name).toBe(name + suffix);
+    expect(studio.description).toBe(description + suffix);
   }
 
   const removeResult = await sdk.removeStudios({
