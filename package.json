@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node index.js",
-    "build": "npm run --workspaces build",
+    "build": "npm run --workspaces --if-present build",
     "lint": "eslint --ext .ts packages",
     "test": "jest --ci --coverage",
     "introspect": "npm run --workspace @groovox/plugin-database introspect",
