@@ -5,7 +5,7 @@ import type { NexusGenInputs } from "@groovox/graphql-type";
 
 type Input = NexusGenInputs["TagCategoryUpdateOneInput"];
 
-type Output = Prisma.TagCategoryUpdateInput;
+type Output = Prisma.TagCategoryUpdateArgs["data"];
 
 export const updateOne = (input: Input): Output => {
   if (_.isNil(input)) {

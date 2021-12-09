@@ -3,7 +3,7 @@ import type { NexusGenInputs } from "@groovox/graphql-type";
 
 type Input = NexusGenInputs["AttachmentCreateOneInput"];
 
-type Output = Prisma.AttachmentCreateInput;
+type Output = Prisma.AttachmentCreateArgs["data"];
 
 export const createOne = (input: Input): Output => {
   const { type, description } = input;

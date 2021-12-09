@@ -3,7 +3,7 @@ import type { NexusGenInputs } from "@groovox/graphql-type";
 
 type Input = NexusGenInputs["MovieRoleCreateOneInput"];
 
-type Output = Prisma.MovieRoleCreateInput;
+type Output = Prisma.MovieRoleCreateArgs["data"];
 
 export const createOne = (input: Input, sequence: number): Output => {
   const { movieId, personId, type, role } = input;

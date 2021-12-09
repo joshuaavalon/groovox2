@@ -5,7 +5,7 @@ import type { NexusGenInputs } from "@groovox/graphql-type";
 
 type Input = NexusGenInputs["AttachmentUpdateOneInput"];
 
-type Output = Prisma.AttachmentUpdateInput;
+type Output = Prisma.AttachmentUpdateArgs["data"];
 
 export const updateOne = (input: Input): Output => {
   if (_.isNil(input)) {

@@ -5,7 +5,7 @@ import type { NexusGenInputs } from "@groovox/graphql-type";
 
 type Input = NexusGenInputs["TagUpdateOneInput"];
 
-type Output = Prisma.TagUpdateInput;
+type Output = Prisma.TagUpdateArgs["data"];
 
 export const updateOne = (input: Input): Output => {
   if (_.isNil(input)) {
@@ -14,9 +14,7 @@ export const updateOne = (input: Input): Output => {
   const result: Output = {
     name: input.name ?? undefined,
     description: input.description ?? undefined,
-    tagCategory: {
-      connect: { id: input.categoryId ?? undefined }
-    },
+    categoryId: input.categoryId ?? undefined,
     updatedAt: new Date()
   };
   return _.omitBy(result, _.isUndefined);

@@ -3,7 +3,7 @@ import type { NexusGenInputs } from "@groovox/graphql-type";
 
 type Input = NexusGenInputs["TagCreateOneInput"];
 
-type Output = Prisma.TagCreateInput;
+type Output = Prisma.TagCreateArgs["data"];
 
 export const createOne = (input: Input): Output => {
   const { name, description, categoryId } = input;

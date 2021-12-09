@@ -5,7 +5,7 @@ import type { NexusGenInputs } from "@groovox/graphql-type";
 
 type Input = NexusGenInputs["MovieUpdateOneInput"];
 
-type Output = Prisma.MovieUpdateInput;
+type Output = Prisma.MovieUpdateArgs["data"];
 
 export const updateOne = (input: Input): Output => {
   if (_.isNil(input)) {
