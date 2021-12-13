@@ -1,13 +1,28 @@
+import fastifyStatic from "fastify-static";
 import fastifyPlugin from "fastify-plugin";
+import path from "path";
 
 import { AjvValidator } from "./ajv";
 
-import type { Options } from "ajv/dist/2020";
+import type { Options as AjvOptions } from "ajv/dist/2020";
+
+export interface Options {
+  ajv?: AjvOptions;
+  schema?: boolean;
+}
 
 const plugin = fastifyPlugin<Options>(
   async (fastify, opts) => {
-    const ajv = new AjvValidator(opts);
-    fastify.decorate("entity", ajv);
+    const { schema = true, ajv } = opts;
+    fastify.decorate("entity", new AjvValidator(ajv));
+    if (schema) {
+      await fastify.register(fastifyStatic, {
+        root: path.join(__dirname, "schema"),
+        prefix: "/schema/",
+        allowedPath: pathname => pathname.endsWith(".schema.json"),
+        decorateReply: false
+      });
+    }
   },
   {
     name: "@groovox/plugin-entity",

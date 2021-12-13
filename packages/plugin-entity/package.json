@@ -23,7 +23,8 @@
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "devDependencies": {
-    "fastify-plugin": "^3.0.0"
+    "fastify-plugin": "^3.0.0",
+    "fastify-static": "^4.5.0"
   },
   "dependencies": {
     "ajv": "^8.8.1",
