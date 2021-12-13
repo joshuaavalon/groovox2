@@ -11,5 +11,26 @@ query person($where: PersonFindOneInput!) {
     nameSort
     sex
     updatedAt
+    units {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+      category {
+        id
+        name
+        description
+        updatedAt
+        createdAt
+      }
+    }
   }
 }

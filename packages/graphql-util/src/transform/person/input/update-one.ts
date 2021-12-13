@@ -22,5 +22,15 @@ export const updateOne = (input: Input): Output => {
     sex: input.sex ?? undefined,
     updatedAt: new Date()
   };
+  if (input.unitIds) {
+    result.unit = {
+      connect: input.unitIds.map(id => ({ id }))
+    };
+  }
+  if (input.tagIds) {
+    result.tag = {
+      connect: input.tagIds.map(id => ({ id }))
+    };
+  }
   return _.omitBy(result, _.isUndefined);
 };

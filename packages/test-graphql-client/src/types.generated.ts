@@ -487,6 +487,8 @@ export type PersonUpdateOneInput = {
   nameMiddle?: InputMaybe<Scalars['String']>;
   nameSort?: InputMaybe<Scalars['String']>;
   sex?: InputMaybe<Scalars['String']>;
+  tagIds?: InputMaybe<Array<Scalars['UUID']>>;
+  unitIds?: InputMaybe<Array<Scalars['UUID']>>;
 };
 
 export type Query = {
@@ -916,6 +918,7 @@ export type UnitUpdateOneInput = {
   description?: InputMaybe<Scalars['String']>;
   memberIds?: InputMaybe<Array<Scalars['UUID']>>;
   name?: InputMaybe<Scalars['String']>;
+  tagIds?: InputMaybe<Array<Scalars['UUID']>>;
 };
 
 export type CreatePersonMutationVariables = Exact<{
@@ -965,7 +968,7 @@ export type PersonQueryVariables = Exact<{
 }>;
 
 
-export type PersonQuery = { person?: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string } | null | undefined };
+export type PersonQuery = { person?: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string, units: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> } | null | undefined };
 
 export type RemovePeopleMutationVariables = Exact<{
   where: PersonFindManyInput;
@@ -1064,7 +1067,7 @@ export type UpdatePersonMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePersonMutation = { updatePerson: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string } };
+export type UpdatePersonMutation = { updatePerson: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string, units: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> } };
 
 export type UpdateStudioMutationVariables = Exact<{
   data: StudioUpdateOneInput;
@@ -1198,6 +1201,27 @@ export const PersonDocument = gql`
     nameSort
     sex
     updatedAt
+    units {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+      category {
+        id
+        name
+        description
+        updatedAt
+        createdAt
+      }
+    }
   }
 }
     `;
@@ -1393,6 +1417,27 @@ export const UpdatePersonDocument = gql`
     nameSort
     sex
     updatedAt
+    units {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+      category {
+        id
+        name
+        description
+        updatedAt
+        createdAt
+      }
+    }
   }
 }
     `;

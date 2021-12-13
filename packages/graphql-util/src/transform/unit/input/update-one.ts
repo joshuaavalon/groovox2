@@ -21,5 +21,10 @@ export const updateOne = (input: Input): Output => {
       connect: input.memberIds.map(id => ({ id }))
     };
   }
+  if (input.tagIds) {
+    result.tag = {
+      connect: input.tagIds.map(id => ({ id }))
+    };
+  }
   return _.omitBy(result, _.isUndefined);
 };

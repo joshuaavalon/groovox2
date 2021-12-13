@@ -332,6 +332,8 @@ input PersonUpdateOneInput {
   nameMiddle: String
   nameSort: String
   sex: String
+  tagIds: [UUID!]
+  unitIds: [UUID!]
 }
 
 type Query {
@@ -633,6 +635,7 @@ input UnitUpdateOneInput {
   description: String
   memberIds: [UUID!]
   name: String
+  tagIds: [UUID!]
 }
 
 """The `Upload` scalar type represents a file upload."""

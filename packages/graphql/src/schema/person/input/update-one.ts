@@ -13,6 +13,8 @@ const type = inputObjectType({
     t.nullable.date("birthDate");
     t.nullable.date("deathDate");
     t.nullable.string("sex");
+    t.nullable.list.uuid("unitIds");
+    t.nullable.list.uuid("tagIds");
   }
 });
 

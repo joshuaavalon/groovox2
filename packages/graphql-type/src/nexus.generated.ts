@@ -277,6 +277,8 @@ export interface NexusGenInputs {
     nameMiddle?: string | null; // String
     nameSort?: string | null; // String
     sex?: string | null; // String
+    tagIds?: NexusGenScalars['UUID'][] | null; // [UUID!]
+    unitIds?: NexusGenScalars['UUID'][] | null; // [UUID!]
   }
   ShowCreateOneInput: { // input type
     airedDate?: NexusGenScalars['Date'] | null; // Date
@@ -453,6 +455,7 @@ export interface NexusGenInputs {
     description?: string | null; // String
     memberIds?: NexusGenScalars['UUID'][] | null; // [UUID!]
     name?: string | null; // String
+    tagIds?: NexusGenScalars['UUID'][] | null; // [UUID!]
   }
 }
 
