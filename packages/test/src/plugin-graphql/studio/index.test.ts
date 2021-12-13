@@ -1,7 +1,7 @@
 import { createApp } from "@groovox/app";
 import { createSdk } from "@groovox/test-graphql-client";
 
-import { testCreate, testCreateDuplicate } from "./create";
+import { testCreate } from "./create";
 import {
   testFindById,
   testFindByNameEqual,
@@ -21,7 +21,6 @@ describe("plugin-graphql", () => {
     });
 
     test("create", async () => testCreate(sdk));
-    test("create duplicate", async () => testCreateDuplicate(sdk));
     test("find by id", async () => testFindById(sdk));
     test("find by name equal", async () => testFindByNameEqual(sdk));
     test("find by name start with", async () => testFindByNameStartWith(sdk));

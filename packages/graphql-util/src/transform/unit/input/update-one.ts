@@ -13,7 +13,8 @@ export const updateOne = (input: Input): Output => {
   }
   const result: Output = {
     name: input.name ?? undefined,
-    description: input.description ?? undefined
+    description: input.description ?? undefined,
+    updatedAt: new Date()
   };
   if (input.memberIds) {
     result.person = {
