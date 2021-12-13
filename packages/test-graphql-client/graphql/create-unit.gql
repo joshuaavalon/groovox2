@@ -1,0 +1,9 @@
+mutation createUnit($data: UnitCreateOneInput!) {
+  createUnit(data: $data) {
+    id
+    name
+    description
+    createdAt
+    updatedAt
+  }
+}

@@ -11,9 +11,14 @@ export const updateOne = (input: Input): Output => {
   if (_.isNil(input)) {
     return {};
   }
-  const result = {
+  const result: Output = {
     name: input.name ?? undefined,
     description: input.description ?? undefined
   };
+  if (input.memberIds) {
+    result.person = {
+      connect: input.memberIds.map(id => ({ id }))
+    };
+  }
   return _.omitBy(result, _.isUndefined);
 };

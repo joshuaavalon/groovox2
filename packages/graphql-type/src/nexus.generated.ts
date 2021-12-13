@@ -451,6 +451,7 @@ export interface NexusGenInputs {
   }
   UnitUpdateOneInput: { // input type
     description?: string | null; // String
+    memberIds?: NexusGenScalars['UUID'][] | null; // [UUID!]
     name?: string | null; // String
   }
 }

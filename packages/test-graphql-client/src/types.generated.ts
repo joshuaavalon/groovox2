@@ -914,6 +914,7 @@ export type UnitOrderByInput = {
 
 export type UnitUpdateOneInput = {
   description?: InputMaybe<Scalars['String']>;
+  memberIds?: InputMaybe<Array<Scalars['UUID']>>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -944,6 +945,13 @@ export type CreateTagMutationVariables = Exact<{
 
 
 export type CreateTagMutation = { createTag: { id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } } };
+
+export type CreateUnitMutationVariables = Exact<{
+  data: UnitCreateOneInput;
+}>;
+
+
+export type CreateUnitMutation = { createUnit: { id: string, name: string, description: string, createdAt: string, updatedAt: string } };
 
 export type PeopleQueryVariables = Exact<{
   where: PersonFindManyInput;
@@ -987,6 +995,13 @@ export type RemoveTagsMutationVariables = Exact<{
 
 export type RemoveTagsMutation = { removeTags: { count: number } };
 
+export type RemoveUnitsMutationVariables = Exact<{
+  where: UnitFindManyInput;
+}>;
+
+
+export type RemoveUnitsMutation = { removeUnits: { count: number } };
+
 export type StudioQueryVariables = Exact<{
   where: StudioFindOneInput;
 }>;
@@ -1029,6 +1044,20 @@ export type TagsQueryVariables = Exact<{
 
 export type TagsQuery = { tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> };
 
+export type UnitQueryVariables = Exact<{
+  where: UnitFindOneInput;
+}>;
+
+
+export type UnitQuery = { unit?: { id: string, name: string, description: string, updatedAt: string, createdAt: string, members: Array<{ id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> } | null | undefined };
+
+export type UnitsQueryVariables = Exact<{
+  where: UnitFindManyInput;
+}>;
+
+
+export type UnitsQuery = { units: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> };
+
 export type UpdatePersonMutationVariables = Exact<{
   data: PersonUpdateOneInput;
   where: PersonFindOneInput;
@@ -1060,6 +1089,14 @@ export type UpdateTagMutationVariables = Exact<{
 
 
 export type UpdateTagMutation = { updateTag: { id: string, name: string, description: string, updatedAt: string, createdAt: string } };
+
+export type UpdateUnitMutationVariables = Exact<{
+  data: UnitUpdateOneInput;
+  where: UnitFindOneInput;
+}>;
+
+
+export type UpdateUnitMutation = { updateUnit: { id: string, name: string, description: string, updatedAt: string, createdAt: string, members: Array<{ id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> } };
 
 
 export const CreatePersonDocument = gql`
@@ -1116,6 +1153,17 @@ export const CreateTagDocument = gql`
       updatedAt
       createdAt
     }
+  }
+}
+    `;
+export const CreateUnitDocument = gql`
+    mutation createUnit($data: UnitCreateOneInput!) {
+  createUnit(data: $data) {
+    id
+    name
+    description
+    createdAt
+    updatedAt
   }
 }
     `;
@@ -1177,6 +1225,13 @@ export const RemoveTagCategoriesDocument = gql`
 export const RemoveTagsDocument = gql`
     mutation removeTags($where: TagFindManyInput!) {
   removeTags(where: $where) {
+    count
+  }
+}
+    `;
+export const RemoveUnitsDocument = gql`
+    mutation removeUnits($where: UnitFindManyInput!) {
+  removeUnits(where: $where) {
     count
   }
 }
@@ -1275,6 +1330,55 @@ export const TagsDocument = gql`
   }
 }
     `;
+export const UnitDocument = gql`
+    query unit($where: UnitFindOneInput!) {
+  unit(where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+    members {
+      id
+      birthDate
+      createdAt
+      deathDate
+      description
+      nameFirst
+      nameLast
+      nameMiddle
+      nameSort
+      sex
+      updatedAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+      category {
+        id
+        name
+        description
+        updatedAt
+        createdAt
+      }
+    }
+  }
+}
+    `;
+export const UnitsDocument = gql`
+    query units($where: UnitFindManyInput!) {
+  units(where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+  }
+}
+    `;
 export const UpdatePersonDocument = gql`
     mutation updatePerson($data: PersonUpdateOneInput!, $where: PersonFindOneInput!) {
   updatePerson(data: $data, where: $where) {
@@ -1325,6 +1429,44 @@ export const UpdateTagDocument = gql`
   }
 }
     `;
+export const UpdateUnitDocument = gql`
+    mutation updateUnit($data: UnitUpdateOneInput!, $where: UnitFindOneInput!) {
+  updateUnit(data: $data, where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+    members {
+      id
+      birthDate
+      createdAt
+      deathDate
+      description
+      nameFirst
+      nameLast
+      nameMiddle
+      nameSort
+      sex
+      updatedAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+      category {
+        id
+        name
+        description
+        updatedAt
+        createdAt
+      }
+    }
+  }
+}
+    `;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
@@ -1339,6 +1481,9 @@ export function getSdk<C>(requester: Requester<C>) {
     },
     createTag(variables: CreateTagMutationVariables, options?: C): Promise<{ data?: CreateTagMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<CreateTagMutation, CreateTagMutationVariables>(CreateTagDocument, variables, options);
+    },
+    createUnit(variables: CreateUnitMutationVariables, options?: C): Promise<{ data?: CreateUnitMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<CreateUnitMutation, CreateUnitMutationVariables>(CreateUnitDocument, variables, options);
     },
     people(variables: PeopleQueryVariables, options?: C): Promise<{ data?: PeopleQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<PeopleQuery, PeopleQueryVariables>(PeopleDocument, variables, options);
@@ -1358,6 +1503,9 @@ export function getSdk<C>(requester: Requester<C>) {
     removeTags(variables: RemoveTagsMutationVariables, options?: C): Promise<{ data?: RemoveTagsMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<RemoveTagsMutation, RemoveTagsMutationVariables>(RemoveTagsDocument, variables, options);
     },
+    removeUnits(variables: RemoveUnitsMutationVariables, options?: C): Promise<{ data?: RemoveUnitsMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<RemoveUnitsMutation, RemoveUnitsMutationVariables>(RemoveUnitsDocument, variables, options);
+    },
     studio(variables: StudioQueryVariables, options?: C): Promise<{ data?: StudioQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<StudioQuery, StudioQueryVariables>(StudioDocument, variables, options);
     },
@@ -1376,6 +1524,12 @@ export function getSdk<C>(requester: Requester<C>) {
     tags(variables: TagsQueryVariables, options?: C): Promise<{ data?: TagsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<TagsQuery, TagsQueryVariables>(TagsDocument, variables, options);
     },
+    unit(variables: UnitQueryVariables, options?: C): Promise<{ data?: UnitQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<UnitQuery, UnitQueryVariables>(UnitDocument, variables, options);
+    },
+    units(variables: UnitsQueryVariables, options?: C): Promise<{ data?: UnitsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<UnitsQuery, UnitsQueryVariables>(UnitsDocument, variables, options);
+    },
     updatePerson(variables: UpdatePersonMutationVariables, options?: C): Promise<{ data?: UpdatePersonMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<UpdatePersonMutation, UpdatePersonMutationVariables>(UpdatePersonDocument, variables, options);
     },
@@ -1387,6 +1541,9 @@ export function getSdk<C>(requester: Requester<C>) {
     },
     updateTag(variables: UpdateTagMutationVariables, options?: C): Promise<{ data?: UpdateTagMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<UpdateTagMutation, UpdateTagMutationVariables>(UpdateTagDocument, variables, options);
+    },
+    updateUnit(variables: UpdateUnitMutationVariables, options?: C): Promise<{ data?: UpdateUnitMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<UpdateUnitMutation, UpdateUnitMutationVariables>(UpdateUnitDocument, variables, options);
     }
   };
 }

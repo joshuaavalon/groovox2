@@ -1,0 +1,5 @@
+mutation removeUnits($where: UnitFindManyInput!) {
+  removeUnits(where: $where) {
+    count
+  }
+}

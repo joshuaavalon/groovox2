@@ -1,0 +1,9 @@
+query units($where: UnitFindManyInput!) {
+  units(where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+  }
+}

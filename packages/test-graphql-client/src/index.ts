@@ -20,3 +20,4 @@ export const createSdk = (server: FastifyInstance): Sdk => {
 };
 
 export type { Sdk } from "./types.generated";
+export * as Types from "./types.generated";

@@ -7,6 +7,7 @@ const type = inputObjectType({
   definition(t) {
     t.nullable.string("name");
     t.nullable.string("description");
+    t.nullable.list.uuid("memberIds");
   }
 });
 
