@@ -1,5 +1,5 @@
 {
-  "name": "@groovox/plugin-validate",
+  "name": "@groovox/plugin-entity",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -7,14 +7,15 @@
   "typings": "./src/index.ts",
   "scripts": {
     "prebuild": "rimraf lib",
-    "build": "tsc"
+    "build": "tsc",
+    "generate": "ts-node script/json-d-ts.ts"
   },
   "keywords": [],
   "homepage": "https://github.com/groovox/groovox#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/groovox/groovox.git",
-    "directory": "packages/plugin-validate"
+    "directory": "packages/plugin-entity"
   },
   "bugs": {
     "url": "https://github.com/groovox/groovox/issues"
