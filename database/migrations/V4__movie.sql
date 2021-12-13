@@ -12,24 +12,24 @@ CREATE TABLE movie (
 );
 
 CREATE TABLE _movie_tag (
-  a UUID NOT NULL,
-  b UUID NOT NULL,
-  FOREIGN KEY (a) REFERENCES movie (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES tag (id) ON DELETE CASCADE
+  "A" UUID NOT NULL,
+  "B" UUID NOT NULL,
+  FOREIGN KEY ("A") REFERENCES movie (id) ON DELETE CASCADE,
+  FOREIGN KEY ("B") REFERENCES tag (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _movie_tag_ab_unique ON _movie_tag (a, b);
-CREATE INDEX _movie_tag_b_index ON _movie_tag (b);
+CREATE UNIQUE INDEX _movie_tag_ab_unique ON _movie_tag ("A", "B");
+CREATE INDEX _movie_tag_b_index ON _movie_tag ("B");
 
 CREATE TABLE _movie_studio (
-  a UUID NOT NULL,
-  b UUID NOT NULL,
-  FOREIGN KEY (a) REFERENCES movie (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES studio (id) ON DELETE CASCADE
+  "A" UUID NOT NULL,
+  "B" UUID NOT NULL,
+  FOREIGN KEY ("A") REFERENCES movie (id) ON DELETE CASCADE,
+  FOREIGN KEY ("B") REFERENCES studio (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _movie_studio_ab_unique ON _movie_studio (a, b);
-CREATE INDEX _movie_studio_b_index ON _movie_studio (b);
+CREATE UNIQUE INDEX _movie_studio_ab_unique ON _movie_studio ("A", "B");
+CREATE INDEX _movie_studio_b_index ON _movie_studio ("B");
 
 CREATE TABLE movie_role (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

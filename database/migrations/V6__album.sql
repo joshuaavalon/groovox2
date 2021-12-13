@@ -10,14 +10,14 @@ CREATE TABLE album (
 );
 
 CREATE TABLE _album_tag (
-  a UUID NOT NULL,
-  b UUID NOT NULL,
-  FOREIGN KEY (a) REFERENCES album (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES tag (id) ON DELETE CASCADE
+  "A" UUID NOT NULL,
+  "B" UUID NOT NULL,
+  FOREIGN KEY ("A") REFERENCES album (id) ON DELETE CASCADE,
+  FOREIGN KEY ("B") REFERENCES tag (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _album_tag_ab_unique ON _album_tag (a, b);
-CREATE INDEX _album_tag_b_index ON _album_tag (b);
+CREATE UNIQUE INDEX _album_tag_ab_unique ON _album_tag ("A", "B");
+CREATE INDEX _album_tag_b_index ON _album_tag ("B");
 
 CREATE TABLE album_person_role (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -60,14 +60,14 @@ CREATE TABLE track (
 );
 
 CREATE TABLE _tag_track (
-  a UUID NOT NULL,
-  b UUID NOT NULL,
-  FOREIGN KEY (a) REFERENCES tag (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES track (id) ON DELETE CASCADE
+  "A" UUID NOT NULL,
+  "B" UUID NOT NULL,
+  FOREIGN KEY ("A") REFERENCES tag (id) ON DELETE CASCADE,
+  FOREIGN KEY ("B") REFERENCES track (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _tag_track_ab_unique ON _tag_track (a, b);
-CREATE INDEX _tag_track_b_index ON _tag_track (b);
+CREATE UNIQUE INDEX _tag_track_ab_unique ON _tag_track ("A", "B");
+CREATE INDEX _tag_track_b_index ON _tag_track ("B");
 
 CREATE TABLE track_person_role (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

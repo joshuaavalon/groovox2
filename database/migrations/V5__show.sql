@@ -12,24 +12,24 @@ CREATE TABLE show (
 );
 
 CREATE TABLE _show_tag (
-  a UUID NOT NULL,
-  b UUID NOT NULL,
-  FOREIGN KEY (a) REFERENCES show (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES tag (id) ON DELETE CASCADE
+  "A" UUID NOT NULL,
+  "B" UUID NOT NULL,
+  FOREIGN KEY ("A") REFERENCES show (id) ON DELETE CASCADE,
+  FOREIGN KEY ("B") REFERENCES tag (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _show_tag_ab_unique ON _show_tag (a, b);
-CREATE INDEX _show_tag_b_index ON _show_tag (b);
+CREATE UNIQUE INDEX _show_tag_ab_unique ON _show_tag ("A", "B");
+CREATE INDEX _show_tag_b_index ON _show_tag ("B");
 
 CREATE TABLE _show_studio (
-  a UUID NOT NULL,
-  b UUID NOT NULL,
-  FOREIGN KEY (a) REFERENCES show (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES studio (id) ON DELETE CASCADE
+  "A" UUID NOT NULL,
+  "B" UUID NOT NULL,
+  FOREIGN KEY ("A") REFERENCES show (id) ON DELETE CASCADE,
+  FOREIGN KEY ("B") REFERENCES studio (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _show_studio_ab_unique ON _show_studio (a, b);
-CREATE INDEX _show_studio_b_index ON _show_studio (b);
+CREATE UNIQUE INDEX _show_studio_ab_unique ON _show_studio ("A", "B");
+CREATE INDEX _show_studio_b_index ON _show_studio ("B");
 
 CREATE TABLE show_role (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -110,11 +110,11 @@ CREATE TABLE episode_role (
 );
 
 CREATE TABLE _episode_tag (
-  a UUID NOT NULL,
-  b UUID NOT NULL,
-  FOREIGN KEY (a) REFERENCES episode (id) ON DELETE CASCADE,
-  FOREIGN KEY (b) REFERENCES tag (id) ON DELETE CASCADE
+  "A" UUID NOT NULL,
+  "B" UUID NOT NULL,
+  FOREIGN KEY ("A") REFERENCES episode (id) ON DELETE CASCADE,
+  FOREIGN KEY ("B") REFERENCES tag (id) ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX _episode_tag_ab_unique ON _episode_tag (a, b);
-CREATE INDEX _episode_tag_b_index ON _episode_tag (b);
+CREATE UNIQUE INDEX _episode_tag_ab_unique ON _episode_tag ("A", "B");
+CREATE INDEX _episode_tag_b_index ON _episode_tag ("B");
