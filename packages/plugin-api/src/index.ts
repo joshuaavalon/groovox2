@@ -1,12 +1,12 @@
 import fastifyPlugin from "fastify-plugin";
 
-import { registerApi } from "./func";
+import { createApi, GroovoxApi } from "./api";
 
 import type {} from "@groovox/plugin-database";
 
 const plugin = fastifyPlugin(
   async (fastify, _opts) => {
-    await registerApi(fastify);
+    fastify.decorate("api", createApi(fastify));
   },
   {
     name: "@groovox/plugin-api",
@@ -21,6 +21,4 @@ declare module "fastify" {
   interface FastifyInstance {
     api: GroovoxApi;
   }
-
-  interface GroovoxApi {}
 }

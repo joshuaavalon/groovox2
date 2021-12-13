@@ -9,7 +9,7 @@ const type = objectType({
     export: "TagCategory"
   },
   definition(t) {
-    t.id("_id", { resolve: root => `tagCategory:${root.id}` });
+    t.id("_id", { resolve: root => `tag-category:${root.id}` });
     t.uuid("id");
     t.string("name");
     t.string("description");
