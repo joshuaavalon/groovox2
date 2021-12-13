@@ -27,6 +27,6 @@ describe("plugin-graphql", () => {
     test("find by name equal", async () => testFindByNameEqual(sdk));
     test("find by name start with", async () => testFindByNameStartWith(sdk));
     test("update", async () => testUpdate(sdk));
-    test("person", async () => testUnitWithPerson(sdk));
+    test("person", async () => testPerson(sdk));
   });
 });
