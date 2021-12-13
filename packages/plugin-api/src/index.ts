@@ -2,6 +2,7 @@ import fastifyPlugin from "fastify-plugin";
 
 import { createApi, GroovoxApi } from "./api";
 
+import type {} from "@groovox/plugin-entity";
 import type {} from "@groovox/plugin-database";
 
 const plugin = fastifyPlugin(
@@ -11,7 +12,7 @@ const plugin = fastifyPlugin(
   {
     name: "@groovox/plugin-api",
     fastify: "3.x",
-    dependencies: ["@groovox/plugin-database"]
+    dependencies: ["@groovox/plugin-database", "@groovox/plugin-entity"]
   }
 );
 

@@ -8,7 +8,7 @@ export interface Validate {
   (data: unknown): Promise<unknown[] | null | undefined>;
 }
 
-type Schemas = {
+export type Schemas = {
   [booleanFilter.schema.$id]: booleanFilter.Type;
 };
 

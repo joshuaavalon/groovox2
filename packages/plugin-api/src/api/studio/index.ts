@@ -1,5 +1,7 @@
 import { Studio } from "@prisma/client";
+
 import type { ApiFunction } from "../type";
+// import type { Schemas } from "@groovox/plugin-entity";
 
 export type Input = { where: { id: string } };
 

@@ -22,3 +22,5 @@ declare module "fastify" {
     entity: AjvValidator;
   }
 }
+
+export type { Schemas } from "./ajv";
