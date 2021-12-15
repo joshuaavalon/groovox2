@@ -1,8 +1,14 @@
 import jsonSchema from "./index.schema.json";
 
-export interface StudioCreateOneInput {
-  name: string;
-  not: string;
-}
-
 export const studioCreateOneInputSchema = jsonSchema;
+
+declare module "@groovox/plugin-entity" {
+  export interface StudioCreateOneInput {
+    name: string;
+    description: string;
+  }
+
+  export interface EntitySchemas {
+    [jsonSchema.$id]: StudioCreateOneInput;
+  }
+}

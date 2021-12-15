@@ -39,5 +39,3 @@ declare module "fastify" {
     entity: Validator;
   }
 }
-
-export type { EntityValidationSchemas } from "./schema";

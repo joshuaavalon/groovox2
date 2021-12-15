@@ -5,41 +5,41 @@ const data = {
   "title": "DateTimeFilter",
   "properties": {
     "equal": {
-      "type": ["object", "null"],
+      "type": "object",
       "instanceof": "Date"
     },
     "gt": {
-      "type": ["object", "null"],
+      "type": "object",
       "instanceof": "Date"
     },
     "gte": {
-      "type": ["object", "null"],
+      "type": "object",
       "instanceof": "Date"
     },
     "lt": {
-      "type": ["object", "null"],
+      "type": "object",
       "instanceof": "Date"
     },
     "lte": {
-      "type": ["object", "null"],
+      "type": "object",
       "instanceof": "Date"
     },
     "in": {
-      "type": ["array", "null"],
+      "type": "array",
       "items": {
         "type": "object",
         "instanceof": "Date"
       }
     },
     "notIn": {
-      "type": ["array", "null"],
+      "type": "array",
       "items": {
         "type": "object",
         "instanceof": "Date"
       }
     },
     "not": {
-      "anyOf": [{ "$ref": "#" }, { "type": "null" }]
+      "anyOf": [{ "$ref": "#" }]
     }
   },
   "additionalProperties": false

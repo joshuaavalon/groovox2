@@ -1,23 +1,23 @@
 const data = {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "/schema/decimal-filter.schema.json",
+  "$id": "/schema/decimal-nullable-filter.schema.json",
   "type": "object",
-  "title": "DecimalFilter",
+  "title": "DecimalNullableFilter",
   "properties": {
     "equal": {
       "type": ["object", "null"]
     },
     "gt": {
-      "type": ["object", "null"]
+      "type": "object"
     },
     "gte": {
-      "type": ["object", "null"]
+      "type": "object"
     },
     "lt": {
-      "type": ["object", "null"]
+      "type": "object"
     },
     "lte": {
-      "type": ["object", "null"]
+      "type": "object"
     },
     "in": {
       "type": ["array", "null"],

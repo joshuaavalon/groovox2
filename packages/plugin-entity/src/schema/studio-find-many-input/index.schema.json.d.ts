@@ -5,11 +5,37 @@ const data = {
   "title": "StudioFindManyInput",
   "properties": {
     "id": {
-      "type": "string",
-      "format": "uuid"
+      "$ref": "./uuid-filter.schema.json"
+    },
+    "name": {
+      "$ref": "./string-filter.schema.json"
     },
     "description": {
-      "type": "string"
+      "$ref": "./string-filter.schema.json"
+    },
+    "createdAt": {
+      "$ref": "./date-time-filter.schema.json"
+    },
+    "updatedAt": {
+      "$ref": "./date-time-filter.schema.json"
+    },
+    "and": {
+      "type": "array",
+      "items": {
+        "$ref": "#"
+      }
+    },
+    "or": {
+      "type": "array",
+      "items": {
+        "$ref": "#"
+      }
+    },
+    "not": {
+      "type": "array",
+      "items": {
+        "$ref": "#"
+      }
     }
   },
   "additionalProperties": false

@@ -5,25 +5,25 @@ const data = {
   "title": "UUIDFilter",
   "properties": {
     "equal": {
-      "type": ["string", "null"],
+      "type": "string",
       "format": "uuid"
     },
     "in": {
-      "type": ["array", "null"],
+      "type": "array",
       "items": {
         "type": "string",
         "format": "uuid"
       }
     },
     "notIn": {
-      "type": ["array", "null"],
+      "type": "array",
       "items": {
         "type": "string",
         "format": "uuid"
       }
     },
     "not": {
-      "anyOf": [{ "$ref": "#" }, { "type": "null" }]
+      "$ref": "#"
     }
   },
   "additionalProperties": false

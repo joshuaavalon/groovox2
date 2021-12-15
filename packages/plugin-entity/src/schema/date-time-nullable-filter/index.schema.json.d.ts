@@ -1,27 +1,27 @@
 const data = {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "/schema/date-nullable-filter.schema.json",
+  "$id": "/schema/date-time-nullable-filter.schema.json",
   "type": "object",
-  "title": "DateNullableFilter",
+  "title": "DateTimeNullableFilter",
   "properties": {
     "equal": {
       "type": ["object", "null"],
       "instanceof": "Date"
     },
     "gt": {
-      "type": ["object", "null"],
+      "type": "object",
       "instanceof": "Date"
     },
     "gte": {
-      "type": ["object", "null"],
+      "type": "object",
       "instanceof": "Date"
     },
     "lt": {
-      "type": ["object", "null"],
+      "type": "object",
       "instanceof": "Date"
     },
     "lte": {
-      "type": ["object", "null"],
+      "type": "object",
       "instanceof": "Date"
     },
     "in": {

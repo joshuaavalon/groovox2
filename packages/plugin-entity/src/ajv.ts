@@ -4,7 +4,8 @@ import addKeywords from "ajv-keywords";
 import { entitySchemas } from "./schema";
 
 import type { Options, ValidateFunction } from "ajv/dist/2020";
-import type { EntityValidationSchemas } from "./schema";
+
+import type { EntitySchemas } from "@groovox/plugin-entity";
 
 export interface Validate {
   (data: unknown): Promise<unknown[] | null | undefined>;
@@ -31,12 +32,10 @@ export class Validator {
     entitySchemas.forEach(schema => this.ajv.addSchema(schema));
   }
 
-  getSchema<T extends keyof EntityValidationSchemas>(
+  getSchema<T extends keyof EntitySchemas>(
     id: T
-  ): ValidateFunction<EntityValidationSchemas[T]> {
-    const fn = this.ajv.getSchema(id) as ValidateFunction<
-      EntityValidationSchemas[T]
-    >;
+  ): ValidateFunction<EntitySchemas[T]> {
+    const fn = this.ajv.getSchema(id) as ValidateFunction<EntitySchemas[T]>;
     if (!fn) {
       throw new Error(`Unknown schema: (${id})`);
     }

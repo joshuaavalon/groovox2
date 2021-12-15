@@ -5,31 +5,31 @@ const data = {
   "title": "StringFilter",
   "properties": {
     "contain": {
-      "type": ["string", "null"]
+      "type": "string"
     },
     "endWith": {
-      "type": ["string", "null"]
+      "type": "string"
     },
     "equal": {
-      "type": ["string", "null"]
+      "type": "string"
     },
     "startWith": {
-      "type": ["string", "null"]
+      "type": "string"
     },
     "in": {
-      "type": ["array", "null"],
+      "type": "array",
       "items": {
         "type": "string"
       }
     },
     "notIn": {
-      "type": ["array", "null"],
+      "type": "array",
       "items": {
         "type": "string"
       }
     },
     "not": {
-      "anyOf": [{ "$ref": "#" }, { "type": "null" }]
+      "$ref": "#"
     }
   },
   "additionalProperties": false

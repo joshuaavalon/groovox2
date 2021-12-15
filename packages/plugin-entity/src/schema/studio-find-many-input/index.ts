@@ -1,18 +1,20 @@
 import jsonSchema from "./index.schema.json";
 
-import type { Type as DateTimeFilter } from "../date-time-filter";
-import type { Type as StringFilter } from "../string-filter";
-import type { Type as UUIDFilter } from "../uuid-filter";
+export const studioFindManyInputSchema = jsonSchema;
 
-export type Type = {
-  id?: UUIDFilter | null;
-  name?: StringFilter | null;
-  description?: StringFilter | null;
-  createdAt?: DateTimeFilter | null;
-  updatedAt?: DateTimeFilter | null;
-  and?: Type | null;
-  or?: Type | null;
-  not?: Type | null;
-};
+declare module "@groovox/plugin-entity" {
+  export interface StudioFindManyInput {
+    id?: UUIDFilter;
+    name?: StringFilter;
+    description?: StringFilter;
+    createdAt?: DateTimeFilter;
+    updatedAt?: DateTimeFilter;
+    and?: StudioFindManyInput[];
+    or?: StudioFindManyInput[];
+    not?: StudioFindManyInput[];
+  }
 
-export const schema = jsonSchema;
+  export interface EntitySchemas {
+    [jsonSchema.$id]: StudioFindManyInput;
+  }
+}

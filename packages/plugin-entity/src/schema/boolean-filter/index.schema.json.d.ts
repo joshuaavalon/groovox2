@@ -5,10 +5,7 @@ const data = {
   "title": "BooleanFilter",
   "properties": {
     "equal": {
-      "type": ["boolean", "null"]
-    },
-    "not": {
-      "anyOf": [{ "$ref": "#" }, { "type": "null" }]
+      "type": "boolean"
     }
   },
   "additionalProperties": false

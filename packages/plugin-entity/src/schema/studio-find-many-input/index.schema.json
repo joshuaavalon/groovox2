@@ -5,34 +5,37 @@
   "title": "StudioFindManyInput",
   "properties": {
     "id": {
-      "anyOf": [{ "$ref": "./uuid-filter.schema.json" }, { "type": "null" }]
+      "$ref": "./uuid-filter.schema.json"
     },
     "name": {
-      "anyOf": [{ "$ref": "./string-filter.schema.json" }, { "type": "null" }]
+      "$ref": "./string-filter.schema.json"
     },
     "description": {
-      "anyOf": [{ "$ref": "./string-filter.schema.json" }, { "type": "null" }]
+      "$ref": "./string-filter.schema.json"
     },
     "createdAt": {
-      "anyOf": [
-        { "$ref": "./date-time-filter.schema.json" },
-        { "type": "null" }
-      ]
+      "$ref": "./date-time-filter.schema.json"
     },
     "updatedAt": {
-      "anyOf": [
-        { "$ref": "./date-time-filter.schema.json" },
-        { "type": "null" }
-      ]
+      "$ref": "./date-time-filter.schema.json"
     },
     "and": {
-      "anyOf": [{ "$ref": "#" }, { "type": "null" }]
+      "type": "array",
+      "items": {
+        "$ref": "#"
+      }
     },
     "or": {
-      "anyOf": [{ "$ref": "#" }, { "type": "null" }]
+      "type": "array",
+      "items": {
+        "$ref": "#"
+      }
     },
     "not": {
-      "anyOf": [{ "$ref": "#" }, { "type": "null" }]
+      "type": "array",
+      "items": {
+        "$ref": "#"
+      }
     }
   },
   "additionalProperties": false
