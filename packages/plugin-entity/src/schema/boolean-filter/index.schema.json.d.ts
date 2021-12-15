@@ -1,6 +1,6 @@
 const data = {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "/schema/graphql/filter/boolean.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "/schema/boolean-filter.schema.json",
   "type": "object",
   "title": "BooleanFilter",
   "properties": {
@@ -8,7 +8,7 @@ const data = {
       "type": ["boolean", "null"]
     },
     "not": {
-      "anyOf": [{ "type": "null" }, { "$ref": "#" }]
+      "anyOf": [{ "$ref": "#" }, { "type": "null" }]
     }
   },
   "additionalProperties": false

@@ -1,8 +1,7 @@
-import fastifyStatic from "fastify-static";
 import fastifyPlugin from "fastify-plugin";
-import path from "path";
 
-import { AjvValidator } from "./ajv";
+import { Validator } from "./ajv";
+import { entitySchemas } from "./schema";
 
 import type { Options as AjvOptions } from "ajv/dist/2020";
 
@@ -14,13 +13,16 @@ export interface Options {
 const plugin = fastifyPlugin<Options>(
   async (fastify, opts) => {
     const { schema = true, ajv } = opts;
-    fastify.decorate("entity", new AjvValidator(ajv));
+    fastify.decorate("entity", new Validator(ajv));
     if (schema) {
-      await fastify.register(fastifyStatic, {
-        root: path.join(__dirname, "schema"),
-        prefix: "/schema/",
-        allowedPath: pathname => pathname.endsWith(".schema.json"),
-        decorateReply: false
+      entitySchemas.forEach(schema => {
+        fastify.route({
+          method: "GET",
+          url: schema.$id,
+          handler: (_req, res) => {
+            res.send(schema);
+          }
+        });
       });
     }
   },
@@ -34,8 +36,8 @@ export default plugin;
 
 declare module "fastify" {
   interface FastifyInstance {
-    entity: AjvValidator;
+    entity: Validator;
   }
 }
 
-export type { Schemas } from "./ajv";
+export type { EntityValidationSchemas } from "./schema";

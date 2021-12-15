@@ -1,14 +1,11 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "/schema/boolean-filter.schema.json",
   "type": "object",
   "title": "BooleanFilter",
   "properties": {
     "equal": {
-      "type": ["boolean", "null"]
-    },
-    "not": {
-      "anyOf": [{ "type": "null" }, { "$ref": "#" }]
+      "type": "boolean"
     }
   },
   "additionalProperties": false

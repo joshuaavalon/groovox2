@@ -22,11 +22,12 @@
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "dependencies": {
-    "@groovox/plugin-validate": "^1.0.0",
     "@groovox/plugin-api": "^1.0.0",
     "@groovox/plugin-core": "^1.0.0",
     "@groovox/plugin-database": "^1.0.0",
+    "@groovox/plugin-entity": "^1.0.0",
     "@groovox/plugin-graphql": "^1.0.0",
+    "@groovox/plugin-validate": "^1.0.0",
     "ajv": "^8.8.1",
     "fastify": "^3.23.1"
   }

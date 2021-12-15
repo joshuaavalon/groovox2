@@ -1,16 +1,14 @@
 import Ajv from "ajv/dist/2020";
 import addFormats from "ajv-formats";
+import addKeywords from "ajv-keywords";
+import { entitySchemas } from "./schema";
 
 import type { Options, ValidateFunction } from "ajv/dist/2020";
-import * as booleanFilter from "./schema/boolean-filter";
+import type { EntityValidationSchemas } from "./schema";
 
 export interface Validate {
   (data: unknown): Promise<unknown[] | null | undefined>;
 }
-
-export type Schemas = {
-  [booleanFilter.schema.$id]: booleanFilter.Type;
-};
 
 const defaultAjvOptions: Options = {
   coerceTypes: true,
@@ -22,16 +20,23 @@ const defaultAjvOptions: Options = {
   validateFormats: true
 };
 
-export class AjvValidator {
+export class Validator {
   private ajv: Ajv;
 
   constructor(opts: Options = {}) {
-    this.ajv = addFormats(new Ajv({ ...defaultAjvOptions, ...opts }));
-    this.ajv.addSchema(booleanFilter.schema);
+    let ajv = new Ajv({ ...defaultAjvOptions, ...opts });
+    ajv = addFormats(ajv);
+    ajv = addKeywords(ajv, ["instanceof"]);
+    this.ajv = ajv;
+    entitySchemas.forEach(schema => this.ajv.addSchema(schema));
   }
 
-  getSchema<T extends keyof Schemas>(id: T): ValidateFunction<Schemas[T]> {
-    const fn = this.ajv.getSchema(id) as ValidateFunction<Schemas[T]>;
+  getSchema<T extends keyof EntityValidationSchemas>(
+    id: T
+  ): ValidateFunction<EntityValidationSchemas[T]> {
+    const fn = this.ajv.getSchema(id) as ValidateFunction<
+      EntityValidationSchemas[T]
+    >;
     if (!fn) {
       throw new Error(`Unknown schema: (${id})`);
     }
