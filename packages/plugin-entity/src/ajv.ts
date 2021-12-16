@@ -1,9 +1,9 @@
-import Ajv from "ajv/dist/2020";
+import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import addKeywords from "ajv-keywords";
 import { entitySchemas } from "./schema";
 
-import type { Options, ValidateFunction } from "ajv/dist/2020";
+import type { Options, ValidateFunction } from "ajv";
 
 import type { EntitySchemas } from "@groovox/plugin-entity";
 
