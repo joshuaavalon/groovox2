@@ -16,18 +16,18 @@ export const testFindById = async (sdk: Sdk): Promise<void> => {
   expect(createUnit.name).toBe(name);
   expect(createUnit.description).toBe(description);
 
-  const findResult = await sdk.unit({
+  const findResult = await sdk.findUnit({
     where: { id: createUnit.id }
   });
   expect(findResult.errors).toBeUndefined();
   expect(findResult.data).toBeDefined();
-  if (!findResult.data || !findResult.data.unit) {
+  if (!findResult.data || !findResult.data.findUnit) {
     return;
   }
-  const { unit } = findResult.data;
-  expect(unit.id).toBe(createUnit.id);
-  expect(unit.name).toBe(name);
-  expect(unit.description).toBe(description);
+  const { findUnit } = findResult.data;
+  expect(findUnit.id).toBe(createUnit.id);
+  expect(findUnit.name).toBe(name);
+  expect(findUnit.description).toBe(description);
 
   const removeResult = await sdk.removeUnits({
     where: { id: { equal: createUnit.id } }
@@ -56,7 +56,7 @@ export const testFindByNameEqual = async (sdk: Sdk): Promise<void> => {
   expect(createUnit.name).toBe(name);
   expect(createUnit.description).toBe(description);
 
-  const findResult = await sdk.units({
+  const findResult = await sdk.findUnits({
     where: { name: { equal: name } }
   });
   expect(findResult.errors).toBeUndefined();
@@ -64,10 +64,10 @@ export const testFindByNameEqual = async (sdk: Sdk): Promise<void> => {
   if (!findResult.data) {
     return;
   }
-  const { units } = findResult.data;
-  expect(units.length).toBe(1);
+  const { findUnits } = findResult.data;
+  expect(findUnits.length).toBe(1);
 
-  const unit = units[0];
+  const unit = findUnits[0];
   expect(unit.id).toBe(createUnit.id);
   expect(unit.name).toBe(name);
   expect(unit.description).toBe(description);
@@ -103,7 +103,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     expect(createUnit.description).toBe(description + suffix);
   }
 
-  const findResult = await sdk.units({
+  const findResult = await sdk.findUnits({
     where: { name: { startWith: name } }
   });
   expect(findResult.errors).toBeUndefined();
@@ -111,11 +111,11 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
   if (!findResult.data) {
     return;
   }
-  const { units } = findResult.data;
-  expect(units.length).toBe(3);
+  const { findUnits } = findResult.data;
+  expect(findUnits.length).toBe(3);
 
   for (let i = 0; i < 3; i++) {
-    const unit = units[i];
+    const unit = findUnits[i];
     const suffix = " " + (i + 1);
     expect(unit.name).toBe(name + suffix);
     expect(unit.description).toBe(description + suffix);

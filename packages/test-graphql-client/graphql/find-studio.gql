@@ -1,0 +1,9 @@
+query findStudio($where: StudioFindOneInput!) {
+  findStudio(where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+  }
+}

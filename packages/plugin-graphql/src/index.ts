@@ -2,36 +2,26 @@ import fastifyPlugin from "fastify-plugin";
 import mercurius from "mercurius";
 import mercuriusUpload from "mercurius-upload";
 import altairPlugin from "@groovox/plugin-altair";
-import graphqlJsonSchemaPlugin, {
-  schemas
-} from "@groovox/plugin-graphql-json-schema";
-import { createGraphqlSchema } from "@groovox/graphql";
-import type {} from "@groovox/plugin-api";
+
+import { createSchema } from "./schema";
+
+import type {} from "@groovox/plugin-database";
 
 const plugin = fastifyPlugin(
   async (fastify, _opts) => {
-    const graphqlSchema = createGraphqlSchema();
-    await fastify.register(graphqlJsonSchemaPlugin);
+    const graphqlSchema = createSchema();
     await fastify.register(mercuriusUpload);
     await fastify.register(mercurius, {
       schema: graphqlSchema,
       path: "/graphql",
-      graphiql: false,
-      context: (request, reply) => ({
-        fastify,
-        request,
-        reply
-      })
+      graphiql: false
     });
     await fastify.register(altairPlugin);
-    fastify.addHook("onReady", async () => {
-      schemas.forEach(schema => fastify.validate.addSchema(schema));
-    });
   },
   {
     name: "@groovox/plugin-graphql",
     fastify: "3.x",
-    dependencies: ["@groovox/plugin-api", "@groovox/plugin-validate"]
+    dependencies: ["@groovox/plugin-database", "@groovox/plugin-validate"]
   }
 );
 

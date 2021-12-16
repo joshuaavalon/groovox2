@@ -31,52 +31,8 @@ export type AffectedRowsOutput = {
   count: Scalars['Int'];
 };
 
-export type Attachment = {
-  _id: Scalars['ID'];
-  createdAt: Scalars['DateTime'];
-  description: Scalars['String'];
-  id: Scalars['UUID'];
-  tag?: Maybe<Tag>;
-  tagCategoryId?: Maybe<Scalars['UUID']>;
-  tagId?: Maybe<Scalars['UUID']>;
-  type: Scalars['String'];
-};
-
-export type AttachmentCreateOneInput = {
-  description?: Scalars['String'];
-  file: Scalars['Upload'];
-  type: Scalars['String'];
-};
-
-export type AttachmentFindManyInput = {
-  and?: InputMaybe<Array<InputMaybe<AttachmentFindManyInput>>>;
-  createdAt?: InputMaybe<DateTimeFilter>;
-  description?: InputMaybe<StringFilter>;
-  id?: InputMaybe<UuidFilter>;
-  not?: InputMaybe<Array<InputMaybe<AttachmentFindManyInput>>>;
-  or?: InputMaybe<Array<InputMaybe<AttachmentFindManyInput>>>;
-  tag?: InputMaybe<TagFindManyInput>;
-  type?: InputMaybe<StringFilter>;
-};
-
-export type AttachmentFindOneInput = {
-  id: Scalars['UUID'];
-};
-
-export type AttachmentOrderByInput = {
-  createdAt?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
-};
-
-export type AttachmentUpdateOneInput = {
-  description?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
 export type BooleanFilter = {
-  equal?: InputMaybe<Scalars['Boolean']>;
-  not?: InputMaybe<BooleanFilter>;
+  equal: Scalars['Boolean'];
 };
 
 export type DateNullableFilter = {
@@ -101,17 +57,6 @@ export type DateTimeFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
-export type DecimalFilter = {
-  equal?: InputMaybe<Scalars['Decimal']>;
-  gt?: InputMaybe<Scalars['Decimal']>;
-  gte?: InputMaybe<Scalars['Decimal']>;
-  in?: InputMaybe<Array<Scalars['Decimal']>>;
-  lt?: InputMaybe<Scalars['Decimal']>;
-  lte?: InputMaybe<Scalars['Decimal']>;
-  not?: InputMaybe<DecimalFilter>;
-  notIn?: InputMaybe<Array<Scalars['Decimal']>>;
-};
-
 export type DecimalNullableFilter = {
   equal?: InputMaybe<Scalars['Decimal']>;
   gt?: InputMaybe<Scalars['Decimal']>;
@@ -119,155 +64,22 @@ export type DecimalNullableFilter = {
   in?: InputMaybe<Array<Scalars['Decimal']>>;
   lt?: InputMaybe<Scalars['Decimal']>;
   lte?: InputMaybe<Scalars['Decimal']>;
-  not?: InputMaybe<DecimalFilter>;
+  not?: InputMaybe<DecimalNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['Decimal']>>;
 };
 
-export type Movie = {
-  _id: Scalars['ID'];
-  airedDate?: Maybe<Scalars['Date']>;
-  alias: Array<Scalars['String']>;
-  contentRating: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  description: Scalars['String'];
-  id: Scalars['UUID'];
-  name: Scalars['String'];
-  nameSort: Scalars['String'];
-  rating?: Maybe<Scalars['Decimal']>;
-  studios: Array<Studio>;
-  tagline: Scalars['String'];
-  tags: Array<Tag>;
-  updatedAt: Scalars['DateTime'];
-};
-
-
-export type MovieStudiosArgs = {
-  orderBy?: InputMaybe<Array<StudioOrderByInput>>;
-};
-
-
-export type MovieTagsArgs = {
-  orderBy?: InputMaybe<Array<TagOrderByInput>>;
-};
-
-export type MovieCreateOneInput = {
-  airedDate?: InputMaybe<Scalars['Date']>;
-  contentRating: Scalars['String'];
-  description?: Scalars['String'];
-  name: Scalars['String'];
-  nameSort: Scalars['String'];
-  rating?: InputMaybe<Scalars['Decimal']>;
-  studioIds?: Array<Scalars['UUID']>;
-  tagline?: Scalars['String'];
-};
-
-export type MovieFindManyInput = {
-  airedDate?: InputMaybe<DateNullableFilter>;
-  and?: InputMaybe<Array<InputMaybe<MovieFindManyInput>>>;
-  contentRating?: InputMaybe<StringFilter>;
-  createdAt?: InputMaybe<DateTimeFilter>;
-  description?: InputMaybe<StringFilter>;
-  id?: InputMaybe<UuidFilter>;
-  name?: InputMaybe<StringFilter>;
-  nameSort?: InputMaybe<StringFilter>;
-  not?: InputMaybe<Array<InputMaybe<MovieFindManyInput>>>;
-  or?: InputMaybe<Array<InputMaybe<MovieFindManyInput>>>;
-  rating?: InputMaybe<DecimalNullableFilter>;
-  tagline?: InputMaybe<StringFilter>;
-  updatedAt?: InputMaybe<DateTimeFilter>;
-};
-
-export type MovieFindOneInput = {
-  id: Scalars['UUID'];
-};
-
-export type MovieOrderByInput = {
-  airedDate?: InputMaybe<SortOrder>;
-  contentRating?: InputMaybe<SortOrder>;
-  createdAt?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  name?: InputMaybe<SortOrder>;
-  nameSort?: InputMaybe<SortOrder>;
-  rating?: InputMaybe<SortOrder>;
-  updatedAt?: InputMaybe<SortOrder>;
-};
-
-export type MovieRole = {
-  _id: Scalars['ID'];
-  id: Scalars['UUID'];
-  movie: Movie;
-  person: Person;
-  role: Scalars['String'];
-  type: Scalars['String'];
-};
-
-export type MovieRoleCreateOneInput = {
-  movieId: Scalars['UUID'];
-  personId: Scalars['UUID'];
-  role: Scalars['String'];
-  type: Scalars['String'];
-};
-
-export type MovieRoleFindManyInput = {
-  and?: InputMaybe<Array<InputMaybe<MovieRoleFindManyInput>>>;
-  id?: InputMaybe<UuidFilter>;
-  not?: InputMaybe<Array<InputMaybe<MovieRoleFindManyInput>>>;
-  or?: InputMaybe<Array<InputMaybe<MovieRoleFindManyInput>>>;
-  role?: InputMaybe<StringFilter>;
-  type?: InputMaybe<StringFilter>;
-};
-
-export type MovieRoleFindOneInput = {
-  id: Scalars['UUID'];
-};
-
-export type MovieRoleOrderByInput = {
-  createdAt?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  role?: InputMaybe<SortOrder>;
-  sequence?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
-  updatedAt?: InputMaybe<SortOrder>;
-};
-
-export type MovieRoleUpdateOneInput = {
-  role?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-};
-
-export type MovieUpdateOneInput = {
-  airedDate?: InputMaybe<Scalars['Date']>;
-  contentRating?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  nameSort?: InputMaybe<Scalars['String']>;
-  rating?: InputMaybe<Scalars['Decimal']>;
-  studioIds?: InputMaybe<Array<Scalars['UUID']>>;
-  tagline?: InputMaybe<Scalars['String']>;
-};
-
 export type Mutation = {
-  createAttachment: Attachment;
-  createMovie: Movie;
   createPerson: Person;
-  createShow: Show;
   createStudio: Studio;
   createTag: Tag;
   createTagCategory: TagCategory;
   createUnit: Unit;
-  removeAttachments: AffectedRowsOutput;
-  removeMovies: AffectedRowsOutput;
   removePeople: AffectedRowsOutput;
-  removeShows: AffectedRowsOutput;
   removeStudios: AffectedRowsOutput;
   removeTagCategories: AffectedRowsOutput;
   removeTags: AffectedRowsOutput;
   removeUnits: AffectedRowsOutput;
-  updateAttachment: Attachment;
-  updateMovie: Movie;
-  updateMovieRole: MovieRole;
   updatePerson: Person;
-  updateShow: Show;
   updateStudio: Studio;
   updateTag: Tag;
   updateTagCategory: TagCategory;
@@ -275,23 +87,8 @@ export type Mutation = {
 };
 
 
-export type MutationCreateAttachmentArgs = {
-  data: AttachmentCreateOneInput;
-};
-
-
-export type MutationCreateMovieArgs = {
-  data: MovieCreateOneInput;
-};
-
-
 export type MutationCreatePersonArgs = {
   data: PersonCreateOneInput;
-};
-
-
-export type MutationCreateShowArgs = {
-  data: ShowCreateOneInput;
 };
 
 
@@ -315,23 +112,8 @@ export type MutationCreateUnitArgs = {
 };
 
 
-export type MutationRemoveAttachmentsArgs = {
-  where: AttachmentFindManyInput;
-};
-
-
-export type MutationRemoveMoviesArgs = {
-  where: MovieFindManyInput;
-};
-
-
 export type MutationRemovePeopleArgs = {
   where: PersonFindManyInput;
-};
-
-
-export type MutationRemoveShowsArgs = {
-  where: ShowFindManyInput;
 };
 
 
@@ -355,33 +137,9 @@ export type MutationRemoveUnitsArgs = {
 };
 
 
-export type MutationUpdateAttachmentArgs = {
-  data: AttachmentUpdateOneInput;
-  where: AttachmentFindOneInput;
-};
-
-
-export type MutationUpdateMovieArgs = {
-  data: MovieUpdateOneInput;
-  where: MovieFindOneInput;
-};
-
-
-export type MutationUpdateMovieRoleArgs = {
-  data: MovieRoleUpdateOneInput;
-  where: MovieRoleFindOneInput;
-};
-
-
 export type MutationUpdatePersonArgs = {
   data: PersonUpdateOneInput;
   where: PersonFindOneInput;
-};
-
-
-export type MutationUpdateShowArgs = {
-  data: ShowUpdateOneInput;
-  where: ShowFindOneInput;
 };
 
 
@@ -445,7 +203,7 @@ export type PersonCreateOneInput = {
 };
 
 export type PersonFindManyInput = {
-  and?: InputMaybe<Array<InputMaybe<PersonFindManyInput>>>;
+  and?: InputMaybe<Array<PersonFindManyInput>>;
   birthDate?: InputMaybe<DateNullableFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   deathDate?: InputMaybe<DateNullableFilter>;
@@ -455,8 +213,8 @@ export type PersonFindManyInput = {
   nameLast?: InputMaybe<StringFilter>;
   nameMiddle?: InputMaybe<StringFilter>;
   nameSort?: InputMaybe<StringFilter>;
-  not?: InputMaybe<Array<InputMaybe<PersonFindManyInput>>>;
-  or?: InputMaybe<Array<InputMaybe<PersonFindManyInput>>>;
+  not?: InputMaybe<Array<PersonFindManyInput>>;
+  or?: InputMaybe<Array<PersonFindManyInput>>;
   sex?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeFilter>;
 };
@@ -492,200 +250,76 @@ export type PersonUpdateOneInput = {
 };
 
 export type Query = {
-  attachment?: Maybe<Attachment>;
-  attachments: Array<Attachment>;
-  movie?: Maybe<Movie>;
-  movieRole?: Maybe<MovieRole>;
-  movieRoles: Array<MovieRole>;
-  movies: Array<Movie>;
-  people: Array<Person>;
-  person?: Maybe<Person>;
-  show?: Maybe<Show>;
-  shows: Array<Show>;
-  studio?: Maybe<Studio>;
-  studios: Array<Studio>;
-  tag?: Maybe<Tag>;
-  tagCategories: Array<TagCategory>;
-  tagCategory?: Maybe<TagCategory>;
-  tags: Array<Tag>;
-  unit?: Maybe<Unit>;
-  units: Array<Unit>;
+  findPeople: Array<Person>;
+  findPerson?: Maybe<Person>;
+  findStudio?: Maybe<Studio>;
+  findStudios: Array<Studio>;
+  findTag?: Maybe<Tag>;
+  findTagCategories: Array<TagCategory>;
+  findTagCategory?: Maybe<TagCategory>;
+  findTags: Array<Tag>;
+  findUnit?: Maybe<Unit>;
+  findUnits: Array<Unit>;
 };
 
 
-export type QueryAttachmentArgs = {
-  where: AttachmentFindOneInput;
-};
-
-
-export type QueryAttachmentsArgs = {
-  orderBy?: InputMaybe<Array<AttachmentOrderByInput>>;
-  pagination?: InputMaybe<Pagination>;
-  where?: InputMaybe<AttachmentFindManyInput>;
-};
-
-
-export type QueryMovieArgs = {
-  where: MovieFindOneInput;
-};
-
-
-export type QueryMovieRoleArgs = {
-  where: MovieRoleFindOneInput;
-};
-
-
-export type QueryMovieRolesArgs = {
-  orderBy?: InputMaybe<Array<MovieRoleOrderByInput>>;
-  pagination?: InputMaybe<Pagination>;
-  where?: InputMaybe<MovieRoleFindManyInput>;
-};
-
-
-export type QueryMoviesArgs = {
-  orderBy?: InputMaybe<Array<MovieOrderByInput>>;
-  pagination?: InputMaybe<Pagination>;
-  where?: InputMaybe<MovieFindManyInput>;
-};
-
-
-export type QueryPeopleArgs = {
+export type QueryFindPeopleArgs = {
   orderBy?: InputMaybe<Array<PersonOrderByInput>>;
   pagination?: InputMaybe<Pagination>;
   where?: InputMaybe<PersonFindManyInput>;
 };
 
 
-export type QueryPersonArgs = {
+export type QueryFindPersonArgs = {
   where: PersonFindOneInput;
 };
 
 
-export type QueryShowArgs = {
-  where: ShowFindOneInput;
-};
-
-
-export type QueryShowsArgs = {
-  orderBy?: InputMaybe<Array<ShowOrderByInput>>;
-  pagination?: InputMaybe<Pagination>;
-  where?: InputMaybe<ShowFindManyInput>;
-};
-
-
-export type QueryStudioArgs = {
+export type QueryFindStudioArgs = {
   where: StudioFindOneInput;
 };
 
 
-export type QueryStudiosArgs = {
+export type QueryFindStudiosArgs = {
   orderBy?: InputMaybe<Array<StudioOrderByInput>>;
   pagination?: InputMaybe<Pagination>;
   where?: InputMaybe<StudioFindManyInput>;
 };
 
 
-export type QueryTagArgs = {
+export type QueryFindTagArgs = {
   where: TagFindOneInput;
 };
 
 
-export type QueryTagCategoriesArgs = {
+export type QueryFindTagCategoriesArgs = {
   orderBy?: InputMaybe<Array<TagCategoryOrderByInput>>;
   pagination?: InputMaybe<Pagination>;
   where?: InputMaybe<TagCategoryFindManyInput>;
 };
 
 
-export type QueryTagCategoryArgs = {
+export type QueryFindTagCategoryArgs = {
   where: TagCategoryFindOneInput;
 };
 
 
-export type QueryTagsArgs = {
+export type QueryFindTagsArgs = {
   orderBy?: InputMaybe<Array<TagOrderByInput>>;
   pagination?: InputMaybe<Pagination>;
   where?: InputMaybe<TagFindManyInput>;
 };
 
 
-export type QueryUnitArgs = {
+export type QueryFindUnitArgs = {
   where: UnitFindOneInput;
 };
 
 
-export type QueryUnitsArgs = {
+export type QueryFindUnitsArgs = {
   orderBy?: InputMaybe<Array<UnitOrderByInput>>;
   pagination?: InputMaybe<Pagination>;
   where?: InputMaybe<UnitFindManyInput>;
-};
-
-export type Show = {
-  _id: Scalars['ID'];
-  airedDate?: Maybe<Scalars['Date']>;
-  contentRating: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  description: Scalars['String'];
-  id: Scalars['UUID'];
-  name: Scalars['String'];
-  nameSort: Scalars['String'];
-  rating?: Maybe<Scalars['Decimal']>;
-  studio: Array<Studio>;
-  tagline: Scalars['String'];
-  updatedAt: Scalars['DateTime'];
-};
-
-export type ShowCreateOneInput = {
-  airedDate?: InputMaybe<Scalars['Date']>;
-  contentRating: Scalars['String'];
-  description?: Scalars['String'];
-  name: Scalars['String'];
-  nameSort: Scalars['String'];
-  rating?: InputMaybe<Scalars['Decimal']>;
-  studioIds?: Array<Scalars['UUID']>;
-  tagline?: Scalars['String'];
-};
-
-export type ShowFindManyInput = {
-  airedDate?: InputMaybe<DateNullableFilter>;
-  and?: InputMaybe<Array<InputMaybe<ShowFindManyInput>>>;
-  contentRating?: InputMaybe<StringFilter>;
-  createdAt?: InputMaybe<DateTimeFilter>;
-  description?: InputMaybe<StringFilter>;
-  id?: InputMaybe<UuidFilter>;
-  name?: InputMaybe<StringFilter>;
-  nameSort?: InputMaybe<StringFilter>;
-  not?: InputMaybe<Array<InputMaybe<ShowFindManyInput>>>;
-  or?: InputMaybe<Array<InputMaybe<ShowFindManyInput>>>;
-  rating?: InputMaybe<DecimalNullableFilter>;
-  tagline?: InputMaybe<StringFilter>;
-  updatedAt?: InputMaybe<DateTimeFilter>;
-};
-
-export type ShowFindOneInput = {
-  id: Scalars['UUID'];
-};
-
-export type ShowOrderByInput = {
-  airedDate?: InputMaybe<SortOrder>;
-  contentRating?: InputMaybe<SortOrder>;
-  createdAt?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  name?: InputMaybe<SortOrder>;
-  nameSort?: InputMaybe<SortOrder>;
-  rating?: InputMaybe<SortOrder>;
-  updatedAt?: InputMaybe<SortOrder>;
-};
-
-export type ShowUpdateOneInput = {
-  airedDate?: InputMaybe<Scalars['Date']>;
-  contentRating?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  nameSort?: InputMaybe<Scalars['String']>;
-  rating?: InputMaybe<Scalars['Decimal']>;
-  studioIds?: InputMaybe<Array<Scalars['UUID']>>;
-  tagline?: InputMaybe<Scalars['String']>;
 };
 
 export enum SortOrder {
@@ -708,20 +342,8 @@ export type Studio = {
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   id: Scalars['UUID'];
-  movies: Array<Movie>;
   name: Scalars['String'];
-  shows: Array<Show>;
   updatedAt: Scalars['DateTime'];
-};
-
-
-export type StudioMoviesArgs = {
-  orderBy?: InputMaybe<Array<MovieOrderByInput>>;
-};
-
-
-export type StudioShowsArgs = {
-  orderBy?: InputMaybe<Array<ShowOrderByInput>>;
 };
 
 export type StudioCreateOneInput = {
@@ -730,13 +352,13 @@ export type StudioCreateOneInput = {
 };
 
 export type StudioFindManyInput = {
-  and?: InputMaybe<Array<InputMaybe<StudioFindManyInput>>>;
+  and?: InputMaybe<Array<StudioFindManyInput>>;
   createdAt?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
   name?: InputMaybe<StringFilter>;
-  not?: InputMaybe<Array<InputMaybe<StudioFindManyInput>>>;
-  or?: InputMaybe<Array<InputMaybe<StudioFindManyInput>>>;
+  not?: InputMaybe<Array<StudioFindManyInput>>;
+  or?: InputMaybe<Array<StudioFindManyInput>>;
   updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
@@ -758,37 +380,13 @@ export type StudioUpdateOneInput = {
 
 export type Tag = {
   _id: Scalars['ID'];
-  attachments: Array<Attachment>;
   category: TagCategory;
   categoryId: Scalars['UUID'];
   createdAt: Scalars['DateTime'];
   description: Scalars['String'];
   id: Scalars['UUID'];
-  movies: Array<Movie>;
   name: Scalars['String'];
-  people: Array<Person>;
-  units: Array<Unit>;
   updatedAt: Scalars['DateTime'];
-};
-
-
-export type TagAttachmentsArgs = {
-  orderBy?: InputMaybe<Array<AttachmentOrderByInput>>;
-};
-
-
-export type TagMoviesArgs = {
-  orderBy?: InputMaybe<Array<MovieOrderByInput>>;
-};
-
-
-export type TagPeopleArgs = {
-  orderBy?: InputMaybe<Array<PersonOrderByInput>>;
-};
-
-
-export type TagUnitsArgs = {
-  orderBy?: InputMaybe<Array<UnitOrderByInput>>;
 };
 
 export type TagCategory = {
@@ -807,13 +405,13 @@ export type TagCategoryCreateOneInput = {
 };
 
 export type TagCategoryFindManyInput = {
-  and?: InputMaybe<Array<InputMaybe<TagCategoryFindManyInput>>>;
+  and?: InputMaybe<Array<TagCategoryFindManyInput>>;
   createdAt?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
   name?: InputMaybe<StringFilter>;
-  not?: InputMaybe<Array<InputMaybe<TagCategoryFindManyInput>>>;
-  or?: InputMaybe<Array<InputMaybe<TagCategoryFindManyInput>>>;
+  not?: InputMaybe<Array<TagCategoryFindManyInput>>;
+  or?: InputMaybe<Array<TagCategoryFindManyInput>>;
   updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
@@ -840,14 +438,14 @@ export type TagCreateOneInput = {
 };
 
 export type TagFindManyInput = {
-  and?: InputMaybe<Array<InputMaybe<TagFindManyInput>>>;
+  and?: InputMaybe<Array<TagFindManyInput>>;
   categoryId?: InputMaybe<UuidFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
   name?: InputMaybe<StringFilter>;
-  not?: InputMaybe<Array<InputMaybe<TagFindManyInput>>>;
-  or?: InputMaybe<Array<InputMaybe<TagFindManyInput>>>;
+  not?: InputMaybe<Array<TagFindManyInput>>;
+  or?: InputMaybe<Array<TagFindManyInput>>;
   updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
@@ -893,13 +491,13 @@ export type UnitCreateOneInput = {
 };
 
 export type UnitFindManyInput = {
-  and?: InputMaybe<Array<InputMaybe<UnitFindManyInput>>>;
+  and?: InputMaybe<Array<UnitFindManyInput>>;
   createdAt?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
   name?: InputMaybe<StringFilter>;
-  not?: InputMaybe<Array<InputMaybe<UnitFindManyInput>>>;
-  or?: InputMaybe<Array<InputMaybe<UnitFindManyInput>>>;
+  not?: InputMaybe<Array<UnitFindManyInput>>;
+  or?: InputMaybe<Array<UnitFindManyInput>>;
   updatedAt?: InputMaybe<DateTimeFilter>;
 };
 
@@ -956,19 +554,75 @@ export type CreateUnitMutationVariables = Exact<{
 
 export type CreateUnitMutation = { createUnit: { id: string, name: string, description: string, createdAt: string, updatedAt: string } };
 
-export type PeopleQueryVariables = Exact<{
+export type FindPeopleQueryVariables = Exact<{
   where: PersonFindManyInput;
 }>;
 
 
-export type PeopleQuery = { people: Array<{ id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string }> };
+export type FindPeopleQuery = { findPeople: Array<{ id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string }> };
 
-export type PersonQueryVariables = Exact<{
+export type FindPersonQueryVariables = Exact<{
   where: PersonFindOneInput;
 }>;
 
 
-export type PersonQuery = { person?: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string, units: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> } | null | undefined };
+export type FindPersonQuery = { findPerson?: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string, units: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> } | null | undefined };
+
+export type FindStudioQueryVariables = Exact<{
+  where: StudioFindOneInput;
+}>;
+
+
+export type FindStudioQuery = { findStudio?: { id: string, name: string, description: string, updatedAt: string, createdAt: string } | null | undefined };
+
+export type FindStudiosQueryVariables = Exact<{
+  where: StudioFindManyInput;
+}>;
+
+
+export type FindStudiosQuery = { findStudios: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> };
+
+export type FindTagCategoriesQueryVariables = Exact<{
+  where: TagCategoryFindManyInput;
+}>;
+
+
+export type FindTagCategoriesQuery = { findTagCategories: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> }> };
+
+export type FindTagCategoryQueryVariables = Exact<{
+  where: TagCategoryFindOneInput;
+}>;
+
+
+export type FindTagCategoryQuery = { findTagCategory?: { id: string, name: string, description: string, updatedAt: string, createdAt: string, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> } | null | undefined };
+
+export type FindTagQueryVariables = Exact<{
+  where: TagFindOneInput;
+}>;
+
+
+export type FindTagQuery = { findTag?: { id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } } | null | undefined };
+
+export type FindTagsQueryVariables = Exact<{
+  where: TagFindManyInput;
+}>;
+
+
+export type FindTagsQuery = { findTags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> };
+
+export type FindUnitQueryVariables = Exact<{
+  where: UnitFindOneInput;
+}>;
+
+
+export type FindUnitQuery = { findUnit?: { id: string, name: string, description: string, updatedAt: string, createdAt: string, members: Array<{ id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> } | null | undefined };
+
+export type FindUnitsQueryVariables = Exact<{
+  where: UnitFindManyInput;
+}>;
+
+
+export type FindUnitsQuery = { findUnits: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> };
 
 export type RemovePeopleMutationVariables = Exact<{
   where: PersonFindManyInput;
@@ -1004,62 +658,6 @@ export type RemoveUnitsMutationVariables = Exact<{
 
 
 export type RemoveUnitsMutation = { removeUnits: { count: number } };
-
-export type StudioQueryVariables = Exact<{
-  where: StudioFindOneInput;
-}>;
-
-
-export type StudioQuery = { studio?: { id: string, name: string, description: string, updatedAt: string, createdAt: string } | null | undefined };
-
-export type StudiosQueryVariables = Exact<{
-  where: StudioFindManyInput;
-}>;
-
-
-export type StudiosQuery = { studios: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> };
-
-export type TagCategoriesQueryVariables = Exact<{
-  where: TagCategoryFindManyInput;
-}>;
-
-
-export type TagCategoriesQuery = { tagCategories: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> }> };
-
-export type TagCategoryQueryVariables = Exact<{
-  where: TagCategoryFindOneInput;
-}>;
-
-
-export type TagCategoryQuery = { tagCategory?: { id: string, name: string, description: string, updatedAt: string, createdAt: string, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> } | null | undefined };
-
-export type TagQueryVariables = Exact<{
-  where: TagFindOneInput;
-}>;
-
-
-export type TagQuery = { tag?: { id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } } | null | undefined };
-
-export type TagsQueryVariables = Exact<{
-  where: TagFindManyInput;
-}>;
-
-
-export type TagsQuery = { tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> };
-
-export type UnitQueryVariables = Exact<{
-  where: UnitFindOneInput;
-}>;
-
-
-export type UnitQuery = { unit?: { id: string, name: string, description: string, updatedAt: string, createdAt: string, members: Array<{ id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> } | null | undefined };
-
-export type UnitsQueryVariables = Exact<{
-  where: UnitFindManyInput;
-}>;
-
-
-export type UnitsQuery = { units: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> };
 
 export type UpdatePersonMutationVariables = Exact<{
   data: PersonUpdateOneInput;
@@ -1170,9 +768,9 @@ export const CreateUnitDocument = gql`
   }
 }
     `;
-export const PeopleDocument = gql`
-    query people($where: PersonFindManyInput!) {
-  people(where: $where) {
+export const FindPeopleDocument = gql`
+    query findPeople($where: PersonFindManyInput!) {
+  findPeople(where: $where) {
     id
     birthDate
     createdAt
@@ -1187,9 +785,9 @@ export const PeopleDocument = gql`
   }
 }
     `;
-export const PersonDocument = gql`
-    query person($where: PersonFindOneInput!) {
-  person(where: $where) {
+export const FindPersonDocument = gql`
+    query findPerson($where: PersonFindOneInput!) {
+  findPerson(where: $where) {
     id
     birthDate
     createdAt
@@ -1225,44 +823,9 @@ export const PersonDocument = gql`
   }
 }
     `;
-export const RemovePeopleDocument = gql`
-    mutation removePeople($where: PersonFindManyInput!) {
-  removePeople(where: $where) {
-    count
-  }
-}
-    `;
-export const RemoveStudiosDocument = gql`
-    mutation removeStudios($where: StudioFindManyInput!) {
-  removeStudios(where: $where) {
-    count
-  }
-}
-    `;
-export const RemoveTagCategoriesDocument = gql`
-    mutation removeTagCategories($where: TagCategoryFindManyInput!) {
-  removeTagCategories(where: $where) {
-    count
-  }
-}
-    `;
-export const RemoveTagsDocument = gql`
-    mutation removeTags($where: TagFindManyInput!) {
-  removeTags(where: $where) {
-    count
-  }
-}
-    `;
-export const RemoveUnitsDocument = gql`
-    mutation removeUnits($where: UnitFindManyInput!) {
-  removeUnits(where: $where) {
-    count
-  }
-}
-    `;
-export const StudioDocument = gql`
-    query studio($where: StudioFindOneInput!) {
-  studio(where: $where) {
+export const FindStudioDocument = gql`
+    query findStudio($where: StudioFindOneInput!) {
+  findStudio(where: $where) {
     id
     name
     description
@@ -1271,9 +834,9 @@ export const StudioDocument = gql`
   }
 }
     `;
-export const StudiosDocument = gql`
-    query studios($where: StudioFindManyInput!) {
-  studios(where: $where) {
+export const FindStudiosDocument = gql`
+    query findStudios($where: StudioFindManyInput!) {
+  findStudios(where: $where) {
     id
     name
     description
@@ -1282,9 +845,9 @@ export const StudiosDocument = gql`
   }
 }
     `;
-export const TagCategoriesDocument = gql`
-    query tagCategories($where: TagCategoryFindManyInput!) {
-  tagCategories(where: $where) {
+export const FindTagCategoriesDocument = gql`
+    query findTagCategories($where: TagCategoryFindManyInput!) {
+  findTagCategories(where: $where) {
     id
     name
     description
@@ -1300,9 +863,9 @@ export const TagCategoriesDocument = gql`
   }
 }
     `;
-export const TagCategoryDocument = gql`
-    query tagCategory($where: TagCategoryFindOneInput!) {
-  tagCategory(where: $where) {
+export const FindTagCategoryDocument = gql`
+    query findTagCategory($where: TagCategoryFindOneInput!) {
+  findTagCategory(where: $where) {
     id
     name
     description
@@ -1318,9 +881,9 @@ export const TagCategoryDocument = gql`
   }
 }
     `;
-export const TagDocument = gql`
-    query tag($where: TagFindOneInput!) {
-  tag(where: $where) {
+export const FindTagDocument = gql`
+    query findTag($where: TagFindOneInput!) {
+  findTag(where: $where) {
     id
     name
     description
@@ -1336,9 +899,9 @@ export const TagDocument = gql`
   }
 }
     `;
-export const TagsDocument = gql`
-    query tags($where: TagFindManyInput!) {
-  tags(where: $where) {
+export const FindTagsDocument = gql`
+    query findTags($where: TagFindManyInput!) {
+  findTags(where: $where) {
     id
     name
     description
@@ -1354,9 +917,9 @@ export const TagsDocument = gql`
   }
 }
     `;
-export const UnitDocument = gql`
-    query unit($where: UnitFindOneInput!) {
-  unit(where: $where) {
+export const FindUnitDocument = gql`
+    query findUnit($where: UnitFindOneInput!) {
+  findUnit(where: $where) {
     id
     name
     description
@@ -1392,14 +955,49 @@ export const UnitDocument = gql`
   }
 }
     `;
-export const UnitsDocument = gql`
-    query units($where: UnitFindManyInput!) {
-  units(where: $where) {
+export const FindUnitsDocument = gql`
+    query findUnits($where: UnitFindManyInput!) {
+  findUnits(where: $where) {
     id
     name
     description
     updatedAt
     createdAt
+  }
+}
+    `;
+export const RemovePeopleDocument = gql`
+    mutation removePeople($where: PersonFindManyInput!) {
+  removePeople(where: $where) {
+    count
+  }
+}
+    `;
+export const RemoveStudiosDocument = gql`
+    mutation removeStudios($where: StudioFindManyInput!) {
+  removeStudios(where: $where) {
+    count
+  }
+}
+    `;
+export const RemoveTagCategoriesDocument = gql`
+    mutation removeTagCategories($where: TagCategoryFindManyInput!) {
+  removeTagCategories(where: $where) {
+    count
+  }
+}
+    `;
+export const RemoveTagsDocument = gql`
+    mutation removeTags($where: TagFindManyInput!) {
+  removeTags(where: $where) {
+    count
+  }
+}
+    `;
+export const RemoveUnitsDocument = gql`
+    mutation removeUnits($where: UnitFindManyInput!) {
+  removeUnits(where: $where) {
+    count
   }
 }
     `;
@@ -1530,11 +1128,35 @@ export function getSdk<C>(requester: Requester<C>) {
     createUnit(variables: CreateUnitMutationVariables, options?: C): Promise<{ data?: CreateUnitMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<CreateUnitMutation, CreateUnitMutationVariables>(CreateUnitDocument, variables, options);
     },
-    people(variables: PeopleQueryVariables, options?: C): Promise<{ data?: PeopleQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<PeopleQuery, PeopleQueryVariables>(PeopleDocument, variables, options);
+    findPeople(variables: FindPeopleQueryVariables, options?: C): Promise<{ data?: FindPeopleQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindPeopleQuery, FindPeopleQueryVariables>(FindPeopleDocument, variables, options);
     },
-    person(variables: PersonQueryVariables, options?: C): Promise<{ data?: PersonQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<PersonQuery, PersonQueryVariables>(PersonDocument, variables, options);
+    findPerson(variables: FindPersonQueryVariables, options?: C): Promise<{ data?: FindPersonQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindPersonQuery, FindPersonQueryVariables>(FindPersonDocument, variables, options);
+    },
+    findStudio(variables: FindStudioQueryVariables, options?: C): Promise<{ data?: FindStudioQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindStudioQuery, FindStudioQueryVariables>(FindStudioDocument, variables, options);
+    },
+    findStudios(variables: FindStudiosQueryVariables, options?: C): Promise<{ data?: FindStudiosQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindStudiosQuery, FindStudiosQueryVariables>(FindStudiosDocument, variables, options);
+    },
+    findTagCategories(variables: FindTagCategoriesQueryVariables, options?: C): Promise<{ data?: FindTagCategoriesQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindTagCategoriesQuery, FindTagCategoriesQueryVariables>(FindTagCategoriesDocument, variables, options);
+    },
+    findTagCategory(variables: FindTagCategoryQueryVariables, options?: C): Promise<{ data?: FindTagCategoryQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindTagCategoryQuery, FindTagCategoryQueryVariables>(FindTagCategoryDocument, variables, options);
+    },
+    findTag(variables: FindTagQueryVariables, options?: C): Promise<{ data?: FindTagQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindTagQuery, FindTagQueryVariables>(FindTagDocument, variables, options);
+    },
+    findTags(variables: FindTagsQueryVariables, options?: C): Promise<{ data?: FindTagsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindTagsQuery, FindTagsQueryVariables>(FindTagsDocument, variables, options);
+    },
+    findUnit(variables: FindUnitQueryVariables, options?: C): Promise<{ data?: FindUnitQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindUnitQuery, FindUnitQueryVariables>(FindUnitDocument, variables, options);
+    },
+    findUnits(variables: FindUnitsQueryVariables, options?: C): Promise<{ data?: FindUnitsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindUnitsQuery, FindUnitsQueryVariables>(FindUnitsDocument, variables, options);
     },
     removePeople(variables: RemovePeopleMutationVariables, options?: C): Promise<{ data?: RemovePeopleMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<RemovePeopleMutation, RemovePeopleMutationVariables>(RemovePeopleDocument, variables, options);
@@ -1550,30 +1172,6 @@ export function getSdk<C>(requester: Requester<C>) {
     },
     removeUnits(variables: RemoveUnitsMutationVariables, options?: C): Promise<{ data?: RemoveUnitsMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<RemoveUnitsMutation, RemoveUnitsMutationVariables>(RemoveUnitsDocument, variables, options);
-    },
-    studio(variables: StudioQueryVariables, options?: C): Promise<{ data?: StudioQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<StudioQuery, StudioQueryVariables>(StudioDocument, variables, options);
-    },
-    studios(variables: StudiosQueryVariables, options?: C): Promise<{ data?: StudiosQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<StudiosQuery, StudiosQueryVariables>(StudiosDocument, variables, options);
-    },
-    tagCategories(variables: TagCategoriesQueryVariables, options?: C): Promise<{ data?: TagCategoriesQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<TagCategoriesQuery, TagCategoriesQueryVariables>(TagCategoriesDocument, variables, options);
-    },
-    tagCategory(variables: TagCategoryQueryVariables, options?: C): Promise<{ data?: TagCategoryQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<TagCategoryQuery, TagCategoryQueryVariables>(TagCategoryDocument, variables, options);
-    },
-    tag(variables: TagQueryVariables, options?: C): Promise<{ data?: TagQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<TagQuery, TagQueryVariables>(TagDocument, variables, options);
-    },
-    tags(variables: TagsQueryVariables, options?: C): Promise<{ data?: TagsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<TagsQuery, TagsQueryVariables>(TagsDocument, variables, options);
-    },
-    unit(variables: UnitQueryVariables, options?: C): Promise<{ data?: UnitQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<UnitQuery, UnitQueryVariables>(UnitDocument, variables, options);
-    },
-    units(variables: UnitsQueryVariables, options?: C): Promise<{ data?: UnitsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
-      return requester<UnitsQuery, UnitsQueryVariables>(UnitsDocument, variables, options);
     },
     updatePerson(variables: UpdatePersonMutationVariables, options?: C): Promise<{ data?: UpdatePersonMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<UpdatePersonMutation, UpdatePersonMutationVariables>(UpdatePersonDocument, variables, options);

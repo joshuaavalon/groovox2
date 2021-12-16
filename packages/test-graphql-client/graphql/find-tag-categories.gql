@@ -1,0 +1,16 @@
+query findTagCategories($where: TagCategoryFindManyInput!) {
+  findTagCategories(where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+  }
+}

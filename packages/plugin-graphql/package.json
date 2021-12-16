@@ -7,7 +7,8 @@
   "typings": "./src/index.ts",
   "scripts": {
     "prebuild": "rimraf lib",
-    "build": "tsc"
+    "build": "tsc",
+    "generate": "ts-node-transpile-only script/generate.ts"
   },
   "keywords": [],
   "homepage": "https://github.com/groovox/groovox#readme",
@@ -22,10 +23,10 @@
   "author": "Joshua Avalon",
   "license": "Apache-2.0",
   "dependencies": {
-    "@groovox/graphql": "^1.0.0",
     "@groovox/plugin-altair": "^1.0.0",
-    "@groovox/plugin-graphql-json-schema": "^1.0.0",
     "fastify-plugin": "^3.0.0",
+    "graphql-scalars": "^1.13.1",
+    "graphql-upload": "^12.0.0",
     "lodash": "^4.17.21",
     "mercurius": "^8.8.0",
     "mercurius-upload": "^2.0.0"

@@ -16,18 +16,18 @@ export const testFindById = async (sdk: Sdk): Promise<void> => {
   expect(createStudio.name).toBe(name);
   expect(createStudio.description).toBe(description);
 
-  const findResult = await sdk.studio({
+  const findResult = await sdk.findStudio({
     where: { id: createStudio.id }
   });
   expect(findResult.errors).toBeUndefined();
   expect(findResult.data).toBeDefined();
-  if (!findResult.data || !findResult.data.studio) {
+  if (!findResult.data || !findResult.data.findStudio) {
     return;
   }
-  const { studio } = findResult.data;
-  expect(studio.id).toBe(createStudio.id);
-  expect(studio.name).toBe(name);
-  expect(studio.description).toBe(description);
+  const { findStudio } = findResult.data;
+  expect(findStudio.id).toBe(createStudio.id);
+  expect(findStudio.name).toBe(name);
+  expect(findStudio.description).toBe(description);
 
   const removeResult = await sdk.removeStudios({
     where: { id: { equal: createStudio.id } }
@@ -56,7 +56,7 @@ export const testFindByNameEqual = async (sdk: Sdk): Promise<void> => {
   expect(createStudio.name).toBe(name);
   expect(createStudio.description).toBe(description);
 
-  const findResult = await sdk.studios({
+  const findResult = await sdk.findStudios({
     where: { name: { equal: name } }
   });
   expect(findResult.errors).toBeUndefined();
@@ -64,10 +64,10 @@ export const testFindByNameEqual = async (sdk: Sdk): Promise<void> => {
   if (!findResult.data) {
     return;
   }
-  const { studios } = findResult.data;
-  expect(studios.length).toBe(1);
+  const { findStudios } = findResult.data;
+  expect(findStudios.length).toBe(1);
 
-  const studio = studios[0];
+  const studio = findStudios[0];
   expect(studio.id).toBe(createStudio.id);
   expect(studio.name).toBe(name);
   expect(studio.description).toBe(description);
@@ -103,7 +103,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     expect(createStudio.description).toBe(description + suffix);
   }
 
-  const findResult = await sdk.studios({
+  const findResult = await sdk.findStudios({
     where: { name: { startWith: name } }
   });
   expect(findResult.errors).toBeUndefined();
@@ -111,11 +111,11 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
   if (!findResult.data) {
     return;
   }
-  const { studios } = findResult.data;
-  expect(studios.length).toBe(3);
+  const { findStudios } = findResult.data;
+  expect(findStudios.length).toBe(3);
 
   for (let i = 0; i < 3; i++) {
-    const studio = studios[i];
+    const studio = findStudios[i];
     const suffix = " " + (i + 1);
     expect(studio.name).toBe(name + suffix);
     expect(studio.description).toBe(description + suffix);

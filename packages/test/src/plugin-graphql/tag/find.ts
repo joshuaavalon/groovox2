@@ -27,18 +27,18 @@ export const testFindById = async (sdk: Sdk): Promise<void> => {
   expect(createTag.name).toBe(name);
   expect(createTag.description).toBe(description);
 
-  const findResult = await sdk.tag({
+  const findResult = await sdk.findTag({
     where: { id: createTag.id }
   });
   expect(findResult.errors).toBeUndefined();
   expect(findResult.data).toBeDefined();
-  if (!findResult.data || !findResult.data.tag) {
+  if (!findResult.data || !findResult.data.findTag) {
     return;
   }
-  const { tag } = findResult.data;
-  expect(tag.id).toBe(createTag.id);
-  expect(tag.name).toBe(name);
-  expect(tag.description).toBe(description);
+  const { findTag } = findResult.data;
+  expect(findTag.id).toBe(createTag.id);
+  expect(findTag.name).toBe(name);
+  expect(findTag.description).toBe(description);
 
   const removeResult = await sdk.removeTags({
     where: { id: { equal: createTag.id } }
@@ -78,7 +78,7 @@ export const testFindByNameEqual = async (sdk: Sdk): Promise<void> => {
   expect(createTag.name).toBe(name);
   expect(createTag.description).toBe(description);
 
-  const findResult = await sdk.tags({
+  const findResult = await sdk.findTags({
     where: { name: { equal: name } }
   });
   expect(findResult.errors).toBeUndefined();
@@ -86,10 +86,10 @@ export const testFindByNameEqual = async (sdk: Sdk): Promise<void> => {
   if (!findResult.data) {
     return;
   }
-  const { tags } = findResult.data;
-  expect(tags.length).toBe(1);
+  const { findTags } = findResult.data;
+  expect(findTags.length).toBe(1);
 
-  const tag = tags[0];
+  const tag = findTags[0];
   expect(tag.id).toBe(createTag.id);
   expect(tag.name).toBe(name);
   expect(tag.description).toBe(description);
@@ -149,7 +149,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     expect(createTag.description).toBe(description + suffix);
   }
 
-  const findResult = await sdk.tags({
+  const findResult = await sdk.findTags({
     where: { name: { startWith: name } }
   });
   expect(findResult.errors).toBeUndefined();
@@ -157,11 +157,11 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
   if (!findResult.data) {
     return;
   }
-  const { tags } = findResult.data;
-  expect(tags.length).toBe(3);
+  const { findTags } = findResult.data;
+  expect(findTags.length).toBe(3);
 
   for (let i = 0; i < 3; i++) {
-    const tag = tags[i];
+    const tag = findTags[i];
     const suffix = " " + (i + 1);
     expect(tag.name).toBe(name + suffix);
     expect(tag.description).toBe(description + suffix);

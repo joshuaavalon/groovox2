@@ -1,0 +1,36 @@
+query findUnit($where: UnitFindOneInput!) {
+  findUnit(where: $where) {
+    id
+    name
+    description
+    updatedAt
+    createdAt
+    members {
+      id
+      birthDate
+      createdAt
+      deathDate
+      description
+      nameFirst
+      nameLast
+      nameMiddle
+      nameSort
+      sex
+      updatedAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+      category {
+        id
+        name
+        description
+        updatedAt
+        createdAt
+      }
+    }
+  }
+}

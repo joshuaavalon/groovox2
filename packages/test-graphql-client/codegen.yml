@@ -1,4 +1,4 @@
-schema: ../graphql-type/nexus.generated.graphql
+schema: ../plugin-graphql/nexus.generated.graphql
 config:
   rawRequest: true
   skipTypename: true

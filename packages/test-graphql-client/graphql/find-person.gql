@@ -1,0 +1,36 @@
+query findPerson($where: PersonFindOneInput!) {
+  findPerson(where: $where) {
+    id
+    birthDate
+    createdAt
+    deathDate
+    description
+    nameFirst
+    nameLast
+    nameMiddle
+    nameSort
+    sex
+    updatedAt
+    units {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+      category {
+        id
+        name
+        description
+        updatedAt
+        createdAt
+      }
+    }
+  }
+}

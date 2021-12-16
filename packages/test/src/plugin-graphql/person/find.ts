@@ -24,22 +24,22 @@ export const testFindById = async (sdk: Sdk): Promise<void> => {
   expect(createPerson.sex).toBe(sex);
   expect(createPerson.description).toBe(description);
 
-  const findResult = await sdk.person({
+  const findResult = await sdk.findPerson({
     where: { id: createPerson.id }
   });
   expect(findResult.errors).toBeUndefined();
   expect(findResult.data).toBeDefined();
-  if (!findResult.data || !findResult.data.person) {
+  if (!findResult.data || !findResult.data.findPerson) {
     return;
   }
-  const { person } = findResult.data;
-  expect(person.id).toBe(createPerson.id);
-  expect(person.nameFirst).toBe(nameFirst);
-  expect(person.nameMiddle).toBe(nameMiddle);
-  expect(person.nameLast).toBe(nameLast);
-  expect(person.nameSort).toBe(nameSort);
-  expect(person.sex).toBe(sex);
-  expect(person.description).toBe(description);
+  const { findPerson } = findResult.data;
+  expect(findPerson.id).toBe(createPerson.id);
+  expect(findPerson.nameFirst).toBe(nameFirst);
+  expect(findPerson.nameMiddle).toBe(nameMiddle);
+  expect(findPerson.nameLast).toBe(nameLast);
+  expect(findPerson.nameSort).toBe(nameSort);
+  expect(findPerson.sex).toBe(sex);
+  expect(findPerson.description).toBe(description);
 
   const removeResult = await sdk.removePeople({
     where: { id: { equal: createPerson.id } }
@@ -76,7 +76,7 @@ export const testFindByNameEqual = async (sdk: Sdk): Promise<void> => {
   expect(createPerson.sex).toBe(sex);
   expect(createPerson.description).toBe(description);
 
-  const findResult = await sdk.people({
+  const findResult = await sdk.findPeople({
     where: { nameFirst: { equal: nameFirst } }
   });
   expect(findResult.errors).toBeUndefined();
@@ -84,10 +84,10 @@ export const testFindByNameEqual = async (sdk: Sdk): Promise<void> => {
   if (!findResult.data) {
     return;
   }
-  const { people } = findResult.data;
-  expect(people.length).toBe(1);
+  const { findPeople } = findResult.data;
+  expect(findPeople.length).toBe(1);
 
-  const person = people[0];
+  const person = findPeople[0];
   expect(person.id).toBe(createPerson.id);
   expect(person.nameFirst).toBe(nameFirst);
   expect(person.nameMiddle).toBe(nameMiddle);
@@ -142,7 +142,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     expect(createPerson.description).toBe(description + suffix);
   }
 
-  const findResult = await sdk.people({
+  const findResult = await sdk.findPeople({
     where: { nameFirst: { startWith: nameFirst } }
   });
   expect(findResult.errors).toBeUndefined();
@@ -150,11 +150,11 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
   if (!findResult.data) {
     return;
   }
-  const { people } = findResult.data;
-  expect(people.length).toBe(3);
+  const { findPeople } = findResult.data;
+  expect(findPeople.length).toBe(3);
 
   for (let i = 0; i < 3; i++) {
-    const person = people[i];
+    const person = findPeople[i];
     const suffix = " " + (i + 1);
     expect(person.nameFirst).toBe(nameFirst + suffix);
     expect(person.nameMiddle).toBe(nameMiddle + suffix);
