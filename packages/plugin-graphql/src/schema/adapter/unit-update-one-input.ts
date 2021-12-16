@@ -10,5 +10,15 @@ export const adaptUnitUpdateOneInput: InputAdapter<Input, Output> = input => {
     description: input.description ?? undefined,
     updatedAt: new Date()
   };
+  if (input.tagIds) {
+    output.tag = {
+      set: input.tagIds.map(id => ({ id }))
+    };
+  }
+  if (input.memberIds) {
+    output.person = {
+      set: input.memberIds.map(id => ({ id }))
+    };
+  }
   return output;
 };

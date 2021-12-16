@@ -1,6 +1,6 @@
 import { arg, mutationField } from "nexus";
 
-import { adaptStudioFindManyInput } from "../adapter";
+import { adaptPersonFindManyInput } from "../adapter";
 
 export const removePeople = mutationField("removePeople", {
   type: "AffectedRowsOutput",
@@ -9,7 +9,7 @@ export const removePeople = mutationField("removePeople", {
   },
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.app;
-    const where = adaptStudioFindManyInput(args.where);
-    return db.studio.deleteMany({ where });
+    const where = adaptPersonFindManyInput(args.where);
+    return db.person.deleteMany({ where });
   }
 });
