@@ -113,6 +113,7 @@ export interface NexusGenInputs {
     name: string; // String!
     nameSort: string; // String!
     rating?: NexusGenScalars['Decimal'] | null; // Decimal
+    roles: NexusGenInputs['MovieRoleCreateOneInput'][]; // [MovieRoleCreateOneInput!]!
     studioIds: NexusGenScalars['UUID'][]; // [UUID!]!
     tagline: string; // String!
   }
@@ -143,6 +144,20 @@ export interface NexusGenInputs {
     nameSort?: NexusGenEnums['SortOrder'] | null; // SortOrder
     rating?: NexusGenEnums['SortOrder'] | null; // SortOrder
     updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
+  MovieRoleCreateOneInput: { // input type
+    movieId: NexusGenScalars['UUID']; // UUID!
+    personId: NexusGenScalars['UUID']; // UUID!
+    role: string; // String!
+    type: string; // String!
+  }
+  MovieRoleFindOneInput: { // input type
+    id: NexusGenScalars['UUID']; // UUID!
+  }
+  MovieRoleUpdateOneInput: { // input type
+    personId?: NexusGenScalars['UUID'] | null; // UUID
+    role?: string | null; // String
+    type?: string | null; // String
   }
   MovieUpdateOneInput: { // input type
     airedDate?: NexusGenScalars['Date'] | null; // Date
@@ -428,6 +443,7 @@ export interface NexusGenFieldTypes {
     removeTags: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeUnits: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     updateMovie: NexusGenRootTypes['Movie']; // Movie!
+    updateMovieRole: NexusGenRootTypes['MovieRole']; // MovieRole!
     updatePerson: NexusGenRootTypes['Person']; // Person!
     updateStudio: NexusGenRootTypes['Studio']; // Studio!
     updateTag: NexusGenRootTypes['Tag']; // Tag!
@@ -544,6 +560,7 @@ export interface NexusGenFieldTypeNames {
     removeTags: 'AffectedRowsOutput'
     removeUnits: 'AffectedRowsOutput'
     updateMovie: 'Movie'
+    updateMovieRole: 'MovieRole'
     updatePerson: 'Person'
     updateStudio: 'Studio'
     updateTag: 'Tag'
@@ -666,6 +683,10 @@ export interface NexusGenArgTypes {
     updateMovie: { // args
       data: NexusGenInputs['MovieUpdateOneInput']; // MovieUpdateOneInput!
       where: NexusGenInputs['MovieFindOneInput']; // MovieFindOneInput!
+    }
+    updateMovieRole: { // args
+      data: NexusGenInputs['MovieRoleUpdateOneInput']; // MovieRoleUpdateOneInput!
+      where: NexusGenInputs['MovieRoleFindOneInput']; // MovieRoleFindOneInput!
     }
     updatePerson: { // args
       data: NexusGenInputs['PersonUpdateOneInput']; // PersonUpdateOneInput!

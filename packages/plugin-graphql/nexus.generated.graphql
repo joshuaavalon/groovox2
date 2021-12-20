@@ -81,6 +81,7 @@ input MovieCreateOneInput {
   name: String!
   nameSort: String!
   rating: Decimal
+  roles: [MovieRoleCreateOneInput!]! = []
   studioIds: [UUID!]! = []
   tagline: String! = ""
 }
@@ -125,6 +126,23 @@ type MovieRole {
   type: String!
 }
 
+input MovieRoleCreateOneInput {
+  movieId: UUID!
+  personId: UUID!
+  role: String!
+  type: String!
+}
+
+input MovieRoleFindOneInput {
+  id: UUID!
+}
+
+input MovieRoleUpdateOneInput {
+  personId: UUID
+  role: String
+  type: String
+}
+
 input MovieUpdateOneInput {
   airedDate: Date
   contentRating: String
@@ -150,6 +168,7 @@ type Mutation {
   removeTags(where: TagFindManyInput!): AffectedRowsOutput!
   removeUnits(where: UnitFindManyInput!): AffectedRowsOutput!
   updateMovie(data: MovieUpdateOneInput!, where: MovieFindOneInput!): Movie!
+  updateMovieRole(data: MovieRoleUpdateOneInput!, where: MovieRoleFindOneInput!): MovieRole!
   updatePerson(data: PersonUpdateOneInput!, where: PersonFindOneInput!): Person!
   updateStudio(data: StudioUpdateOneInput!, where: StudioFindOneInput!): Studio!
   updateTag(data: TagUpdateOneInput!, where: TagFindOneInput!): Tag!

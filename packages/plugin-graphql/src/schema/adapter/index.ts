@@ -7,6 +7,8 @@ export * from "./movie-find-many-input";
 export * from "./movie-find-one-input";
 export * from "./movie-order-by-input";
 export * from "./movie-update-one-input";
+export * from "./movie-role-find-one-input";
+export * from "./movie-role-update-one-input";
 export * from "./pagination";
 export * from "./person-create-one-input";
 export * from "./person-find-many-input";

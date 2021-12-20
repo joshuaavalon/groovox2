@@ -10,6 +10,7 @@ import { removeStudios } from "./remove-studios";
 import { removeTagCategories } from "./remove-tag-categories";
 import { removeTags } from "./remove-tags";
 import { removeUnits } from "./remove-units";
+import { updateMovieRole } from "./update-movie-role";
 import { updateMovie } from "./update-movie";
 import { updatePerson } from "./update-person";
 import { updateStudio } from "./update-studio";
@@ -30,6 +31,7 @@ export const mutations = [
   removeTagCategories,
   removeTags,
   removeUnits,
+  updateMovieRole,
   updateMovie,
   updatePerson,
   updateStudio,

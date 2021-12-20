@@ -19,5 +19,17 @@ export const adaptMovieCreateOneInput: InputAdapter<Input, Output> = input => {
       connect: input.studioIds.map(id => ({ id }))
     };
   }
+  if (input.roles) {
+    output.movieRole = {
+      createMany: {
+        data: input.roles.map(({ type, role, personId }, i) => ({
+          type,
+          role,
+          personId,
+          sequence: i
+        }))
+      }
+    };
+  }
   return output;
 };

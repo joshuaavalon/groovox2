@@ -7,6 +7,9 @@ import { date } from "./date";
 import { decimalNullableFilter } from "./decimal-nullable-filter";
 import { decimal } from "./decimal";
 import { fileUpload } from "./file-upload";
+import { movieRoleCreateOneInput } from "./movie-role-create-one-input";
+import { movieRoleFindOneInput } from "./movie-role-find-one-input";
+import { movieRoleUpdateOneInput } from "./movie-role-update-one-input";
 import { movieRole } from "./movie-role";
 import { movieCreateOneInput } from "./movie-create-one-input";
 import { movieFindManyInput } from "./movie-find-many-input";
@@ -62,6 +65,9 @@ export const objects = [
   decimal,
   fileUpload,
   time,
+  movieRoleCreateOneInput,
+  movieRoleFindOneInput,
+  movieRoleUpdateOneInput,
   movieRole,
   movieCreateOneInput,
   movieFindManyInput,
