@@ -7,6 +7,13 @@ import { date } from "./date";
 import { decimalNullableFilter } from "./decimal-nullable-filter";
 import { decimal } from "./decimal";
 import { fileUpload } from "./file-upload";
+import { movieRole } from "./movie-role";
+import { movieCreateOneInput } from "./movie-create-one-input";
+import { movieFindManyInput } from "./movie-find-many-input";
+import { movieFindOneInput } from "./movie-find-one-input";
+import { movieOrderByInput } from "./movie-order-by-input";
+import { movieUpdateOneInput } from "./movie-update-one-input";
+import { movie } from "./movie";
 import { pagination } from "./pagination";
 import { personCreateOneInput } from "./person-create-one-input";
 import { personFindManyInput } from "./person-find-many-input";
@@ -55,6 +62,13 @@ export const objects = [
   decimal,
   fileUpload,
   time,
+  movieRole,
+  movieCreateOneInput,
+  movieFindManyInput,
+  movieFindOneInput,
+  movieOrderByInput,
+  movieUpdateOneInput,
+  movie,
   pagination,
   personCreateOneInput,
   personFindManyInput,

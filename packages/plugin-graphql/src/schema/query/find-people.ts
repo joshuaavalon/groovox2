@@ -1,6 +1,6 @@
 import { arg, list, nullable, queryField } from "nexus";
 
-import { adaptArrayDefined, adaptDefined } from "./utils";
+import { guardNil, guardNilArray } from "../utils";
 
 import {
   adaptPagination,
@@ -17,9 +17,9 @@ export const findPeople = queryField("findPeople", {
   },
   resolve: async (_root, args, ctx) => {
     const { db } = ctx.app;
-    const pagination = adaptDefined(args.pagination, adaptPagination);
-    const orderBy = adaptArrayDefined(args.orderBy, adaptPersonOrderByInput);
-    const where = adaptDefined(args.where, adaptPersonFindManyInput);
-    return db.person.findMany({ where, orderBy, ...pagination });
+    const { take, skip } = guardNil(adaptPagination)(args.pagination) ?? {};
+    const orderBy = guardNilArray(adaptPersonOrderByInput)(args.orderBy);
+    const where = guardNil(adaptPersonFindManyInput)(args.where);
+    return db.person.findMany({ where, orderBy, take, skip });
   }
 });

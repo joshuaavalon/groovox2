@@ -6,7 +6,7 @@
 
 import type { MercuriusContext } from "mercurius"
 import type { FileUpload } from "graphql-upload"
-import type { Person, Studio, TagCategory, Tag, Unit } from "@prisma/client"
+import type { MovieRole, Movie, Person, Studio, TagCategory, Tag, Unit } from "@prisma/client"
 import type { FieldAuthorizeResolver } from "nexus/dist/plugins/fieldAuthorizePlugin"
 import type { QueryComplexity } from "nexus/dist/plugins/queryComplexityPlugin"
 import type { core } from "nexus"
@@ -105,6 +105,54 @@ export interface NexusGenInputs {
     lte?: NexusGenScalars['Decimal'] | null; // Decimal
     not?: NexusGenInputs['DecimalNullableFilter'] | null; // DecimalNullableFilter
     notIn?: NexusGenScalars['Decimal'][] | null; // [Decimal!]
+  }
+  MovieCreateOneInput: { // input type
+    airedDate?: NexusGenScalars['Date'] | null; // Date
+    contentRating: string; // String!
+    description: string; // String!
+    name: string; // String!
+    nameSort: string; // String!
+    rating?: NexusGenScalars['Decimal'] | null; // Decimal
+    studioIds: NexusGenScalars['UUID'][]; // [UUID!]!
+    tagline: string; // String!
+  }
+  MovieFindManyInput: { // input type
+    airedDate?: NexusGenInputs['DateNullableFilter'] | null; // DateNullableFilter
+    and?: NexusGenInputs['MovieFindManyInput'][] | null; // [MovieFindManyInput!]
+    contentRating?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+    description?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    id?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
+    name?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    nameSort?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    not?: NexusGenInputs['MovieFindManyInput'][] | null; // [MovieFindManyInput!]
+    or?: NexusGenInputs['MovieFindManyInput'][] | null; // [MovieFindManyInput!]
+    rating?: NexusGenInputs['DecimalNullableFilter'] | null; // DecimalNullableFilter
+    tagline?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
+  }
+  MovieFindOneInput: { // input type
+    id: NexusGenScalars['UUID']; // UUID!
+  }
+  MovieOrderByInput: { // input type
+    airedDate?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    contentRating?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    id?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    name?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    nameSort?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    rating?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
+  MovieUpdateOneInput: { // input type
+    airedDate?: NexusGenScalars['Date'] | null; // Date
+    contentRating?: string | null; // String
+    description?: string | null; // String
+    name?: string | null; // String
+    nameSort?: string | null; // String
+    rating?: NexusGenScalars['Decimal'] | null; // Decimal
+    studioIds?: NexusGenScalars['UUID'][] | null; // [UUID!]
+    tagline?: string | null; // String
   }
   Pagination: { // input type
     skip?: number | null; // Int
@@ -316,6 +364,8 @@ export interface NexusGenObjects {
   AffectedRowsOutput: { // root type
     count: number; // Int!
   }
+  Movie: Movie;
+  MovieRole: MovieRole;
   Mutation: {};
   Person: Person;
   Query: {};
@@ -339,17 +389,45 @@ export interface NexusGenFieldTypes {
   AffectedRowsOutput: { // field return type
     count: number; // Int!
   }
+  Movie: { // field return type
+    _id: string; // ID!
+    airedDate: NexusGenScalars['Date'] | null; // Date
+    alias: string[]; // [String!]!
+    contentRating: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    description: string; // String!
+    id: NexusGenScalars['UUID']; // UUID!
+    name: string; // String!
+    nameSort: string; // String!
+    rating: NexusGenScalars['Decimal'] | null; // Decimal
+    roles: NexusGenRootTypes['MovieRole'][]; // [MovieRole!]!
+    studios: NexusGenRootTypes['Studio'][]; // [Studio!]!
+    tagline: string; // String!
+    tags: NexusGenRootTypes['Tag'][]; // [Tag!]!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+  }
+  MovieRole: { // field return type
+    _id: string; // ID!
+    id: NexusGenScalars['UUID']; // UUID!
+    movie: NexusGenRootTypes['Movie']; // Movie!
+    person: NexusGenRootTypes['Person']; // Person!
+    role: string; // String!
+    type: string; // String!
+  }
   Mutation: { // field return type
+    createMovie: NexusGenRootTypes['Movie']; // Movie!
     createPerson: NexusGenRootTypes['Person']; // Person!
     createStudio: NexusGenRootTypes['Studio']; // Studio!
     createTag: NexusGenRootTypes['Tag']; // Tag!
     createTagCategory: NexusGenRootTypes['TagCategory']; // TagCategory!
     createUnit: NexusGenRootTypes['Unit']; // Unit!
+    removeMovies: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removePeople: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeStudios: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeTagCategories: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeTags: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
     removeUnits: NexusGenRootTypes['AffectedRowsOutput']; // AffectedRowsOutput!
+    updateMovie: NexusGenRootTypes['Movie']; // Movie!
     updatePerson: NexusGenRootTypes['Person']; // Person!
     updateStudio: NexusGenRootTypes['Studio']; // Studio!
     updateTag: NexusGenRootTypes['Tag']; // Tag!
@@ -427,17 +505,45 @@ export interface NexusGenFieldTypeNames {
   AffectedRowsOutput: { // field return type name
     count: 'Int'
   }
+  Movie: { // field return type name
+    _id: 'ID'
+    airedDate: 'Date'
+    alias: 'String'
+    contentRating: 'String'
+    createdAt: 'DateTime'
+    description: 'String'
+    id: 'UUID'
+    name: 'String'
+    nameSort: 'String'
+    rating: 'Decimal'
+    roles: 'MovieRole'
+    studios: 'Studio'
+    tagline: 'String'
+    tags: 'Tag'
+    updatedAt: 'DateTime'
+  }
+  MovieRole: { // field return type name
+    _id: 'ID'
+    id: 'UUID'
+    movie: 'Movie'
+    person: 'Person'
+    role: 'String'
+    type: 'String'
+  }
   Mutation: { // field return type name
+    createMovie: 'Movie'
     createPerson: 'Person'
     createStudio: 'Studio'
     createTag: 'Tag'
     createTagCategory: 'TagCategory'
     createUnit: 'Unit'
+    removeMovies: 'AffectedRowsOutput'
     removePeople: 'AffectedRowsOutput'
     removeStudios: 'AffectedRowsOutput'
     removeTagCategories: 'AffectedRowsOutput'
     removeTags: 'AffectedRowsOutput'
     removeUnits: 'AffectedRowsOutput'
+    updateMovie: 'Movie'
     updatePerson: 'Person'
     updateStudio: 'Studio'
     updateTag: 'Tag'
@@ -512,7 +618,18 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Movie: {
+    studios: { // args
+      orderBy?: NexusGenInputs['StudioOrderByInput'][] | null; // [StudioOrderByInput!]
+    }
+    tags: { // args
+      orderBy?: NexusGenInputs['TagOrderByInput'][] | null; // [TagOrderByInput!]
+    }
+  }
   Mutation: {
+    createMovie: { // args
+      data: NexusGenInputs['MovieCreateOneInput']; // MovieCreateOneInput!
+    }
     createPerson: { // args
       data: NexusGenInputs['PersonCreateOneInput']; // PersonCreateOneInput!
     }
@@ -528,6 +645,9 @@ export interface NexusGenArgTypes {
     createUnit: { // args
       data: NexusGenInputs['UnitCreateOneInput']; // UnitCreateOneInput!
     }
+    removeMovies: { // args
+      where: NexusGenInputs['MovieFindManyInput']; // MovieFindManyInput!
+    }
     removePeople: { // args
       where: NexusGenInputs['PersonFindManyInput']; // PersonFindManyInput!
     }
@@ -542,6 +662,10 @@ export interface NexusGenArgTypes {
     }
     removeUnits: { // args
       where: NexusGenInputs['UnitFindManyInput']; // UnitFindManyInput!
+    }
+    updateMovie: { // args
+      data: NexusGenInputs['MovieUpdateOneInput']; // MovieUpdateOneInput!
+      where: NexusGenInputs['MovieFindOneInput']; // MovieFindOneInput!
     }
     updatePerson: { // args
       data: NexusGenInputs['PersonUpdateOneInput']; // PersonUpdateOneInput!
