@@ -17,6 +17,7 @@ export const adaptMovieUpdateOneInput: InputAdapter<Input, Output> = input => {
   };
   if (input.alias) {
     output.movieAlias = {
+      deleteMany: {},
       createMany: {
         data: input.alias.map((alias, i) => ({
           alias,

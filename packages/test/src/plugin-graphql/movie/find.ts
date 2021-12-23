@@ -164,7 +164,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     const createResult = await sdk.createMovie({
       data: {
         name: name + suffix,
-        nameSort,
+        nameSort: nameSort + suffix,
         contentRating,
         airedDate,
         tagline,
@@ -182,7 +182,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     expect(createMovie.id).toBeDefined();
     expect(createMovie.name).toBe(name + suffix);
     expect(createMovie.description).toBe(description + suffix);
-    expect(createMovie.nameSort).toBe(nameSort);
+    expect(createMovie.nameSort).toBe(nameSort + suffix);
     expect(createMovie.contentRating).toBe(contentRating);
     expect(createMovie.airedDate).toBe(airedDate);
     expect(createMovie.tagline).toBe(tagline);
