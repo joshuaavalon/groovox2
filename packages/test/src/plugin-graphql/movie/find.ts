@@ -206,7 +206,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     const suffix = " " + (i + 1);
     expect(movie.name).toBe(name + suffix);
     expect(movie.description).toBe(description + suffix);
-    expect(movie.nameSort).toBe(nameSort);
+    expect(movie.nameSort).toBe(nameSort + suffix);
     expect(movie.contentRating).toBe(contentRating);
     expect(movie.airedDate).toBe(airedDate);
     expect(movie.tagline).toBe(tagline);
