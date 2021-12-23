@@ -114,9 +114,14 @@ export interface NexusGenInputs {
     name: string; // String!
     nameSort: string; // String!
     rating?: NexusGenScalars['Decimal'] | null; // Decimal
-    roles: NexusGenInputs['MovieRoleCreateOneInput'][]; // [MovieRoleCreateOneInput!]!
+    roles: NexusGenInputs['MovieCreateRoleInput'][]; // [MovieCreateRoleInput!]!
     studioIds: NexusGenScalars['UUID'][]; // [UUID!]!
     tagline: string; // String!
+  }
+  MovieCreateRoleInput: { // input type
+    personId: NexusGenScalars['UUID']; // UUID!
+    role: string; // String!
+    type: string; // String!
   }
   MovieFindManyInput: { // input type
     airedDate?: NexusGenInputs['DateNullableFilter'] | null; // DateNullableFilter
@@ -183,7 +188,7 @@ export interface NexusGenInputs {
     name?: string | null; // String
     nameSort?: string | null; // String
     rating?: NexusGenScalars['Decimal'] | null; // Decimal
-    roles: NexusGenInputs['MovieRoleCreateOneInput'][] | null; // [MovieRoleCreateOneInput!]
+    roles: NexusGenInputs['MovieCreateRoleInput'][] | null; // [MovieCreateRoleInput!]
     studioIds?: NexusGenScalars['UUID'][] | null; // [UUID!]
     tagline?: string | null; // String
   }

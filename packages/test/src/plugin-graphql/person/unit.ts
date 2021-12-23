@@ -62,7 +62,7 @@ export const testUnit = async (sdk: Sdk): Promise<void> => {
     return;
   }
   const { updatePerson } = updateResult.data;
-  expect(updatePerson.id).toBe(updatePerson.id);
+  expect(updatePerson.id).toBe(createPerson.id);
   expect(updatePerson.units.length).toBe(2);
 
   const removePersonResult = await sdk.removePeople({

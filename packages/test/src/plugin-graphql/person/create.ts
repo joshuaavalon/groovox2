@@ -7,15 +7,15 @@ export const testCreate = async (sdk: Sdk): Promise<void> => {
   const nameSort = "Create Person Sort Name";
   const sex = "M";
   const description = "Create Person Desc";
-  const { data, errors } = await sdk.createPerson({
+  const createResult = await sdk.createPerson({
     data: { nameFirst, nameMiddle, nameLast, nameSort, sex, description }
   });
-  expect(errors).toBeUndefined();
-  expect(data).toBeDefined();
-  if (!data) {
+  expect(createResult.errors).toBeUndefined();
+  expect(createResult.data).toBeDefined();
+  if (!createResult.data) {
     return;
   }
-  const { createPerson } = data;
+  const { createPerson } = createResult.data;
   expect(createPerson.id).toBeDefined();
   expect(createPerson.nameFirst).toBe(nameFirst);
   expect(createPerson.nameMiddle).toBe(nameMiddle);

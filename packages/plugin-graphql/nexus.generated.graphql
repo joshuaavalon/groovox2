@@ -82,9 +82,15 @@ input MovieCreateOneInput {
   name: String!
   nameSort: String!
   rating: Decimal
-  roles: [MovieRoleCreateOneInput!]! = []
+  roles: [MovieCreateRoleInput!]! = []
   studioIds: [UUID!]! = []
   tagline: String! = ""
+}
+
+input MovieCreateRoleInput {
+  personId: UUID!
+  role: String!
+  type: String!
 }
 
 input MovieFindManyInput {
@@ -169,7 +175,7 @@ input MovieUpdateOneInput {
   name: String
   nameSort: String
   rating: Decimal
-  roles: [MovieRoleCreateOneInput!] = []
+  roles: [MovieCreateRoleInput!] = []
   studioIds: [UUID!]
   tagline: String
 }

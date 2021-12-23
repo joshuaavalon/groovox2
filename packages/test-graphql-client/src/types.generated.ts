@@ -104,9 +104,15 @@ export type MovieCreateOneInput = {
   name: Scalars['String'];
   nameSort: Scalars['String'];
   rating?: InputMaybe<Scalars['Decimal']>;
-  roles?: Array<MovieRoleCreateOneInput>;
+  roles?: Array<MovieCreateRoleInput>;
   studioIds?: Array<Scalars['UUID']>;
   tagline?: Scalars['String'];
+};
+
+export type MovieCreateRoleInput = {
+  personId: Scalars['UUID'];
+  role: Scalars['String'];
+  type: Scalars['String'];
 };
 
 export type MovieFindManyInput = {
@@ -191,7 +197,7 @@ export type MovieUpdateOneInput = {
   name?: InputMaybe<Scalars['String']>;
   nameSort?: InputMaybe<Scalars['String']>;
   rating?: InputMaybe<Scalars['Decimal']>;
-  roles?: InputMaybe<Array<MovieRoleCreateOneInput>>;
+  roles?: InputMaybe<Array<MovieCreateRoleInput>>;
   studioIds?: InputMaybe<Array<Scalars['UUID']>>;
   tagline?: InputMaybe<Scalars['String']>;
 };

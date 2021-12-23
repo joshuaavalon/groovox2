@@ -41,7 +41,7 @@ export const testUpdate = async (sdk: Sdk): Promise<void> => {
   expect(createMovie.tagline).toBe(tagline);
   expect(createMovie.rating).toBe(rating);
   expect(createMovie.description).toBe(description);
-  expect(createMovie.alias).toBe(alias);
+  expect(createMovie.alias).toStrictEqual(alias);
 
   const name2 = "Update Movie Name 2";
   const description2 = "Update Movie Desc 2";

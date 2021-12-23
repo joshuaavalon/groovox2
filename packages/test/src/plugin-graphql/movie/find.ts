@@ -39,7 +39,7 @@ export const testFindById = async (sdk: Sdk): Promise<void> => {
   expect(createMovie.tagline).toBe(tagline);
   expect(createMovie.rating).toBe(rating);
   expect(createMovie.description).toBe(description);
-  expect(createMovie.alias).toBe(alias);
+  expect(createMovie.alias).toStrictEqual(alias);
 
   const findResult = await sdk.findMovie({
     where: { id: createMovie.id }
@@ -58,7 +58,7 @@ export const testFindById = async (sdk: Sdk): Promise<void> => {
   expect(findMovie.tagline).toBe(tagline);
   expect(findMovie.rating).toBe(rating);
   expect(findMovie.description).toBe(description);
-  expect(findMovie.alias).toBe(alias);
+  expect(findMovie.alias).toStrictEqual(alias);
 
   const removeResult = await sdk.removeMovies({
     where: { id: { equal: createMovie.id } }
@@ -110,7 +110,7 @@ export const testFindByNameEqual = async (sdk: Sdk): Promise<void> => {
   expect(createMovie.tagline).toBe(tagline);
   expect(createMovie.rating).toBe(rating);
   expect(createMovie.description).toBe(description);
-  expect(createMovie.alias).toBe(alias);
+  expect(createMovie.alias).toStrictEqual(alias);
 
   const findResult = await sdk.findMovies({
     where: { name: { equal: name } }
@@ -132,7 +132,7 @@ export const testFindByNameEqual = async (sdk: Sdk): Promise<void> => {
   expect(movie.tagline).toBe(tagline);
   expect(movie.rating).toBe(rating);
   expect(movie.description).toBe(description);
-  expect(movie.alias).toBe(alias);
+  expect(movie.alias).toStrictEqual(alias);
 
   const removeResult = await sdk.removeMovies({
     where: { name: { equal: name } }
@@ -187,7 +187,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     expect(createMovie.airedDate).toBe(airedDate);
     expect(createMovie.tagline).toBe(tagline);
     expect(createMovie.rating).toBe(rating);
-    expect(createMovie.alias).toBe(alias);
+    expect(createMovie.alias).toStrictEqual(alias);
   }
 
   const findResult = await sdk.findMovies({
@@ -211,7 +211,7 @@ export const testFindByNameStartWith = async (sdk: Sdk): Promise<void> => {
     expect(movie.airedDate).toBe(airedDate);
     expect(movie.tagline).toBe(tagline);
     expect(movie.rating).toBe(rating);
-    expect(movie.alias).toBe(alias);
+    expect(movie.alias).toStrictEqual(alias);
   }
 
   const removeResult = await sdk.removeMovies({

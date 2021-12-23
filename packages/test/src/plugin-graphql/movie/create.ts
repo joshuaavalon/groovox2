@@ -39,7 +39,7 @@ export const testCreate = async (sdk: Sdk): Promise<void> => {
   expect(createMovie.tagline).toBe(tagline);
   expect(createMovie.rating).toBe(rating);
   expect(createMovie.description).toBe(description);
-  expect(createMovie.alias).toBe(alias);
+  expect(createMovie.alias).toStrictEqual(alias);
 
   const removeResult = await sdk.removeMovies({
     where: { id: { equal: createMovie.id } }

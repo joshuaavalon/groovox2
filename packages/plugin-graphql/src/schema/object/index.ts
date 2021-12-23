@@ -13,6 +13,7 @@ import { movieRoleFindOneInput } from "./movie-role-find-one-input";
 import { movieRoleOrderByInput } from "./movie-role-order-by-input";
 import { movieRoleUpdateOneInput } from "./movie-role-update-one-input";
 import { movieRole } from "./movie-role";
+import { movieCreateRoleInput } from "./movie-create-role-input";
 import { movieCreateOneInput } from "./movie-create-one-input";
 import { movieFindManyInput } from "./movie-find-many-input";
 import { movieFindOneInput } from "./movie-find-one-input";
@@ -73,6 +74,7 @@ export const objects = [
   movieRoleOrderByInput,
   movieRoleUpdateOneInput,
   movieRole,
+  movieCreateRoleInput,
   movieCreateOneInput,
   movieFindManyInput,
   movieFindOneInput,
