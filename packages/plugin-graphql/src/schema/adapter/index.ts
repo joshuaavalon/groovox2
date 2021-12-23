@@ -10,6 +10,7 @@ export * from "./movie-update-one-input";
 export * from "./movie-role-create-one-input";
 export * from "./movie-role-find-many-input";
 export * from "./movie-role-find-one-input";
+export * from "./movie-role-order-by-input";
 export * from "./movie-role-update-one-input";
 export * from "./pagination";
 export * from "./person-create-one-input";
