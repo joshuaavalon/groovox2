@@ -11,6 +11,7 @@ export const movieCreateOneInput = inputObjectType({
     t.nullable.decimal("rating");
     t.string("description", { default: "" });
     t.list.uuid("studioIds", { default: [] });
+    t.list.string("alias", { default: [] });
     t.list.field("roles", { type: "MovieRoleCreateOneInput", default: [] });
   }
 });

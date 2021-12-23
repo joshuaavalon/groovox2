@@ -1,3 +1,7 @@
+import { findMovieRole } from "./find-movie-role";
+import { findMovieRoles } from "./find-movie-roles";
+import { findMovie } from "./find-movie";
+import { findMovies } from "./find-movies";
 import { findPeople } from "./find-people";
 import { findPerson } from "./find-person";
 import { findStudio } from "./find-studio";
@@ -10,6 +14,10 @@ import { findUnit } from "./find-unit";
 import { findUnits } from "./find-units";
 
 export const queries = [
+  findMovieRole,
+  findMovieRoles,
+  findMovie,
+  findMovies,
   findPeople,
   findPerson,
   findStudio,

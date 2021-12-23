@@ -1,0 +1,47 @@
+query findMovies($where: MovieFindManyInput!) {
+  findMovies(where: $where) {
+    id
+    name
+    nameSort
+    contentRating
+    airedDate
+    tagline
+    rating
+    description
+    updatedAt
+    createdAt
+    alias
+    studios {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    roles {
+      id
+      type
+      role
+      person {
+        id
+        birthDate
+        createdAt
+        deathDate
+        description
+        nameFirst
+        nameLast
+        nameMiddle
+        nameSort
+        sex
+        updatedAt
+      }
+    }
+  }
+}

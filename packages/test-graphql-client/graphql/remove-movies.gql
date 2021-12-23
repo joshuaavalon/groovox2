@@ -1,0 +1,5 @@
+mutation removeMovies($where: MovieFindManyInput!) {
+  removeMovies(where: $where) {
+    count
+  }
+}

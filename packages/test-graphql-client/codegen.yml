@@ -6,7 +6,7 @@ config:
     UUID: string
     Date: string
     DateTime: string
-    Decimal: string
+    Decimal: number
     Time: string
 generates:
   src/types.generated.ts:

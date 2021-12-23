@@ -108,6 +108,7 @@ export interface NexusGenInputs {
   }
   MovieCreateOneInput: { // input type
     airedDate?: NexusGenScalars['Date'] | null; // Date
+    alias: string[]; // [String!]!
     contentRating: string; // String!
     description: string; // String!
     name: string; // String!
@@ -151,8 +152,23 @@ export interface NexusGenInputs {
     role: string; // String!
     type: string; // String!
   }
+  MovieRoleFindManyInput: { // input type
+    and?: NexusGenInputs['MovieRoleFindManyInput'][] | null; // [MovieRoleFindManyInput!]
+    id?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
+    movieId?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
+    not?: NexusGenInputs['MovieRoleFindManyInput'][] | null; // [MovieRoleFindManyInput!]
+    or?: NexusGenInputs['MovieRoleFindManyInput'][] | null; // [MovieRoleFindManyInput!]
+    personId?: NexusGenInputs['UUIDFilter'] | null; // UUIDFilter
+    role?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    type?: NexusGenInputs['StringFilter'] | null; // StringFilter
+  }
   MovieRoleFindOneInput: { // input type
     id: NexusGenScalars['UUID']; // UUID!
+  }
+  MovieRoleOrderByInput: { // input type
+    role?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    sequence?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    type?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   MovieRoleUpdateOneInput: { // input type
     personId?: NexusGenScalars['UUID'] | null; // UUID
@@ -161,11 +177,13 @@ export interface NexusGenInputs {
   }
   MovieUpdateOneInput: { // input type
     airedDate?: NexusGenScalars['Date'] | null; // Date
+    alias?: string[] | null; // [String!]
     contentRating?: string | null; // String
     description?: string | null; // String
     name?: string | null; // String
     nameSort?: string | null; // String
     rating?: NexusGenScalars['Decimal'] | null; // Decimal
+    roles: NexusGenInputs['MovieRoleCreateOneInput'][] | null; // [MovieRoleCreateOneInput!]
     studioIds?: NexusGenScalars['UUID'][] | null; // [UUID!]
     tagline?: string | null; // String
   }
@@ -467,6 +485,10 @@ export interface NexusGenFieldTypes {
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Query: { // field return type
+    findMovie: NexusGenRootTypes['Movie'] | null; // Movie
+    findMovieRole: NexusGenRootTypes['MovieRole'] | null; // MovieRole
+    findMovieRoles: NexusGenRootTypes['MovieRole'][]; // [MovieRole!]!
+    findMovies: NexusGenRootTypes['Movie'][]; // [Movie!]!
     findPeople: NexusGenRootTypes['Person'][]; // [Person!]!
     findPerson: NexusGenRootTypes['Person'] | null; // Person
     findStudio: NexusGenRootTypes['Studio'] | null; // Studio
@@ -584,6 +606,10 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'DateTime'
   }
   Query: { // field return type name
+    findMovie: 'Movie'
+    findMovieRole: 'MovieRole'
+    findMovieRoles: 'MovieRole'
+    findMovies: 'Movie'
     findPeople: 'Person'
     findPerson: 'Person'
     findStudio: 'Studio'
@@ -710,6 +736,22 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    findMovie: { // args
+      where: NexusGenInputs['MovieFindOneInput']; // MovieFindOneInput!
+    }
+    findMovieRole: { // args
+      where: NexusGenInputs['MovieRoleFindOneInput']; // MovieRoleFindOneInput!
+    }
+    findMovieRoles: { // args
+      orderBy?: NexusGenInputs['MovieRoleOrderByInput'][] | null; // [MovieRoleOrderByInput!]
+      pagination?: NexusGenInputs['Pagination'] | null; // Pagination
+      where?: NexusGenInputs['MovieRoleFindManyInput'] | null; // MovieRoleFindManyInput
+    }
+    findMovies: { // args
+      orderBy?: NexusGenInputs['MovieOrderByInput'][] | null; // [MovieOrderByInput!]
+      pagination?: NexusGenInputs['Pagination'] | null; // Pagination
+      where?: NexusGenInputs['MovieFindManyInput'] | null; // MovieFindManyInput
+    }
     findPeople: { // args
       orderBy?: NexusGenInputs['PersonOrderByInput'][] | null; // [PersonOrderByInput!]
       pagination?: NexusGenInputs['Pagination'] | null; // Pagination

@@ -15,5 +15,33 @@ export const adaptMovieUpdateOneInput: InputAdapter<Input, Output> = input => {
     description: input.description ?? undefined,
     updatedAt: new Date()
   };
+  if (input.alias) {
+    output.movieAlias = {
+      createMany: {
+        data: input.alias.map((alias, i) => ({
+          alias,
+          sequence: i
+        }))
+      }
+    };
+  }
+  if (input.studioIds) {
+    output.studio = {
+      set: input.studioIds.map(id => ({ id }))
+    };
+  }
+  if (input.roles) {
+    output.movieRole = {
+      deleteMany: {},
+      createMany: {
+        data: input.roles.map(({ type, role, personId }, i) => ({
+          type,
+          role,
+          personId,
+          sequence: i
+        }))
+      }
+    };
+  }
   return output;
 };

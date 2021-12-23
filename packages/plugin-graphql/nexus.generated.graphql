@@ -76,6 +76,7 @@ type Movie {
 
 input MovieCreateOneInput {
   airedDate: Date
+  alias: [String!]! = []
   contentRating: String!
   description: String! = ""
   name: String!
@@ -133,8 +134,25 @@ input MovieRoleCreateOneInput {
   type: String!
 }
 
+input MovieRoleFindManyInput {
+  and: [MovieRoleFindManyInput!]
+  id: UUIDFilter
+  movieId: UUIDFilter
+  not: [MovieRoleFindManyInput!]
+  or: [MovieRoleFindManyInput!]
+  personId: UUIDFilter
+  role: StringFilter
+  type: StringFilter
+}
+
 input MovieRoleFindOneInput {
   id: UUID!
+}
+
+input MovieRoleOrderByInput {
+  role: SortOrder
+  sequence: SortOrder
+  type: SortOrder
 }
 
 input MovieRoleUpdateOneInput {
@@ -145,11 +163,13 @@ input MovieRoleUpdateOneInput {
 
 input MovieUpdateOneInput {
   airedDate: Date
+  alias: [String!]
   contentRating: String
   description: String
   name: String
   nameSort: String
   rating: Decimal
+  roles: [MovieRoleCreateOneInput!] = []
   studioIds: [UUID!]
   tagline: String
 }
@@ -261,6 +281,10 @@ input PersonUpdateOneInput {
 }
 
 type Query {
+  findMovie(where: MovieFindOneInput!): Movie
+  findMovieRole(where: MovieRoleFindOneInput!): MovieRole
+  findMovieRoles(orderBy: [MovieRoleOrderByInput!], pagination: Pagination, where: MovieRoleFindManyInput): [MovieRole!]!
+  findMovies(orderBy: [MovieOrderByInput!], pagination: Pagination, where: MovieFindManyInput): [Movie!]!
   findPeople(orderBy: [PersonOrderByInput!], pagination: Pagination, where: PersonFindManyInput): [Person!]!
   findPerson(where: PersonFindOneInput!): Person
   findStudio(where: StudioFindOneInput!): Studio

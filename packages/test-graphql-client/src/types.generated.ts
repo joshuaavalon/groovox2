@@ -18,7 +18,7 @@ export type Scalars = {
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: string;
   /** The `Decimal` scalar type to represent values */
-  Decimal: string;
+  Decimal: number;
   /** A time string at UTC, such as 10:15:30Z, compliant with the `full-time` format outlined in section 5.6 of the RFC 3339profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   Time: string;
   /** A field whose value is a generic Universally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier. */
@@ -68,22 +68,159 @@ export type DecimalNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['Decimal']>>;
 };
 
+export type Movie = {
+  _id: Scalars['ID'];
+  airedDate?: Maybe<Scalars['Date']>;
+  alias: Array<Scalars['String']>;
+  contentRating: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  description: Scalars['String'];
+  id: Scalars['UUID'];
+  name: Scalars['String'];
+  nameSort: Scalars['String'];
+  rating?: Maybe<Scalars['Decimal']>;
+  roles: Array<MovieRole>;
+  studios: Array<Studio>;
+  tagline: Scalars['String'];
+  tags: Array<Tag>;
+  updatedAt: Scalars['DateTime'];
+};
+
+
+export type MovieStudiosArgs = {
+  orderBy?: InputMaybe<Array<StudioOrderByInput>>;
+};
+
+
+export type MovieTagsArgs = {
+  orderBy?: InputMaybe<Array<TagOrderByInput>>;
+};
+
+export type MovieCreateOneInput = {
+  airedDate?: InputMaybe<Scalars['Date']>;
+  alias?: Array<Scalars['String']>;
+  contentRating: Scalars['String'];
+  description?: Scalars['String'];
+  name: Scalars['String'];
+  nameSort: Scalars['String'];
+  rating?: InputMaybe<Scalars['Decimal']>;
+  roles?: Array<MovieRoleCreateOneInput>;
+  studioIds?: Array<Scalars['UUID']>;
+  tagline?: Scalars['String'];
+};
+
+export type MovieFindManyInput = {
+  airedDate?: InputMaybe<DateNullableFilter>;
+  and?: InputMaybe<Array<MovieFindManyInput>>;
+  contentRating?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  description?: InputMaybe<StringFilter>;
+  id?: InputMaybe<UuidFilter>;
+  name?: InputMaybe<StringFilter>;
+  nameSort?: InputMaybe<StringFilter>;
+  not?: InputMaybe<Array<MovieFindManyInput>>;
+  or?: InputMaybe<Array<MovieFindManyInput>>;
+  rating?: InputMaybe<DecimalNullableFilter>;
+  tagline?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeFilter>;
+};
+
+export type MovieFindOneInput = {
+  id: Scalars['UUID'];
+};
+
+export type MovieOrderByInput = {
+  airedDate?: InputMaybe<SortOrder>;
+  contentRating?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  nameSort?: InputMaybe<SortOrder>;
+  rating?: InputMaybe<SortOrder>;
+  updatedAt?: InputMaybe<SortOrder>;
+};
+
+export type MovieRole = {
+  _id: Scalars['ID'];
+  id: Scalars['UUID'];
+  movie: Movie;
+  person: Person;
+  role: Scalars['String'];
+  type: Scalars['String'];
+};
+
+export type MovieRoleCreateOneInput = {
+  movieId: Scalars['UUID'];
+  personId: Scalars['UUID'];
+  role: Scalars['String'];
+  type: Scalars['String'];
+};
+
+export type MovieRoleFindManyInput = {
+  and?: InputMaybe<Array<MovieRoleFindManyInput>>;
+  id?: InputMaybe<UuidFilter>;
+  movieId?: InputMaybe<UuidFilter>;
+  not?: InputMaybe<Array<MovieRoleFindManyInput>>;
+  or?: InputMaybe<Array<MovieRoleFindManyInput>>;
+  personId?: InputMaybe<UuidFilter>;
+  role?: InputMaybe<StringFilter>;
+  type?: InputMaybe<StringFilter>;
+};
+
+export type MovieRoleFindOneInput = {
+  id: Scalars['UUID'];
+};
+
+export type MovieRoleOrderByInput = {
+  role?: InputMaybe<SortOrder>;
+  sequence?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+};
+
+export type MovieRoleUpdateOneInput = {
+  personId?: InputMaybe<Scalars['UUID']>;
+  role?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+};
+
+export type MovieUpdateOneInput = {
+  airedDate?: InputMaybe<Scalars['Date']>;
+  alias?: InputMaybe<Array<Scalars['String']>>;
+  contentRating?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  nameSort?: InputMaybe<Scalars['String']>;
+  rating?: InputMaybe<Scalars['Decimal']>;
+  roles?: InputMaybe<Array<MovieRoleCreateOneInput>>;
+  studioIds?: InputMaybe<Array<Scalars['UUID']>>;
+  tagline?: InputMaybe<Scalars['String']>;
+};
+
 export type Mutation = {
+  createMovie: Movie;
   createPerson: Person;
   createStudio: Studio;
   createTag: Tag;
   createTagCategory: TagCategory;
   createUnit: Unit;
+  removeMovies: AffectedRowsOutput;
   removePeople: AffectedRowsOutput;
   removeStudios: AffectedRowsOutput;
   removeTagCategories: AffectedRowsOutput;
   removeTags: AffectedRowsOutput;
   removeUnits: AffectedRowsOutput;
+  updateMovie: Movie;
+  updateMovieRole: MovieRole;
   updatePerson: Person;
   updateStudio: Studio;
   updateTag: Tag;
   updateTagCategory: TagCategory;
   updateUnit: Unit;
+};
+
+
+export type MutationCreateMovieArgs = {
+  data: MovieCreateOneInput;
 };
 
 
@@ -112,6 +249,11 @@ export type MutationCreateUnitArgs = {
 };
 
 
+export type MutationRemoveMoviesArgs = {
+  where: MovieFindManyInput;
+};
+
+
 export type MutationRemovePeopleArgs = {
   where: PersonFindManyInput;
 };
@@ -134,6 +276,18 @@ export type MutationRemoveTagsArgs = {
 
 export type MutationRemoveUnitsArgs = {
   where: UnitFindManyInput;
+};
+
+
+export type MutationUpdateMovieArgs = {
+  data: MovieUpdateOneInput;
+  where: MovieFindOneInput;
+};
+
+
+export type MutationUpdateMovieRoleArgs = {
+  data: MovieRoleUpdateOneInput;
+  where: MovieRoleFindOneInput;
 };
 
 
@@ -250,6 +404,10 @@ export type PersonUpdateOneInput = {
 };
 
 export type Query = {
+  findMovie?: Maybe<Movie>;
+  findMovieRole?: Maybe<MovieRole>;
+  findMovieRoles: Array<MovieRole>;
+  findMovies: Array<Movie>;
   findPeople: Array<Person>;
   findPerson?: Maybe<Person>;
   findStudio?: Maybe<Studio>;
@@ -260,6 +418,30 @@ export type Query = {
   findTags: Array<Tag>;
   findUnit?: Maybe<Unit>;
   findUnits: Array<Unit>;
+};
+
+
+export type QueryFindMovieArgs = {
+  where: MovieFindOneInput;
+};
+
+
+export type QueryFindMovieRoleArgs = {
+  where: MovieRoleFindOneInput;
+};
+
+
+export type QueryFindMovieRolesArgs = {
+  orderBy?: InputMaybe<Array<MovieRoleOrderByInput>>;
+  pagination?: InputMaybe<Pagination>;
+  where?: InputMaybe<MovieRoleFindManyInput>;
+};
+
+
+export type QueryFindMoviesArgs = {
+  orderBy?: InputMaybe<Array<MovieOrderByInput>>;
+  pagination?: InputMaybe<Pagination>;
+  where?: InputMaybe<MovieFindManyInput>;
 };
 
 
@@ -519,6 +701,13 @@ export type UnitUpdateOneInput = {
   tagIds?: InputMaybe<Array<Scalars['UUID']>>;
 };
 
+export type CreateMovieMutationVariables = Exact<{
+  data: MovieCreateOneInput;
+}>;
+
+
+export type CreateMovieMutation = { createMovie: { id: string, name: string, nameSort: string, contentRating: string, airedDate?: string | null | undefined, tagline: string, rating?: number | null | undefined, description: string, updatedAt: string, createdAt: string, alias: Array<string>, studios: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, roles: Array<{ id: string, type: string, role: string, person: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string } }> } };
+
 export type CreatePersonMutationVariables = Exact<{
   data: PersonCreateOneInput;
 }>;
@@ -553,6 +742,20 @@ export type CreateUnitMutationVariables = Exact<{
 
 
 export type CreateUnitMutation = { createUnit: { id: string, name: string, description: string, createdAt: string, updatedAt: string } };
+
+export type FindMovieQueryVariables = Exact<{
+  where: MovieFindOneInput;
+}>;
+
+
+export type FindMovieQuery = { findMovie?: { id: string, name: string, nameSort: string, contentRating: string, airedDate?: string | null | undefined, tagline: string, rating?: number | null | undefined, description: string, updatedAt: string, createdAt: string, alias: Array<string>, studios: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, roles: Array<{ id: string, type: string, role: string, person: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string } }> } | null | undefined };
+
+export type FindMoviesQueryVariables = Exact<{
+  where: MovieFindManyInput;
+}>;
+
+
+export type FindMoviesQuery = { findMovies: Array<{ id: string, name: string, nameSort: string, contentRating: string, airedDate?: string | null | undefined, tagline: string, rating?: number | null | undefined, description: string, updatedAt: string, createdAt: string, alias: Array<string>, studios: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, roles: Array<{ id: string, type: string, role: string, person: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string } }> }> };
 
 export type FindPeopleQueryVariables = Exact<{
   where: PersonFindManyInput;
@@ -624,6 +827,13 @@ export type FindUnitsQueryVariables = Exact<{
 
 export type FindUnitsQuery = { findUnits: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }> };
 
+export type RemoveMoviesMutationVariables = Exact<{
+  where: MovieFindManyInput;
+}>;
+
+
+export type RemoveMoviesMutation = { removeMovies: { count: number } };
+
 export type RemovePeopleMutationVariables = Exact<{
   where: PersonFindManyInput;
 }>;
@@ -658,6 +868,14 @@ export type RemoveUnitsMutationVariables = Exact<{
 
 
 export type RemoveUnitsMutation = { removeUnits: { count: number } };
+
+export type UpdateMovieMutationVariables = Exact<{
+  data: MovieUpdateOneInput;
+  where: MovieFindOneInput;
+}>;
+
+
+export type UpdateMovieMutation = { updateMovie: { id: string, name: string, nameSort: string, contentRating: string, airedDate?: string | null | undefined, tagline: string, rating?: number | null | undefined, description: string, updatedAt: string, createdAt: string, alias: Array<string>, studios: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string }>, roles: Array<{ id: string, type: string, role: string, person: { id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string } }> } };
 
 export type UpdatePersonMutationVariables = Exact<{
   data: PersonUpdateOneInput;
@@ -700,6 +918,55 @@ export type UpdateUnitMutationVariables = Exact<{
 export type UpdateUnitMutation = { updateUnit: { id: string, name: string, description: string, updatedAt: string, createdAt: string, members: Array<{ id: string, birthDate?: string | null | undefined, createdAt: string, deathDate?: string | null | undefined, description: string, nameFirst: string, nameLast: string, nameMiddle: string, nameSort: string, sex: string, updatedAt: string }>, tags: Array<{ id: string, name: string, description: string, updatedAt: string, createdAt: string, category: { id: string, name: string, description: string, updatedAt: string, createdAt: string } }> } };
 
 
+export const CreateMovieDocument = gql`
+    mutation createMovie($data: MovieCreateOneInput!) {
+  createMovie(data: $data) {
+    id
+    name
+    nameSort
+    contentRating
+    airedDate
+    tagline
+    rating
+    description
+    updatedAt
+    createdAt
+    alias
+    studios {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    roles {
+      id
+      type
+      role
+      person {
+        id
+        birthDate
+        createdAt
+        deathDate
+        description
+        nameFirst
+        nameLast
+        nameMiddle
+        nameSort
+        sex
+        updatedAt
+      }
+    }
+  }
+}
+    `;
 export const CreatePersonDocument = gql`
     mutation createPerson($data: PersonCreateOneInput!) {
   createPerson(data: $data) {
@@ -765,6 +1032,104 @@ export const CreateUnitDocument = gql`
     description
     createdAt
     updatedAt
+  }
+}
+    `;
+export const FindMovieDocument = gql`
+    query findMovie($where: MovieFindOneInput!) {
+  findMovie(where: $where) {
+    id
+    name
+    nameSort
+    contentRating
+    airedDate
+    tagline
+    rating
+    description
+    updatedAt
+    createdAt
+    alias
+    studios {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    roles {
+      id
+      type
+      role
+      person {
+        id
+        birthDate
+        createdAt
+        deathDate
+        description
+        nameFirst
+        nameLast
+        nameMiddle
+        nameSort
+        sex
+        updatedAt
+      }
+    }
+  }
+}
+    `;
+export const FindMoviesDocument = gql`
+    query findMovies($where: MovieFindManyInput!) {
+  findMovies(where: $where) {
+    id
+    name
+    nameSort
+    contentRating
+    airedDate
+    tagline
+    rating
+    description
+    updatedAt
+    createdAt
+    alias
+    studios {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    roles {
+      id
+      type
+      role
+      person {
+        id
+        birthDate
+        createdAt
+        deathDate
+        description
+        nameFirst
+        nameLast
+        nameMiddle
+        nameSort
+        sex
+        updatedAt
+      }
+    }
   }
 }
     `;
@@ -966,6 +1331,13 @@ export const FindUnitsDocument = gql`
   }
 }
     `;
+export const RemoveMoviesDocument = gql`
+    mutation removeMovies($where: MovieFindManyInput!) {
+  removeMovies(where: $where) {
+    count
+  }
+}
+    `;
 export const RemovePeopleDocument = gql`
     mutation removePeople($where: PersonFindManyInput!) {
   removePeople(where: $where) {
@@ -998,6 +1370,55 @@ export const RemoveUnitsDocument = gql`
     mutation removeUnits($where: UnitFindManyInput!) {
   removeUnits(where: $where) {
     count
+  }
+}
+    `;
+export const UpdateMovieDocument = gql`
+    mutation updateMovie($data: MovieUpdateOneInput!, $where: MovieFindOneInput!) {
+  updateMovie(data: $data, where: $where) {
+    id
+    name
+    nameSort
+    contentRating
+    airedDate
+    tagline
+    rating
+    description
+    updatedAt
+    createdAt
+    alias
+    studios {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    tags {
+      id
+      name
+      description
+      updatedAt
+      createdAt
+    }
+    roles {
+      id
+      type
+      role
+      person {
+        id
+        birthDate
+        createdAt
+        deathDate
+        description
+        nameFirst
+        nameLast
+        nameMiddle
+        nameSort
+        sex
+        updatedAt
+      }
+    }
   }
 }
     `;
@@ -1113,6 +1534,9 @@ export const UpdateUnitDocument = gql`
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
 export function getSdk<C>(requester: Requester<C>) {
   return {
+    createMovie(variables: CreateMovieMutationVariables, options?: C): Promise<{ data?: CreateMovieMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<CreateMovieMutation, CreateMovieMutationVariables>(CreateMovieDocument, variables, options);
+    },
     createPerson(variables: CreatePersonMutationVariables, options?: C): Promise<{ data?: CreatePersonMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<CreatePersonMutation, CreatePersonMutationVariables>(CreatePersonDocument, variables, options);
     },
@@ -1127,6 +1551,12 @@ export function getSdk<C>(requester: Requester<C>) {
     },
     createUnit(variables: CreateUnitMutationVariables, options?: C): Promise<{ data?: CreateUnitMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<CreateUnitMutation, CreateUnitMutationVariables>(CreateUnitDocument, variables, options);
+    },
+    findMovie(variables: FindMovieQueryVariables, options?: C): Promise<{ data?: FindMovieQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindMovieQuery, FindMovieQueryVariables>(FindMovieDocument, variables, options);
+    },
+    findMovies(variables: FindMoviesQueryVariables, options?: C): Promise<{ data?: FindMoviesQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<FindMoviesQuery, FindMoviesQueryVariables>(FindMoviesDocument, variables, options);
     },
     findPeople(variables: FindPeopleQueryVariables, options?: C): Promise<{ data?: FindPeopleQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<FindPeopleQuery, FindPeopleQueryVariables>(FindPeopleDocument, variables, options);
@@ -1158,6 +1588,9 @@ export function getSdk<C>(requester: Requester<C>) {
     findUnits(variables: FindUnitsQueryVariables, options?: C): Promise<{ data?: FindUnitsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<FindUnitsQuery, FindUnitsQueryVariables>(FindUnitsDocument, variables, options);
     },
+    removeMovies(variables: RemoveMoviesMutationVariables, options?: C): Promise<{ data?: RemoveMoviesMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<RemoveMoviesMutation, RemoveMoviesMutationVariables>(RemoveMoviesDocument, variables, options);
+    },
     removePeople(variables: RemovePeopleMutationVariables, options?: C): Promise<{ data?: RemovePeopleMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<RemovePeopleMutation, RemovePeopleMutationVariables>(RemovePeopleDocument, variables, options);
     },
@@ -1172,6 +1605,9 @@ export function getSdk<C>(requester: Requester<C>) {
     },
     removeUnits(variables: RemoveUnitsMutationVariables, options?: C): Promise<{ data?: RemoveUnitsMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<RemoveUnitsMutation, RemoveUnitsMutationVariables>(RemoveUnitsDocument, variables, options);
+    },
+    updateMovie(variables: UpdateMovieMutationVariables, options?: C): Promise<{ data?: UpdateMovieMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<UpdateMovieMutation, UpdateMovieMutationVariables>(UpdateMovieDocument, variables, options);
     },
     updatePerson(variables: UpdatePersonMutationVariables, options?: C): Promise<{ data?: UpdatePersonMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<UpdatePersonMutation, UpdatePersonMutationVariables>(UpdatePersonDocument, variables, options);
