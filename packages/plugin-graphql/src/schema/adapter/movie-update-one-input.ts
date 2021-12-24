@@ -9,9 +9,9 @@ export const adaptMovieUpdateOneInput: InputAdapter<Input, Output> = input => {
     name: input.name ?? undefined,
     nameSort: input.nameSort ?? undefined,
     contentRating: input.contentRating ?? undefined,
-    airedDate: input.airedDate ?? undefined,
+    airedDate: input.airedDate,
     tagline: input.tagline ?? undefined,
-    rating: input.rating ?? undefined,
+    rating: input.rating,
     description: input.description ?? undefined,
     updatedAt: new Date()
   };

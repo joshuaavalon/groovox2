@@ -6,6 +6,19 @@ import { dateTime } from "./date-time";
 import { date } from "./date";
 import { decimalNullableFilter } from "./decimal-nullable-filter";
 import { decimal } from "./decimal";
+import { episodeRoleCreateOneInput } from "./episode-role-create-one-input";
+import { episodeRoleFindManyInput } from "./episode-role-find-many-input";
+import { episodeRoleFindOneInput } from "./episode-role-find-one-input";
+import { episodeRoleOrderByInput } from "./episode-role-order-by-input";
+import { episodeRoleUpdateOneInput } from "./episode-role-update-one-input";
+import { episodeRole } from "./episode-role";
+import { episodeCreateRoleInput } from "./episode-create-role-input";
+import { episodeCreateOneInput } from "./episode-create-one-input";
+import { episodeFindManyInput } from "./episode-find-many-input";
+import { episodeFindOneInput } from "./episode-find-one-input";
+import { episodeOrderByInput } from "./episode-order-by-input";
+import { episodeUpdateOneInput } from "./episode-update-one-input";
+import { episode } from "./episode";
 import { fileUpload } from "./file-upload";
 import { movieRoleCreateOneInput } from "./movie-role-create-one-input";
 import { movieRoleFindManyInput } from "./movie-role-find-many-input";
@@ -66,6 +79,19 @@ export const objects = [
   date,
   decimalNullableFilter,
   decimal,
+  episodeRoleCreateOneInput,
+  episodeRoleFindManyInput,
+  episodeRoleFindOneInput,
+  episodeRoleOrderByInput,
+  episodeRoleUpdateOneInput,
+  episodeRole,
+  episodeCreateRoleInput,
+  episodeCreateOneInput,
+  episodeFindManyInput,
+  episodeFindOneInput,
+  episodeOrderByInput,
+  episodeUpdateOneInput,
+  episode,
   fileUpload,
   time,
   movieRoleCreateOneInput,

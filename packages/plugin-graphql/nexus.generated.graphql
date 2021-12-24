@@ -56,6 +56,125 @@ input DecimalNullableFilter {
   notIn: [Decimal!]
 }
 
+type Episode {
+  _id: ID!
+  airedDate: Date
+  contentRating: String!
+  createdAt: DateTime!
+  description: String!
+  episodeNo: Int!
+  id: UUID!
+  name: String!
+  rating: Decimal
+  roles: [EpisodeRole!]!
+  tags(orderBy: [TagOrderByInput!]): [Tag!]!
+  updatedAt: DateTime!
+}
+
+input EpisodeCreateOneInput {
+  airedDate: Date
+  contentRating: String!
+  description: String! = ""
+  episodeNo: Int!
+  name: String!
+  rating: Decimal
+  roles: [EpisodeCreateRoleInput!]! = []
+  seasonId: UUID!
+}
+
+input EpisodeCreateRoleInput {
+  personId: UUID!
+  role: String!
+  type: String!
+}
+
+input EpisodeFindManyInput {
+  airedDate: DateNullableFilter
+  and: [EpisodeFindManyInput!]
+  contentRating: StringFilter
+  createdAt: DateTimeFilter
+  description: StringFilter
+  id: UUIDFilter
+  name: StringFilter
+  nameSort: StringFilter
+  not: [EpisodeFindManyInput!]
+  or: [EpisodeFindManyInput!]
+  rating: DecimalNullableFilter
+  tagline: StringFilter
+  updatedAt: DateTimeFilter
+}
+
+input EpisodeFindOneInput {
+  id: UUID!
+}
+
+input EpisodeOrderByInput {
+  airedDate: SortOrder
+  contentRating: SortOrder
+  createdAt: SortOrder
+  id: SortOrder
+  name: SortOrder
+  nameSort: SortOrder
+  rating: SortOrder
+  updatedAt: SortOrder
+}
+
+type EpisodeRole {
+  _id: ID!
+  episode: Episode!
+  id: UUID!
+  person: Person!
+  role: String!
+  type: String!
+}
+
+input EpisodeRoleCreateOneInput {
+  episodeId: UUID!
+  personId: UUID!
+  role: String!
+  type: String!
+}
+
+input EpisodeRoleFindManyInput {
+  and: [EpisodeRoleFindManyInput!]
+  episodeId: UUIDFilter
+  id: UUIDFilter
+  not: [EpisodeRoleFindManyInput!]
+  or: [EpisodeRoleFindManyInput!]
+  personId: UUIDFilter
+  role: StringFilter
+  type: StringFilter
+}
+
+input EpisodeRoleFindOneInput {
+  id: UUID!
+}
+
+input EpisodeRoleOrderByInput {
+  role: SortOrder
+  sequence: SortOrder
+  type: SortOrder
+}
+
+input EpisodeRoleUpdateOneInput {
+  personId: UUID
+  role: String
+  type: String
+}
+
+input EpisodeUpdateOneInput {
+  airedDate: Date
+  alias: [String!]
+  contentRating: String
+  description: String
+  name: String
+  nameSort: String
+  rating: Decimal
+  roles: [EpisodeCreateRoleInput!] = []
+  studioIds: [UUID!]
+  tagline: String
+}
+
 type Movie {
   _id: ID!
   airedDate: Date
